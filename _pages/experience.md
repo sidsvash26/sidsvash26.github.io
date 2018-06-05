@@ -23,39 +23,39 @@ I am currently working on building neural network architectures to predict fine-
 
 [<img class="experience-picture" src="{{site.url}}{{site.baseurl}}/images/experience/exl_logo.png">](http://www.exlservice.com/analytics/){:target="_blank"}
 
-_Jan 2017 --- Jul 2017_
+
 
 ### [EXL Services, Decision Analytics](http://www.exlservice.com/analytics/){:target="_blank"}
 
 **Senior Consultant**
+_Jan 2017 --- Jul 2017_
 
-
-_July 2015 --- Dec 2016_
 
 ### [EXL Services, Decision Analytics](http://www.exlservice.com/analytics/){:target="_blank"}
 
 **Consultant - II**
+_July 2015 --- Dec 2016_
 
-_Jun 2014 --- Jun 2015_
 
 ### [EXL Services, Decision Analytics](http://www.exlservice.com/analytics/){:target="_blank"}
 
 **Consultant - I**
+_Jun 2014 --- Jun 2015_
 
 <br />
 
 # EDUCATION
 
-[<img class="experience-picture" src="{{site.url}}{{site.baseurl}}/images/experience/UR-header-logo.png">](http://www.rochester.edu//){:target="_blank"}
+[<img class="experience-picture" src="{{site.url}}{{site.baseurl}}/images/experience/uor_logo.png">](http://www.rochester.edu//){:target="_blank"}
 
 _2017 --- 2019_
 
-### [University of Rochester](http://www.sas.rochester.edu/lin/graduate/MS.html/){:target="_blank"}, India
+### [University of Rochester](http://www.sas.rochester.edu/lin/graduate/MS.html/){:target="_blank"}, NY, USA
 
 Master of Science in Computational Linguistics
 <br />
 
-[<img class="experience-picture" src="{{site.url}}{{site.baseurl}}/images/experience/iitkgp_logo.png.jpg">](http://www.iitkgp.ac.in/){:target="_blank"}
+[<img class="experience-picture" src="{{site.url}}{{site.baseurl}}/images/experience/iitkgp_logo.png">](http://www.iitkgp.ac.in/){:target="_blank"}
 
 _2009 --- 2014_
 
