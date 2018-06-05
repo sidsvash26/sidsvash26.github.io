@@ -1,0 +1,24 @@
+title: Vikram Voleti
+author: Vikram Voleti
+url: "https://voletiv.github.io"
+baseurl: ""
+
+description: Vikram Voleti's website
+
+markdown: kramdown
+
+google_analytics_tracking_id: UA-109052064-1
+
+sass:
+    style: compressed
+    sass_dir: _sass
+
+include: ["_pages"]
+
+github_username:      voletiv
+linkedin_username:    vikram-voleti-45372222
+quora_username:       Vikram-Voleti
+wordpress_username:   vikramvoleti
+facebook_username:    vikky2904
+twitter_username:     vikky2904
+google_plus_username: vikky2904

@@ -1,0 +1,15 @@
+- name: "CONTACT"
+  link: "/contact"
+
+- name: "EXPERIENCE"
+  link: "/experience"
+
+- name: "CV"
+  link: "/docs/cv/Siddharth_Vashishtha_CV.pdf"
+
+- name: "PUBLICATIONS"
+  link: "/publications"
+
+- name: "HOME"
+  link: "/"
+
