@@ -1,13 +1,13 @@
-title: Vikram Voleti
-author: Vikram Voleti
-url: "https://voletiv.github.io"
+title: Siddharth Vashishtha
+author: Siddharth Vashishtha
+url: "https://sidsvash26.github.io"
 baseurl: ""
 
-description: Vikram Voleti's website
+description: Siddharth Vashishtha's website
 
 markdown: kramdown
 
-google_analytics_tracking_id: UA-109052064-1
+google_analytics_tracking_id: 
 
 sass:
     style: compressed
@@ -15,10 +15,10 @@ sass:
 
 include: ["_pages"]
 
-github_username:      voletiv
-linkedin_username:    vikram-voleti-45372222
-quora_username:       Vikram-Voleti
-wordpress_username:   vikramvoleti
-facebook_username:    vikky2904
-twitter_username:     vikky2904
-google_plus_username: vikky2904
+github_username:      sidsvash26
+linkedin_username:    siddharthvashishtha
+quora_username:       Siddharth-Vashishtha
+wordpress_username:   siddharthvashishtha
+facebook_username:    sidvash
+twitter_username:     sidvash
+google_plus_username: 118293569776131125433
