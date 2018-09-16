@@ -10,7 +10,7 @@ permalink: /contact
 
 ## Contact
 
-[<i class="fa fa-envelope"></i> sidsvash26@gmail.com](mailto:sidsvash26@gmail.com)
+[<i class="fa fa-envelope"></i> svashishtha.iitkgp@gmail.com](mailto:svashishtha.iitkgp@gmail.com)
 
 ---
 
