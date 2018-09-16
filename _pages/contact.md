@@ -20,12 +20,19 @@ permalink: /contact
 
 [<i class="fa fa-quora"></i> Quora](https://www.quora.com/profile/{{ site.quora_username }}){:target="_blank"}
 
-[<i class="fa fa-facebook"></i> Facebook](https://www.facebook.com/{{ site.facebook_username }}){:target="_blank"}
+[<i class="fa fa-twitter"></i> Twitter](https://www.twitter.com/{{ site.twitter_username }}){:target="_blank"}
 
 ---
 
 ### Data Blog:
 
 [<i class="fa fa-wordpress"></i> {{ site.wordpress_username }}.wordpress.com](https://{{ site.wordpress_username }}.wordpress.com){:target="_blank"}
+
+
+
+## Youtube Channel
+[<i class="fa fa-youtube"></i> Youtube](https://www.youtube.com/{{ site.youtube_username }}){:target="_blank"}
+
+
 
 </div>
