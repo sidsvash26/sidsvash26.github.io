@@ -27,6 +27,7 @@ permalink: /publications
 
 <p>&nbsp;</p>
 
+<!---
 ## Thesis / Reports
 
 {% for publication in site.data.reports %}
@@ -34,4 +35,6 @@ permalink: /publications
 {% include publications.html %}
 
 {% endfor %}
+-->
+
 
