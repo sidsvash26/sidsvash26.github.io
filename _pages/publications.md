@@ -5,7 +5,7 @@ excerpt: Siddharth Vashishtha's publications
 permalink: /publications
 ---
 
-## Journal papers
+<!-- ## Journal papers
 
 {% for publication in site.data.journal_papers %}
 
@@ -25,7 +25,7 @@ permalink: /publications
 
 {% endfor %}
 
-<p>&nbsp;</p>
+<p>&nbsp;</p> -->
 
 ## Publications
 
