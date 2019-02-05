@@ -1,9 +1,10 @@
-- title: Fine-Grained Temporal Relation Extraction
-  authors: Siddharth Vashishtha,  Benjamin Van Durme, Aaron Steven White
-  number_link: 1
-  link2:
-    url: https://arxiv.org/pdf/1902.01390.pdf
-    display: pdf
-  link1:
-    url: https://arxiv.org/abs/1902.01390
-    display: arXiv:1902.01390
+- title: 2019
+  authors: Vashishtha, S., B. Van Durme, & A.S. White. 2019. [Fine-Grained Temporal Relation Extraction](https://arxiv.org/pdf/1902.01390.pdf). [arXiv:1902.01390](https://arxiv.org/abs/1902.01390) [cs.CL].
+  # number_link: 2
+  # link1:
+  #   url: https://arxiv.org/abs/1902.01390
+  #   display: arXiv:1902.01390
+  # link2:
+  #   url: https://arxiv.org/pdf/1902.01390.pdf
+  #   display: pdf
+  # 
