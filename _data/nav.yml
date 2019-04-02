@@ -1,5 +1,5 @@
-- name: "CONTACT"
-  link: "/contact"
+- name: "MISC"
+  link: "/misc"
 
 - name: "EXPERIENCE"
   link: "/experience"
