@@ -2,11 +2,11 @@
 title: Siddharth Vashishtha's contact details
 layout: default
 excerpt: Siddharth Vashishtha's contact details
-type: contact
+type: misc
 permalink: /misc
 ---
 
-<div markdown="1" class="contact">
+<div markdown="1" class="misc">
 
 ## Contact
 
