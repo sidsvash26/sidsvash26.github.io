@@ -3,7 +3,7 @@ title: Siddharth Vashishtha's contact details
 layout: default
 excerpt: Siddharth Vashishtha's contact details
 type: contact
-permalink: /Misc
+permalink: /misc
 ---
 
 <div markdown="1" class="contact">
