@@ -17,7 +17,7 @@ I am a second-year graduate student in the [Department of Linguistics](http://ww
 <strong>Research interests</strong> - to work at the intersection of natural language processing and machine learning, especially extracting semantic information from text. Other interests: Semantic Parsing, Common Sense Reasoning, Text Generation etc.
 
 ## News
-<table cellspacing="0" cellpadding="0">
+<table>
 {% for article in site.data.news %}
 <tr>
 {% include news.html %}
