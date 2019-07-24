@@ -9,7 +9,7 @@ permalink: /
 
 <img class="profile-picture" src="{{site.url}}{{site.baseurl}}/images/profile-picture/sid_dp.jpg">
 
- Hello world! I am Siddharth (Sid). I recently graduated from the University of Rochester with a Masters in [Computational Linguistics](http://www.sas.rochester.edu/lin/graduate/MS.html). I'll start my PhD in Computer Science at the University of Rochester in Fall 2019. 
+ Hello, world! I am Siddharth (Sid). I recently graduated from the University of Rochester with a Masters in [Computational Linguistics](http://www.sas.rochester.edu/lin/graduate/MS.html). I'll start my Ph.D. in Computer Science at the University of Rochester in Fall 2019. 
 
  My research interests lie at the intersection of Natural Language Processing and Machine Learning. I am especially interested in extracting semantic information from linguistic input. 
 
