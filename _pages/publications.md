@@ -26,9 +26,7 @@ To appear in *Proceedings of the 57th Annual Meeting of the Association for Comp
     pages = "2906--2919",
 }
 </pre>
-</div>
-
-<a href="http://www.livecongress.it/aol/indexSA.php?id=5716AC8C&ticket=">[talk]</a>
+</div> <a href="http://www.livecongress.it/aol/indexSA.php?id=5716AC8C&ticket=">[talk]</a>
 
 
 [Towards Improving Semantic Parsing using Statistical Word Sense Disambiguation (Poster Abstract)](https://sidsvash26.github.io/docs/publications/WSD_Poster_FLAIRS.pdf)<br/>
