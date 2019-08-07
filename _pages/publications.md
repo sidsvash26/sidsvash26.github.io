@@ -7,9 +7,29 @@ permalink: /publications
 
 # 2019
 
-[Fine-Grained Temporal Relation Extraction](https://arxiv.org/pdf/1902.01390.pdf)<br/>
+[Fine-Grained Temporal Relation Extraction](https://www.aclweb.org/anthology/P19-1280)<br/>
 **Siddharth Vashishtha**, Benjamin Van Durme, Aaron Steven White<br/>
-To appear in *Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019)*, Florence, Italy, July 29-31, 2019.
+To appear in *Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019)*, Florence, Italy, July 29-31, 2019. <br/>
+<a href="javascript:toggleDiv('Vashishtha-acl-19-bibtex')">[bibtex]</a>
+<div id="Vashishtha-acl-19-bibtex" style="display:none;">
+<pre>@inproceedings{vashishtha-etal-2019-fine,
+    title = "Fine-Grained Temporal Relation Extraction",
+    author = "Vashishtha, Siddharth  and
+      Van Durme, Benjamin  and
+      White, Aaron Steven",
+    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/P19-1280",
+    pages = "2906--2919",
+}
+</pre>
+</div>
+
+<a href="http://www.livecongress.it/aol/indexSA.php?id=5716AC8C&ticket=">[talk]</a>
+
 
 [Towards Improving Semantic Parsing using Statistical Word Sense Disambiguation (Poster Abstract)](https://sidsvash26.github.io/docs/publications/WSD_Poster_FLAIRS.pdf)<br/>
 **Siddharth Vashishtha**, Ritwik Bose, James Allen<br/>
