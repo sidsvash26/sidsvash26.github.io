@@ -11,6 +11,8 @@ permalink: /publications
 **Siddharth Vashishtha**, Benjamin Van Durme, Aaron Steven White<br/>
 To appear in *Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019)*, Florence, Italy, July 29-31, 2019. <br/>
 <a href="javascript:toggleDiv('Vashishtha-acl-19-bibtex')">[bibtex]</a>
+<a href="http://www.livecongress.it/aol/indexSA.php?id=5716AC8C&ticket=">[talk]</a>
+
 <div id="Vashishtha-acl-19-bibtex" style="display:none;">
 <pre>@inproceedings{vashishtha-etal-2019-fine,
     title = "Fine-Grained Temporal Relation Extraction",
@@ -26,7 +28,7 @@ To appear in *Proceedings of the 57th Annual Meeting of the Association for Comp
     pages = "2906--2919",
 }
 </pre>
-</div> <a href="http://www.livecongress.it/aol/indexSA.php?id=5716AC8C&ticket=">[talk]</a>
+</div> 
 
 
 [Towards Improving Semantic Parsing using Statistical Word Sense Disambiguation (Poster Abstract)](https://sidsvash26.github.io/docs/publications/WSD_Poster_FLAIRS.pdf)<br/>
