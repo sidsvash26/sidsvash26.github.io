@@ -7,7 +7,7 @@ permalink: /publications
 
 # 2019
 
-[Fine-Grained Temporal Relation Extraction](https://www.aclweb.org/anthology/P19-1280)<br/>
+[Fine-Grained Temporal Relation Extraction](https://www.aclweb.org/anthology/P19-1280/)<br/>
 **Siddharth Vashishtha**, Benjamin Van Durme, Aaron Steven White<br/>
 In *Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019)*, Florence, Italy, July 29-31, 2019. <br/>
 <a href="javascript:toggleDiv('Vashishtha-acl-19-bibtex')">[bibtex]</a>
