@@ -20,6 +20,9 @@ I recently graduated from the University of Rochester with a Masters in [Computa
 <br/>
 
 <!-- <strong>Research interests</strong> - to work at the intersection of natural language processing and machine learning, especially extracting semantic information from text. Other interests: Semantic Parsing, Common Sense Reasoning, Text Generation etc. -->
+## Mini-proposal ITRG (Project Seminar Assignment)
+My NSF ITRG miniproposal for CSC400 can be accessed at: [Mini-Proposal](http://sidsvash26.github.io/docs/NSF_mini_proposal.pdf)
+
 
 ## News
 <table>
