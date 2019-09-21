@@ -21,16 +21,3 @@ quora_username:       Siddharth-Vashishtha
 wordpress_username:   siddharthvashishtha
 twitter_username:     sidvash
 youtube_username: channel/UCXcGG7apJdc6Atd9PvIF64w?
-
-nav:
- - name: "MISC"
-   link: "/misc"
-
- - name: "CV"
-   link: "/docs/cv/SIDDHARTH_VASHISHTHA_RESUME.pdf"
-
- - name: "PUBLICATIONS"
-   link: "/publications"
-
- - name: "HOME"
-   link: "/"
