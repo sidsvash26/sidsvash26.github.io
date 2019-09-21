@@ -1,7 +1,7 @@
-- name: "MISC"
-  link: "/misc"
+- name: "CONTACT"
+  link: "/contact"
 
-- name: "CV"
+- name: "RESUME"
   link: "/docs/cv/SIDDHARTH_VASHISHTHA_RESUME.pdf"
 
 - name: "PUBLICATIONS"

@@ -2,8 +2,8 @@
 title: Siddharth Vashishtha's contact details
 layout: default
 excerpt: Siddharth Vashishtha's contact details
-type: misc
-permalink: /misc
+type: contact
+permalink: /contact
 ---
 
 <div markdown="1" class="misc">
@@ -28,11 +28,10 @@ permalink: /misc
 
 [<i class="fa fa-wordpress"></i> {{ site.wordpress_username }}.wordpress.com](https://{{ site.wordpress_username }}.wordpress.com){:target="_blank"}
 
-
+---
 
 ## Youtube Channel
 [<i class="fa fa-youtube"></i> Youtube](https://www.youtube.com/{{ site.youtube_username }}){:target="_blank"}
 
-
-
+---
 </div>
