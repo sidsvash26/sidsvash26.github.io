@@ -6,7 +6,7 @@ type: contact
 permalink: /contact
 ---
 
-<div markdown="1" class="misc">
+<div markdown="1" class="contact">
 
 ## Contact
 
