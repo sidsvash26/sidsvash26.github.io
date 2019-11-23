@@ -32,9 +32,9 @@ permalink: /publications
 </div> 
 
 
-[Towards Improving Semantic Parsing using Statistical Word Sense Disambiguation (Poster Abstract)](https://sidsvash26.github.io/docs/publications/WSD_Poster_FLAIRS.pdf)<br/>
-**Siddharth Vashishtha**, Ritwik Bose, James Allen<br/>
-Proceedings of the 32nd International Conference of the Florida Artificial Intelligence Research Society (FLAIRS), 2019.
+[Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf)(in press)<br/>
+Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
+*Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI-20)*, NY, New York, Feb 7-12.
 
 
 
