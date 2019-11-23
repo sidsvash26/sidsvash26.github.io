@@ -32,9 +32,9 @@ permalink: /publications
 </div> 
 
 
-[Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf)(in press)<br/>
+[Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf) (in press)<br/>
 Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
-*Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI-20)*, NY, New York, Feb 7-12.
+*Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI-20)*, NY, New York, Feb 7-12, 2020.
 
 
 
