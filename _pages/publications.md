@@ -5,7 +5,7 @@ excerpt: Siddharth Vashishtha's publications
 permalink: /publications
 ---
 
-# Conference Publications
+# Publications
 
 [Fine-Grained Temporal Relation Extraction](https://www.aclweb.org/anthology/P19-1280/)<br/>
 **Siddharth Vashishtha**, Benjamin Van Durme, Aaron Steven White<br/>
