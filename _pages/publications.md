@@ -5,7 +5,7 @@ excerpt: Siddharth Vashishtha's publications
 permalink: /publications
 ---
 
-# 2019
+# Conference Publications
 
 [Fine-Grained Temporal Relation Extraction](https://www.aclweb.org/anthology/P19-1280/)<br/>
 **Siddharth Vashishtha**, Benjamin Van Durme, Aaron Steven White<br/>
@@ -30,7 +30,6 @@ permalink: /publications
 }
 </pre>
 </div> 
-
 
 [Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf) (in press)<br/>
 Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
