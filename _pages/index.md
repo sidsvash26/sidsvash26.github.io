@@ -20,8 +20,8 @@ I recently graduated from the University of Rochester with a Masters in [Computa
 <!-- ## Faux NSF Mini-proposal ITRG for CSC400:
 My faux NSF ITRG miniproposal for CSC400 can be accessed at: [Mini-Proposal](http://sidsvash26.github.io/docs/NSF_mini_proposal.pdf) -->
 
-## CSC446 (Machine Learning) Office Hours, Spring 2020
-Tuesdays, 4pm-5pm, Wegmans Hall 3209
+## CSC446 (Machine Learning) Office Hours, Spring 2020 
+(Updated: Feb 3, 2020): Tuesdays, 2.30pm-3.30pm, Wegmans Hall 2215
 
 Contact: svashis3 @ cs rochester edu
 
