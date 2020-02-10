@@ -11,7 +11,7 @@ permalink: /publications
 **Siddharth Vashishtha**, Benjamin Van Durme, Aaron Steven White<br/>
 *Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019)*, Florence, Italy, July 29-31, 2019. <br/>
 <a href="javascript:toggleDiv('Vashishtha-acl-19-bibtex')">[bibtex]</a>
-<a href="http://www.livecongress.it/aol/indexSA.php?id=5716AC8C&ticket=">[talk]</a>
+<a href="https://vimeo.com/384767692">[talk]</a>
 <a href="http://decomp.io/projects/time/">[data+code]</a>
 
 <div id="Vashishtha-acl-19-bibtex" style="display:none;">
