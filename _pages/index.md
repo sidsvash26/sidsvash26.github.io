@@ -22,7 +22,9 @@ My faux NSF ITRG miniproposal for CSC400 can be accessed at: [Mini-Proposal](htt
 
 ## Machine Learning (CSC 446) Office Hours, Spring 2020 
 Tuesdays, 2.30pm-3.30pm, Wegmans Hall 2215
+
 Course Webpage: [URL](https://www.cs.rochester.edu/~gildea/2020_Spring/)
+
 Contact: svashis3 \[[strudel](https://en.wikipedia.org/wiki/At_sign)\] cs.rochester.edu
 
 ## News
