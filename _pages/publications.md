@@ -5,7 +5,16 @@ excerpt: Siddharth Vashishtha's publications
 permalink: /publications
 ---
 
-# Publications
+# 2020
+
+White, A.S., E. Stengel-Eskin, **S. Vashishtha**, V. Govindarajan, D. Reisinger, T. Vieira, K. Sakaguchi, S. Zhang, F. Ferraro, R. Rudinger, K. Rawlins, & B. Van Durme. 2019. [The Universal Decompositional Semantics Dataset and Decomp Toolkit](https://arxiv.org/pdf/1909.13851). Accepted to  _Proceedings of the Twelfth International Conference on Language Resources and Evaluation (LREC 2020)_.
+
+[Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf)<br/>
+Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
+*Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI-20)*, NY, New York, Feb 7-12, 2020. <br/>
+<a href="https://sidsvash26.github.io/docs/publications/aaai20_wsd_poster.pdf">[poster]</a>
+
+# 2019
 
 [Fine-Grained Temporal Relation Extraction](https://www.aclweb.org/anthology/P19-1280/)<br/>
 **Siddharth Vashishtha**, Benjamin Van Durme, Aaron Steven White<br/>
@@ -31,10 +40,7 @@ permalink: /publications
 </pre>
 </div> 
 
-[Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf)<br/>
-Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
-*Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI-20)*, NY, New York, Feb 7-12, 2020. <br/>
-<a href="https://sidsvash26.github.io/docs/publications/aaai20_wsd_poster.pdf">[poster]</a>
+
 
 
 
