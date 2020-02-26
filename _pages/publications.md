@@ -7,7 +7,9 @@ permalink: /publications
 
 # 2020
 
-White, A.S., E. Stengel-Eskin, **S. Vashishtha**, V. Govindarajan, D. Reisinger, T. Vieira, K. Sakaguchi, S. Zhang, F. Ferraro, R. Rudinger, K. Rawlins, & B. Van Durme. 2019. [The Universal Decompositional Semantics Dataset and Decomp Toolkit](https://arxiv.org/pdf/1909.13851). Accepted to  _Proceedings of the Twelfth International Conference on Language Resources and Evaluation (LREC 2020)_.
+[The Universal Decompositional Semantics Dataset and Decomp Toolkit](https://arxiv.org/pdf/1909.13851). <br/>
+White, A.S., E. Stengel-Eskin, **S. Vashishtha**, V. Govindarajan, D. Reisinger, T. Vieira, K. Sakaguchi, S. Zhang, F. Ferraro, R. Rudinger, K. Rawlins, & B. Van Durme.<br/>
+Accepted to  _Proceedings of the Twelfth International Conference on Language Resources and Evaluation (LREC 2020)_.
 
 [Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf)<br/>
 Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
