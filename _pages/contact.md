@@ -10,7 +10,7 @@ permalink: /contact
 
 ## Contact
 
-<i class="fa fa-envelope"></i> svashishtha.iitkgp + [<a href="https://en.wikipedia.org/wiki/At_sign">strudel</a>] gmail.com
+<i class="fa fa-envelope"></i> svashishtha.iitkgp [<a href="https://en.wikipedia.org/wiki/At_sign">strudel</a>] gmail.com
 
 <i class="fa fa-envelope"></i> svashis3 [<a href="https://en.wikipedia.org/wiki/At_sign">strudel</a>] cs.rochester.edu
 
