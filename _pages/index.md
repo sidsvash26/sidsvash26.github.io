@@ -15,7 +15,7 @@ In May 2019, I graduated from the University of Rochester with a Masters in [Com
 
  During my Masters at Rochester, I worked as a graduate researcher with [Aaron Steven White](http://aaronstevenwhite.io/) at the [FACTS Lab](http://factslab.io/), where I  worked on fine-grained temporal relation extraction. I also worked with [James Allen](http://www.cs.rochester.edu/u/james/) on improving semantic parsing using statistical Word Sense Disambiguation. 
 
- My papers are listed on the [publications](https://sidsvash26.github.io/publications) page. Here's my semantic scholar profile: [Semantic Scholar](https://www.semanticscholar.org/author/Siddharth-Vashishtha/68972934) 
+ My papers are listed on the [publications](https://sidsvash26.github.io/publications) page.  Full list of publications can be found at [Semantic Scholar](https://www.semanticscholar.org/author/Siddharth-Vashishtha/68972934) 
 
 <!--
 ## Machine Learning (CSC 446) Office Hours, Spring 2020 
@@ -24,7 +24,7 @@ Tuesdays, 2.30pm-3.30pm, Wegmans Hall 2215
 Course Webpage: [URL](https://www.cs.rochester.edu/~gildea/2020_Spring/)
 
 Contact: svashis3 \[[strudel](https://en.wikipedia.org/wiki/At_sign)\] cs.rochester.edu
---></p>
+-->
 
 ## News
 <table>
