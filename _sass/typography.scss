@@ -48,38 +48,20 @@
         padding: 2px 8px 2px 8px;
         font-style: italic;
     }
-
-     //.profile-picture {
-        // height: $image-size;
-        width: 25%;
-        position: relative;
-        margin: 10px 0px 10px 100px;
-        float: right;
-        border-radius: 10%;
-        p & {
-            padding: 0;
-            margin: 0;
-        }
-        @media (max-width: $max-width) {
-            width: 40%;
-            margin: 0px 0% 20px 20px;
-        }
-    } 
-//
-     
+ 
     .profile-picture {
         // height: $image-size;
-        width: 100%;
-        position: relative;
+        width: 50%;
+        //position: relative;
         margin: 10px 0px 10px 100px;
-        float: right;
-        border-radius: 10%;
+        //float: right;
+        border-radius: 50%;
         p & {
             padding: 0;
             margin: 0;
         }
         @media (max-width: $max-width) {
-            width: 80%;
+            width: 50%;
             margin: 0px 0% 20px 20px;
         }
     }
