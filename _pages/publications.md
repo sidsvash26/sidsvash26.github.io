@@ -6,10 +6,15 @@ permalink: /publications
 ---
 
 # 2020
+Temporal Reasoning in Natural Language Inference (in press). <br/>
+**Siddharth Vashishtha**, Adam Poliak, Yash Kumar Lal, Benjamin Van Durme and Aaron Steven White. <br/>
+Accepted to Findings of EMNLP 2020. Online: Association for Computational Linguistics.
 
-[The Universal Decompositional Semantics Dataset and Decomp Toolkit](https://arxiv.org/pdf/1909.13851). <br/>
+[The Universal Decompositional Semantics Dataset and Decomp Toolkit](https://www.aclweb.org/anthology/2020.lrec-1.699/). <br/>
 White, A.S., E. Stengel-Eskin, **S. Vashishtha**, V. Govindarajan, D. Reisinger, T. Vieira, K. Sakaguchi, S. Zhang, F. Ferraro, R. Rudinger, K. Rawlins, & B. Van Durme.<br/>
-Accepted to  _Proceedings of the Twelfth International Conference on Language Resources and Evaluation (LREC 2020)_.
+*Proceedings of the 12th International Conference on Language Resources and Evaluation (LREC 2020)*, Marseille, France, 2020. <br />
+<a href="javascript:toggleDiv('white-etal-2020-universal')">[bibtex]</a>
+<a href="https://github.com/decompositional-semantics-initiative/decomp">[data+code]</a>
 
 [Improving Semantic Parsing using Statistical WSD (Student Abstract)](https://sidsvash26.github.io/docs/publications/aaai20_wsd_student_abstract.pdf)<br/>
 Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
@@ -42,7 +47,35 @@ Ritwik Bose, **Siddharth Vashishtha**, James Allen<br/>
 </pre>
 </div> 
 
-
+<div id="white-etal-2020-universal" style="display:none;">
+<pre>@inproceedings{white-etal-2020-universal,
+    title = "The Universal Decompositional Semantics Dataset and Decomp Toolkit",
+    author = "White, Aaron Steven  and
+      Stengel-Eskin, Elias  and
+      Vashishtha, Siddharth  and
+      Govindarajan, Venkata Subrahmanyan  and
+      Reisinger, Dee Ann  and
+      Vieira, Tim  and
+      Sakaguchi, Keisuke  and
+      Zhang, Sheng  and
+      Ferraro, Francis  and
+      Rudinger, Rachel  and
+      Rawlins, Kyle  and
+      Van Durme, Benjamin",
+    booktitle = "Proceedings of The 12th Language Resources and Evaluation Conference",
+    month = may,
+    year = "2020",
+    address = "Marseille, France",
+    publisher = "European Language Resources Association",
+    url = "https://www.aclweb.org/anthology/2020.lrec-1.699",
+    pages = "5698--5707",
+    abstract = "We present the Universal Decompositional Semantics (UDS) dataset (v1.0), which is bundled with the Decomp toolkit (v0.1). UDS1.0 unifies five high-quality, decompositional semantics-aligned annotation sets within a single semantic graph specification{---}with graph structures defined by the predicative patterns produced by the PredPatt tool and real-valued node and edge attributes constructed using sophisticated normalization procedures. The Decomp toolkit provides a suite of Python 3 tools for querying UDS graphs using SPARQL. Both UDS1.0 and Decomp0.1 are publicly available at http://decomp.io.",
+    language = "English",
+    ISBN = "979-10-95546-34-4",
+}
+   
+</pre>
+</div>
 
 
 
