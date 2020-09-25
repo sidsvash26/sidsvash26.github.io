@@ -18,6 +18,7 @@ In May 2019, I graduated from the University of Rochester with a Masters in [Com
  My papers are listed on the [publications](https://sidsvash26.github.io/publications) page.  Full list of publications can be found at [Semantic Scholar](https://www.semanticscholar.org/author/Siddharth-Vashishtha/68972934)/[Google Scholar](https://scholar.google.com/citations?user=Q9l-XJ8AAAAJ&hl=en). 
 
 <!--
+Older comments:
 ## Machine Learning (CSC 446) Office Hours, Spring 2020 
 Tuesdays, 2.30pm-3.30pm, Wegmans Hall 2215
 
