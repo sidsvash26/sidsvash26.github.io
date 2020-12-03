@@ -8,7 +8,7 @@ permalink: /publications
 # 2020
 [Temporal Reasoning in Natural Language Inference](https://www.aclweb.org/anthology/2020.findings-emnlp.363/). <br/>
 **Siddharth Vashishtha**, Adam Poliak, Yash Kumar Lal, Benjamin Van Durme and Aaron Steven White. <br/>
-Accepted to Findings of EMNLP 2020. Online: Association for Computational Linguistics.
+In Findings of EMNLP 2020. Online: Association for Computational Linguistics.
 <a href="javascript:toggleDiv('vashishtha-etal-2020-temporal')">[bibtex]</a>
 <a href="https://github.com/sidsvash26/temporal_nli">[data+code]</a>
 <div id="vashishtha-etal-2020-temporal" style="display:none;">
