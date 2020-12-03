@@ -6,9 +6,31 @@ permalink: /publications
 ---
 
 # 2020
-[Temporal Reasoning in Natural Language Inference (in press)](https://sidsvash26.github.io/publications). <br/>
+[Temporal Reasoning in Natural Language Inference](https://www.aclweb.org/anthology/2020.findings-emnlp.363/). <br/>
 **Siddharth Vashishtha**, Adam Poliak, Yash Kumar Lal, Benjamin Van Durme and Aaron Steven White. <br/>
 Accepted to Findings of EMNLP 2020. Online: Association for Computational Linguistics.
+<a href="javascript:toggleDiv('vashishtha-etal-2020-temporal')">[bibtex]</a>
+<a href="https://github.com/sidsvash26/temporal_nli">[data+code]</a>
+<div id="vashishtha-etal-2020-temporal" style="display:none;">
+<pre>@inproceedings{vashishtha-etal-2020-temporal,
+    title = "Temporal Reasoning in Natural Language Inference",
+    author = "Vashishtha, Siddharth  and
+      Poliak, Adam  and
+      Lal, Yash Kumar  and
+      Van Durme, Benjamin  and
+      White, Aaron Steven",
+    booktitle = "Findings of the Association for Computational Linguistics: EMNLP 2020",
+    month = nov,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.findings-emnlp.363",
+    doi = "10.18653/v1/2020.findings-emnlp.363",
+    pages = "4070--4078",
+    abstract = "We introduce five new natural language inference (NLI) datasets focused on temporal reasoning. We recast four existing datasets annotated for event duration{---}how long an event lasts{---}and event ordering{---}how events are temporally arranged{---}into more than one million NLI examples. We use these datasets to investigate how well neural models trained on a popular NLI corpus capture these forms of temporal reasoning.",
+}
+</pre>
+</div>
 
 [The Universal Decompositional Semantics Dataset and Decomp Toolkit](https://www.aclweb.org/anthology/2020.lrec-1.699/). <br/>
 White, A.S., E. Stengel-Eskin, **S. Vashishtha**, V. Govindarajan, D. Reisinger, T. Vieira, K. Sakaguchi, S. Zhang, F. Ferraro, R. Rudinger, K. Rawlins, & B. Van Durme.<br/>
