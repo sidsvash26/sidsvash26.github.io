@@ -5,6 +5,38 @@ excerpt: Siddharth Vashishtha's publications
 permalink: /publications
 ---
 
+# 2021
+[LOME: Large Ontology Multilingual Extraction](https://www.aclweb.org/anthology/2021.eacl-demos.19/). <br/>
+Patrick Xia, Guanghui Qin, **Siddharth Vashishtha**, Yunmo Chen, Tongfei Chen, Chandler May, Craig Harman, Kyle Rawlins, Aaron Steven White, Benjamin Van Durme. <br/>
+EACL 2021.
+<a href="javascript:toggleDiv('xia-etal-2021-lome')">[bibtex]</a>
+<a href="https://nlp.jhu.edu/demos/">[webpage]</a>
+<div id="xia-etal-2021-lome" style="display:none;">
+<pre>@inproceedings{xia-etal-2021-lome,
+    title = "{LOME}: Large Ontology Multilingual Extraction",
+    author = "Xia, Patrick  and
+      Qin, Guanghui  and
+      Vashishtha, Siddharth  and
+      Chen, Yunmo  and
+      Chen, Tongfei  and
+      May, Chandler  and
+      Harman, Craig  and
+      Rawlins, Kyle  and
+      White, Aaron Steven  and
+      Van Durme, Benjamin",
+    booktitle = "Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations",
+    month = apr,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2021.eacl-demos.19",
+    pages = "149--159",
+    abstract = "We present LOME, a system for performing multilingual information extraction. Given a text document as input, our core system identifies spans of textual entity and event mentions with a FrameNet (Baker et al., 1998) parser. It subsequently performs coreference resolution, fine-grained entity typing, and temporal relation prediction between events. By doing so, the system constructs an event and entity focused knowledge graph. We can further apply third-party modules for other types of annotation, like relation extraction. Our (multilingual) first-party modules either outperform or are competitive with the (monolingual) state-of-the-art. We achieve this through the use of multilingual encoders like XLM-R (Conneau et al., 2020) and leveraging multilingual training data. LOME is available as a Docker container on Docker Hub. In addition, a lightweight version of the system is accessible as a web demo.",
+}
+</pre>
+</div>
+
+
 # 2020
 [Temporal Reasoning in Natural Language Inference](https://www.aclweb.org/anthology/2020.findings-emnlp.363/). <br/>
 **Siddharth Vashishtha**, Adam Poliak, Yash Kumar Lal, Benjamin Van Durme and Aaron Steven White. <br/>
