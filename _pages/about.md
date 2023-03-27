@@ -2,24 +2,32 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+description: Computer Science PhD Student.
 
 profile:
-  align: right
-  image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  align: center
+  image: sid_pic_2.jpg
   address: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>PhD Student</p>
+    <p>Pronouns: he/him</p>
 
-news: true  # includes a list of news items
+news: false # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true  # includes social icons at the bottom of the page
+social: true # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+Hi! I am Siddharth (Sid). I am a fourth-year Computer Science Ph.D. student at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
 
-Put your address / P.O. box / other info right below your picture. You can also disable any these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+My research focus is in Natural Language Understanding and Information Extraction. I work on building computational models of semantics in natural language text. In my previous work, I have worked on building models for extracting semantic information related to events -- event triggers, event chronology, event duration etc. I also collaborate with [Ben Van Durme](https://www.cs.jhu.edu/~vandurme/) and his group at Johns Hopkins University on projects related to Information Extraction.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+My papers are listed on the [publications](https://sidsvash26.github.io/publications) page. Full list of publications can be found at [Semantic Scholar](https://www.semanticscholar.org/author/Siddharth-Vashishtha/68972934)/[Google Scholar](https://scholar.google.com/citations?user=4Q4zhC0AAAAJ&hl=en)
+
+### PhD Internships
+
+| ![Amazon](/assets/img/amazon_alexa.jpeg){:height="80" width="160"} | ![Verneek](/assets/img/verneek_logo_2.png){:height="80" width="160"} | ![Google](/assets/img/google_logo_2.jpeg){:height="80" width="80"} |
+| :----------------------------------------------------------------: | :------------------------------------------------------------------: | :----------------------------------------------------------------: |
+|                        **Amazon Alexa AI**                         |                            **Verneek.ai**                            |                             **Google**                             |
+|                      Applied Scientist Intern                      |                         NLP Research Intern                          |                          Research Intern                           |
+|                            Summer 2020                             |                             Summer 2021                              |                            Summer 2022                             |
+
+<!-- In May 2019, I graduated from the University of Rochester with a Masters in [Computational Linguistics](http://www.sas.rochester.edu/lin/graduate/MS.html).During my Masters at Rochester, I worked as a graduate researcher with [Aaron Steven White](http://aaronstevenwhite.io/) at the [FACTS Lab](http://factslab.io/), where I  worked on fine-grained temporal relation extraction. I also worked with [James Allen](http://www.cs.rochester.edu/u/james/) on improving semantic parsing using statistical Word Sense Disambiguation. -->

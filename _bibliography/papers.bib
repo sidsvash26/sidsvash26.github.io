@@ -1,84 +1,117 @@
 ---
 ---
-
-@string{aps = {American Physical Society,}}
-
-@book{einstein1956investigations,
-  bibtex_show={true},
-  title={Investigations on the Theory of the Brownian Movement},
-  author={Einstein, Albert},
-  year={1956},
-  publisher={Courier Corporation,},
-  preview={brownian-motion.gif}
+@article{goel2023presto,
+  title   = {PRESTO: A Multilingual Dataset for Parsing Realistic Task-Oriented Dialogs},
+  abbr    = {arXiv Preprint},
+  author  = {Goel, Rahul and Ammar, Waleed and Gupta, Aditya and Vashishtha, Siddharth and Sano, Motoki and Surani, Faiz and Chang, Max and Choe, HyunJeong and Greene, David and He, Kyle and others},
+  journal = {arXiv preprint arXiv:2303.08954},
+  pdf     = {https://arxiv.org/abs/2303.08954},
+  website = {https://github.com/google-research-datasets/presto},
+  year    = {2023}
 }
 
-@article{einstein1950meaning,
-  abbr={AJP},
-  bibtex_show={true},
-  title={The meaning of relativity},
-  author={Einstein, Albert and Taub, AH},
-  journal={American Journal of Physics,},
-  volume={18},
-  number={6},
-  pages={403--404},
-  year={1950},
-  publisher={American Association of Physics Teachers,}
+@inproceedings{vashishtha-etal-2019-fine,
+  title     = {Fine-Grained Temporal Relation Extraction},
+  abbr      = {ACL},
+  author    = {Vashishtha, Siddharth  and
+               Van Durme, Benjamin  and
+               White, Aaron Steven},
+  booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics},
+  month     = jul,
+  year      = {2019},
+  address   = {Florence, Italy},
+  publisher = {Association for Computational Linguistics},
+  pdf       = {https://aclanthology.org/P19-1280},
+  doi       = {10.18653/v1/P19-1280},
+  pages     = {2906--2919},
+  abstract  = {We present a novel semantic framework for modeling temporal relations and event durations that maps pairs of events to real-valued scales. We use this framework to construct the largest temporal relations dataset to date, covering the entirety of the Universal Dependencies English Web Treebank. We use this dataset to train models for jointly predicting fine-grained temporal relations and event durations. We report strong results on our data and show the efficacy of a transfer-learning approach for predicting categorical relations.},
+  selected  = {true},
+  code      = {https://hub.docker.com/r/sidvash/temporal},
+  website   = {http://decomp.io/projects/time/}
 }
 
-@article{PhysRev.47.777,
-  abbr={PhysRev},
-  title={Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?},
-  author={Einstein, A. and Podolsky, B. and Rosen, N.},
-  abstract={In a complete theory there is an element corresponding to each element of reality. A sufficient condition for the reality of a physical quantity is the possibility of predicting it with certainty, without disturbing the system. In quantum mechanics in the case of two physical quantities described by non-commuting operators, the knowledge of one precludes the knowledge of the other. Then either (1) the description of reality given by the wave function in quantum mechanics is not complete or (2) these two quantities cannot have simultaneous reality. Consideration of the problem of making predictions concerning a system on the basis of measurements made on another system that had previously interacted with it leads to the result that if (1) is false then (2) is also false. One is thus led to conclude that the description of reality as given by a wave function is not complete.},
-  journal={Phys. Rev.,},
-  volume={47},
-  issue={10},
-  pages={777--780},
-  numpages={0},
-  year={1935},
-  month={May},
-  publisher=aps,
-  doi={10.1103/PhysRev.47.777},
-  url={http://link.aps.org/doi/10.1103/PhysRev.47.777},
-  html={https://journals.aps.org/pr/abstract/10.1103/PhysRev.47.777},
-  pdf={example_pdf.pdf},
-  altmetric={248277},
-  dimensions={true},
-  selected={true}
+@inproceedings{xia-etal-2021-lome,
+  title     = {{LOME}: Large Ontology Multilingual Extraction},
+  abbr      = {EACL},
+  author    = {Xia, Patrick  and
+               Qin, Guanghui  and
+               Vashishtha, Siddharth  and
+               Chen, Yunmo  and
+               Chen, Tongfei  and
+               May, Chandler  and
+               Harman, Craig  and
+               Rawlins, Kyle  and
+               White, Aaron Steven  and
+               Van Durme, Benjamin},
+  booktitle = {Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations},
+  month     = apr,
+  year      = {2021},
+  address   = {Online},
+  publisher = {Association for Computational Linguistics},
+  pdf       = {https://aclanthology.org/2021.eacl-demos.19},
+  pages     = {149--159},
+  website   = {https://nlp.jhu.edu/demos/},
+  abstract  = {We present LOME, a system for performing multilingual information extraction. Given a text document as input, our core system identifies spans of textual entity and event mentions with a FrameNet (Baker et al., 1998) parser. It subsequently performs coreference resolution, fine-grained entity typing, and temporal relation prediction between events. By doing so, the system constructs an event and entity focused knowledge graph. We can further apply third-party modules for other types of annotation, like relation extraction. Our (multilingual) first-party modules either outperform or are competitive with the (monolingual) state-of-the-art. We achieve this through the use of multilingual encoders like XLM-R (Conneau et al., 2020) and leveraging multilingual training data. LOME is available as a Docker container on Docker Hub. In addition, a lightweight version of the system is accessible as a web demo.}
 }
 
-@article{einstein1905molekularkinetischen,
-  title={{\"U}ber die von der molekularkinetischen Theorie der W{\"a}rme geforderte Bewegung von in ruhenden Fl{\"u}ssigkeiten suspendierten Teilchen},
-  author={Einstein, A.},
-  journal={Annalen der physik,},
-  volume={322},
-  number={8},
-  pages={549--560},
-  year={1905},
-  publisher={Wiley Online Library}
+@inproceedings{vashishtha-etal-2020-temporal,
+  title     = {Temporal Reasoning in Natural Language Inference},
+  abbr      = {EMNLP Findings},
+  author    = {Vashishtha, Siddharth  and
+               Poliak, Adam  and
+               Lal, Yash Kumar  and
+               Van Durme, Benjamin  and
+               White, Aaron Steven},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP},
+  month     = nov,
+  year      = {2020},
+  address   = {Online},
+  publisher = {Association for Computational Linguistics},
+  pdf       = {https://aclanthology.org/2020.findings-emnlp.363},
+  doi       = {10.18653/v1/2020.findings-emnlp.363},
+  pages     = {4070--4078},
+  selected  = {true},
+  code      = {https://github.com/sidsvash26/temporal_nli},
+  abstract  = {We introduce five new natural language inference (NLI) datasets focused on temporal reasoning. We recast four existing datasets annotated for event duration{---}how long an event lasts{---}and event ordering{---}how events are temporally arranged{---}into more than one million NLI examples. We use these datasets to investigate how well neural models trained on a popular NLI corpus capture these forms of temporal reasoning.}
 }
 
-@article{einstein1905movement,
-  abbr={Ann. Phys.},
-  title={Un the movement of small particles suspended in statiunary liquids required by the molecular-kinetic theory 0f heat},
-  author={Einstein, A.},
-  journal={Ann. Phys.,},
-  volume={17},
-  pages={549--560},
-  year={1905}
+@inproceedings{white-etal-2020-universal,
+  title     = {The Universal Decompositional Semantics Dataset and Decomp Toolkit},
+  abbr      = {LREC},
+  author    = {White, Aaron Steven  and
+               Stengel-Eskin, Elias  and
+               Vashishtha, Siddharth  and
+               Govindarajan, Venkata Subrahmanyan  and
+               Reisinger, Dee Ann  and
+               Vieira, Tim  and
+               Sakaguchi, Keisuke  and
+               Zhang, Sheng  and
+               Ferraro, Francis  and
+               Rudinger, Rachel  and
+               Rawlins, Kyle  and
+               Van Durme, Benjamin},
+  booktitle = {Proceedings of the 12th Language Resources and Evaluation Conference},
+  month     = may,
+  year      = {2020},
+  address   = {Marseille, France},
+  publisher = {European Language Resources Association},
+  pdf       = {https://aclanthology.org/2020.lrec-1.699},
+  pages     = {5698--5707},
+  abstract  = {We present the Universal Decompositional Semantics (UDS) dataset (v1.0), which is bundled with the Decomp toolkit (v0.1). UDS1.0 unifies five high-quality, decompositional semantics-aligned annotation sets within a single semantic graph specification{---}with graph structures defined by the predicative patterns produced by the PredPatt tool and real-valued node and edge attributes constructed using sophisticated normalization procedures. The Decomp toolkit provides a suite of Python 3 tools for querying UDS graphs using SPARQL. Both UDS1.0 and Decomp0.1 are publicly available at http://decomp.io.},
+  language  = {English},
+  code      = {https://github.com/decompositional-semantics-initiative/decomp},
+  isbn      = {979-10-95546-34-4}
 }
 
-@article{einstein1905electrodynamics,
-  title={On the electrodynamics of moving bodies},
-  author={Einstein, A.},
-  year={1905}
-}
-
-@book{przibram1967letters,
-  bibtex_show={true},
-  title={Letters on wave mechanics},
-  author={Einstein, Albert and Schrödinger, Erwin and Planck, Max and Lorentz, Hendrik Antoon and Przibram, Karl},
-  year={1967},
-  publisher={Vision},
-  preview={wave-mechanics.gif}
+@inproceedings{bose2020improving,
+  abbr      = {AAAI},
+  title     = {Improving Semantic Parsing Using Statistical Word Sense Disambiguation (Student Abstract)},
+  author    = {Bose, Ritwik and Vashishtha, Siddharth and Allen, James},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume    = {34},
+  number    = {10},
+  pages     = {13757--13758},
+  year      = {2020},
+  pdf       = {publications/aaai20_wsd_student_abstract.pdf},
+  poster    = {posters/aaai20_wsd_poster.pdf}
 }
