@@ -2,7 +2,7 @@
 layout: page
 permalink: /contact/
 title: contact
-description: You can contact me on various platforms mentioned below.
+description: You can contact me on various platforms mentioned on this page.
 nav: true
 ---
 
