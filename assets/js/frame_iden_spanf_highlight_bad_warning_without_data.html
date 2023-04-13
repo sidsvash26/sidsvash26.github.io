@@ -1905,35 +1905,73 @@
 
     </script>
     
-	<script language='Javascript'>
-		turkSetAssignmentID();
-	</script>
+	<script>
 
+        /**
+         * Returns the Mechanical Turk Site to post the HIT to (sandbox. prod)
+         */
+        function turkGetSubmitToHost(hostname) {
+
+            // If the hostname is not passed in, use the default hostname
+            // "https://www.mturk.com"
+            if (hostname == null) {
+                hostname = "https://www.mturk.com";
+            }
+            var submitToHost = decode(turkGetParam("turkSubmitTo", hostname));
+            if (stringStartsWith(submitToHost, "https://")) {
+                return submitToHost;
+            }
+            if (stringStartsWith(submitToHost, "http://")) {
+                return submitToHost;
+            }
+            if (stringStartsWith(submitToHost, "//")) {
+                return submitToHost;
+            }
+            return hostname;
+        }
+
+
+        //  Sets the assignment ID in the form. Defaults to use mturk_form and submitButton
+        function turkSetAssignmentID( form_name, button_name, hostname ) {
+        if (form_name == null) {
+        form_name = "mturk_form";
+        }
+
+        if (button_name == null) {
+        button_name = "submitButton";
+        }
+
+        assignmentID = turkGetParam('assignmentId', "");
+        document.getElementById('assignmentId').value = assignmentID;
+
+        // if assignmentID is null or empty, we must be previewing
+        if (assignmentID == "") { 
+        // If we're previewing, disable the button and give it a helpful message
+        btn = document.getElementById(button_name);
+        if (btn) {
+            btn.disabled = true; 
+            btn.value = "You must ACCEPT the HIT before you can submit the results.";
+        } 
+        }
+
+        form = document.getElementById(form_name); 
+        if (form) {
+        form.action = turkGetSubmitToHost(hostname) + "/mturk/externalSubmit"; 
+        }
+        }
+    </script>
 
     <!-- *********************************************** -->
     <!-- HTML -->
     <!-- *********************************************** -->
     <head>
         <script language='Javascript'>
-            var assignmentId = gup('assignmentId');
-            if (!assignmentId) {
-                assignmentId = 'ASSIGNMENT_ID_NOT_AVAILABLE';
-                document.getElementById('submitButton').disabled = true;
-            } else {
-                turkSetAssignmentID();
-            }
-        
-            function gup(name) {
-                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-                var results = regex.exec(location.search);
-                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-            }
-        </script>
+		    turkSetAssignmentID("mturk_form", "submitButton", "https://workersandbox.mturk.com");
+	    </script>
     </head>
 
     <!-- This form tag is needed to post the 'hidden' input fields to MTurk -->
-    <form id="mturk_form" action="https://workersandbox.mturk.com/mturk/externalSubmit" method="POST">
+    <form id="mturk_form" method="POST">
 
     <input id="assignmentId" name="assignmentId" type="hidden"></input>
     <input id="answer_spans" name="answer_spans" type="hidden"></input>
