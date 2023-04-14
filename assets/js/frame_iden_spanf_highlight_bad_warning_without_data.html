@@ -1906,7 +1906,6 @@
     </script>
     
 	<script>
-
         /**
          * Returns the Mechanical Turk Site to post the HIT to (sandbox. prod)
          */
@@ -1918,6 +1917,9 @@
                 hostname = "https://www.mturk.com";
             }
             var submitToHost = decode(turkGetParam("turkSubmitTo", hostname));
+            console.log("submitToHost: " + submitToHost);
+            console.log("hostname: " + hostname);
+
             if (stringStartsWith(submitToHost, "https://")) {
                 return submitToHost;
             }
@@ -1933,31 +1935,31 @@
 
         //  Sets the assignment ID in the form. Defaults to use mturk_form and submitButton
         function turkSetAssignmentID( form_name, button_name, hostname ) {
-        if (form_name == null) {
-        form_name = "mturk_form";
-        }
+            if (form_name == null) {
+            form_name = "mturk_form";
+            }
 
-        if (button_name == null) {
-        button_name = "submitButton";
-        }
+            if (button_name == null) {
+            button_name = "submitButton";
+            }
 
-        assignmentID = turkGetParam('assignmentId', "");
-        document.getElementById('assignmentId').value = assignmentID;
+            assignmentID = turkGetParam('assignmentId', "");
+            document.getElementById('assignmentId').value = assignmentID;
 
-        // if assignmentID is null or empty, we must be previewing
-        if (assignmentID == "") { 
-        // If we're previewing, disable the button and give it a helpful message
-        btn = document.getElementById(button_name);
-        if (btn) {
-            btn.disabled = true; 
-            btn.value = "You must ACCEPT the HIT before you can submit the results.";
-        } 
-        }
+            // if assignmentID is null or empty, we must be previewing
+            if (assignmentID == "") { 
+            // If we're previewing, disable the button and give it a helpful message
+            btn = document.getElementById(button_name);
+            if (btn) {
+                btn.disabled = true; 
+                btn.value = "You must ACCEPT the HIT before you can submit the results.";
+            } 
+            }
 
-        form = document.getElementById(form_name); 
-        if (form) {
-        form.action = turkGetSubmitToHost(hostname) + "/mturk/externalSubmit"; 
-        }
+            form = document.getElementById(form_name); 
+            if (form) {
+            form.action = turkGetSubmitToHost(hostname) + "/mturk/externalSubmit"; 
+            }
         }
     </script>
 
