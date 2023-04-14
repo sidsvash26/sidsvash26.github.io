@@ -1910,10 +1910,11 @@
     <!-- *********************************************** -->
     <head>
         <script language='Javascript'>
-		    turkSetAssignmentID();
-	    </script>
+            window.onload = function() {
+                turkSetAssignmentID();
+            };
+        </script>
     </head>
-
     <!-- This form tag is needed to post the 'hidden' input fields to MTurk -->
     <form id="mturk_form" method="POST">
         <input id="assignmentId" name="assignmentId" type="hidden"></input>
