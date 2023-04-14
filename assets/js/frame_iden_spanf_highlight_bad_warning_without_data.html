@@ -1948,12 +1948,17 @@
 
             // if assignmentID is null or empty, we must be previewing
             if (assignmentID == "") { 
+                console.log("assignmentID (inside empty loop): " + assignmentID);
             // If we're previewing, disable the button and give it a helpful message
             btn = document.getElementById(button_name);
             if (btn) {
                 btn.disabled = true; 
                 btn.value = "You must ACCEPT the HIT before you can submit the results.";
             } 
+            }
+
+            else {
+                console.log("assignmentID (outside empty loop): " + assignmentID);
             }
 
             form = document.getElementById(form_name); 
