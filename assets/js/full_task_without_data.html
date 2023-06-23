@@ -1664,11 +1664,9 @@
 
                     var output = {"annotated_frame": activeFrameName,
                                   "passageAnswerSpans" : this.model.attributes.passageAnswerSpans,
-                                  'passageCandidateSpans': this.model.attributes.passageCandidateSpans,
-                                  'rolesPassage': this.model.attributes.rolesPassage,
                                   "sourceAnswerSpans" : this.model.attributes.sourceAnswerSpans,
-                                  'sourceCandidateSpans': this.model.attributes.sourceCandidateSpans,
-                                  'rolesSource': this.model.attributes.rolesSource};
+                                  "annotated_all_model_attributes": this.model.attributes,
+                                  };
 
                     $("#answer_spans").val(JSON.stringify(output));
                     $('#alerts').attr('class', '').text('');
