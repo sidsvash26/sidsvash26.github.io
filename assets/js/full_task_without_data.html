@@ -1664,7 +1664,12 @@
 
                     var output = {"annotated_frame": activeFrameName,
                                   "passageAnswerSpans" : this.model.attributes.passageAnswerSpans,
-                                  "sourceAnswerSpans" : this.model.attributes.sourceAnswerSpans};
+                                  'passageCandidateSpans': this.model.attributes.passageCandidateSpans,
+                                  'rolesPassage': this.model.attributes.rolesPassage,
+                                  "sourceAnswerSpans" : this.model.attributes.sourceAnswerSpans,
+                                  'sourceCandidateSpans': this.model.attributes.sourceCandidateSpans,
+                                  'rolesSource': this.model.attributes.rolesSource};
+
                     $("#answer_spans").val(JSON.stringify(output));
                     $('#alerts').attr('class', '').text('');
                     return true;
@@ -1808,7 +1813,7 @@
 
         <!-- begin instructions -->
     <div id="instructions" class="ps-5 pe-5 pt-3 pb-3 collapse">
-        <span class="announcement">Updated instructions as of Jan 31, 2023.</span>
+        <span class="announcement">Updated instructions as of Jun 23, 2023 (<span style="color:red">*new annotated examples added).</span></span>
         <p>
             In this task, we give you a <span class="btn token btn-event font-weight-bold">highlighted</span> word or phrase in a <b>Passage Text</b>. The highlighted phrase refers to some kind of situation -- for example, a dynamic event (like running or kicking) or a state of being (like happiness or redness). We also give you the <b>Source Text</b> from which this Passage was taken. The Passage text is essentially a summary of some situation from the Source Text<b></b>. We then ask you to do the following:
             <ol>
@@ -1820,6 +1825,21 @@
 
             Through a running example, we explain what we mean by event types and roles of an event and how to annotate them. On each of the four sections below click on "show" to show the running example for each section. 
             <br><b>If you prefer watching a video</b>, you can view it here: <a href="https://youtu.be/5QMsbjRnlLo" target="_blank">Annotation Task Example</a>
+
+        </p>
+        
+        <h3>Annotated Examples <span style="color:red">(*new)</span> </h3>
+        <p> We are including some good annotated examples from previous iterations of this protocol below:
+            <!-- Create a list of items and their respective hyperlinks -->
+           
+                <li><a href="https://bit.ly/3p9PewY" target="_blank">Firefighting</a></li>
+                <li><a href="https://bit.ly/42XT5uJ" target="_blank">Kidnapping</a></li>
+                <li><a href="https://bit.ly/3JsgYDD" target="_blank">Temporary_leave</a></li>
+                <li><a href="https://bit.ly/3NqBbuO" target="_blank">Destroying</a></li>
+                <li><a href="https://bit.ly/44gMH2z" target="_blank">Clemency</a></li>
+         
+                <br>
+        For each of the above annotated examples, you can click on all the different roles to see their respective annotation and toggle between 'Passage Text' and 'Source Text' to see roles for both the Texts.
         </p>
 
         <h3>Bonus criteria (upto $4 bonus per HIT):</h3>
