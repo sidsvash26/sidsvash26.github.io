@@ -1227,9 +1227,29 @@
                                 statusDiv.append(activeFrameExample); 
                 }
                 // ***********    Event Status Div ends **************** //
+                
+                // **** ADD Event URL ********* //
+                // More details about the event
+                var eventUrlDiv = $('<div>')
+                    .addClass('clearfix mr-2 mt-1 ');
+                    // add frame name .xml at the end
+                    var activeFrameName = this.model.attributes.frameNames[activeFrameIndex];
+                    var event_url = 'https://framenet2.icsi.berkeley.edu/fnReports/data/frame/' + activeFrameName + '.xml'
 
+                    //  Add a  hyperlink to the event url
+                    // add a hyperlink to the event url in the text with the frame name
+                    var eventUrl = $('<a>')
+                        .attr('href', event_url)
+                        .attr('target', '_blank')
+                        .text('Click here to know more details about the "' + activeFrameName + '" Event Type');
+                    eventUrlDiv.append(eventUrl);
+                                
+
+
+                            
         
                 this.$el.append(statusDiv);
+                this.$el.append(eventUrlDiv);
 
                 return this;
             }
