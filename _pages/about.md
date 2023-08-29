@@ -16,7 +16,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hi! I am Siddharth (Sid). I am a fourth-year Computer Science Ph.D. student at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
+Hi! I am Siddharth (Sid). I am a fifth-year Computer Science Ph.D. student at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
 
 My research focus is in Natural Language Understanding and Information Extraction. I work on building computational models of semantics in natural language text. In my previous work, I have worked on building models for extracting semantic information related to events -- event triggers, event chronology, event duration etc. I also collaborate with [Ben Van Durme](https://www.cs.jhu.edu/~vandurme/) and his group at Johns Hopkins University on projects related to Information Extraction.
 
