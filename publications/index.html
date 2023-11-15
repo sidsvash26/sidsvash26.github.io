@@ -122,10 +122,63 @@ Full publications list at <a href="https://scholar.google.com/citations?user=4Q4
 <div class="publications">
 
   <h2 class="year">2023</h2>
-  <ol class="bibliography"><li>
+  <ol class="bibliography">
+<li>
 <!-- _layouts/bib.html -->
       <div class="row">
-        <div class="col-sm-2 abbr"><abbr class="badge">arXiv Preprint</abbr></div>
+        <div class="col-sm-2 abbr"><abbr class="badge">arXiv preprint</abbr></div>
+
+        <!-- Entry bib key -->
+        <div id="vashishtha2023famus" class="col-sm-8">
+        <!-- Title -->
+        <div class="title">FAMuS: Frames Across Multiple Sources</div>
+        <!-- Author -->
+        <div class="author">
+        
+
+        <em>Siddharth Vashishtha</em>, Alexander Martin, William Gantt, and
+          <span class="more-authors" title="click to view 2 more authors" onclick="
+                var element = $(this);
+                element.attr('title', '');
+                var more_authors_text = element.text() == '2 more authors' ? 'Benjamin Van Durme, Aaron Steven White' : '2 more authors';
+                var cursorPosition = 0;
+                var textAdder = setInterval(function(){
+                  element.text(more_authors_text.substring(0, cursorPosition + 1));
+                  if (++cursorPosition == more_authors_text.length){
+                    clearInterval(textAdder);
+                  }
+              }, '10');
+              ">2 more authors</span>
+</div>
+
+        <!-- Journal/Book title and date -->
+        
+        
+        <div class="periodical">
+          <em>arXiv preprint arXiv:2311.05601</em>, 2023
+        </div>
+        <div class="periodical">
+          
+        </div>
+
+          <!-- Links/Buttons -->
+          <div class="links">
+            <a href="https://arxiv.org/abs/2311.05601" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">PDF</a>
+            <a href="https://github.com/FACTSlab/FAMuS" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">Website</a>
+          </div>
+          
+          <div class="badges">
+            <span class="altmetric-embed" data-hide-no-mentions="true" data-hide-less-than="15" data-badge-type="2" data-badge-popover="right"></span>
+          </div>
+
+          
+        </div>
+      </div>
+</li>
+<li>
+<!-- _layouts/bib.html -->
+      <div class="row">
+        <div class="col-sm-2 abbr"><abbr class="badge">EMNLP</abbr></div>
 
         <!-- Entry bib key -->
         <div id="goel2023presto" class="col-sm-8">
@@ -173,7 +226,8 @@ Full publications list at <a href="https://scholar.google.com/citations?user=4Q4
           
         </div>
       </div>
-</li></ol>
+</li>
+</ol>
 
 
   <h2 class="year">2021</h2>
