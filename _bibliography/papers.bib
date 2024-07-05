@@ -1,33 +1,86 @@
 ---
 ---
-@article{vashishtha2023famus,
-  title   = {FAMuS: Frames Across Multiple Sources},
-  abbr    = {arXiv preprint},
-  author  = {Vashishtha, Siddharth and Martin, Alexander and Gantt, William and Van Durme, Benjamin and White, Aaron Steven},
-  journal = {arXiv preprint arXiv:2311.05601},
-  pdf     = {https://arxiv.org/abs/2311.05601},
-  website = {https://github.com/FACTSlab/FAMuS},
-  year    = {2023}
+@inproceedings{vashishtha-etal-2024-famus,
+  title     = {{FAM}u{S}: Frames Across Multiple Sources},
+  abbr      = {NAACL-long},
+  author    = {Vashishtha, Siddharth  and
+               Martin, Alexander  and
+               Gantt, William  and
+               Van Durme, Benjamin  and
+               White, Aaron},
+  editor    = {Duh, Kevin  and
+               Gomez, Helena  and
+               Bethard, Steven},
+  booktitle = {Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)},
+  month     = jun,
+  year      = {2024},
+  address   = {Mexico City, Mexico},
+  publisher = {Association for Computational Linguistics},
+  url       = {https://aclanthology.org/2024.naacl-long.457},
+  pages     = {8250--8273},
+  website   = {https://github.com/FACTSlab/FAMuS},
+  selected  = {true},
+  pdf       = {https://aclanthology.org/2024.naacl-long.457/}
+  abstract  = {Understanding event descriptions is a central aspect of language processing, but current approaches focus overwhelmingly on single sentences or documents. Aggregating information about an event across documents can offer a much richer understanding. To this end, we present FAMuS, a new corpus of Wikipedia passages that report on some event, paired with underlying, genre-diverse (non-Wikipedia) source articles for the same event. Events and (cross-sentence) arguments in both report and source are annotated against FrameNet, providing broad coverage of different event types. We present results on two key event understanding tasks enabled by FAMuS: source validation{---}determining whether a document is a valid source for a target report event{---}and cross-document argument extraction{---}full-document argument extraction for a target event from both its report and the correct source article.}
 }
 
-@article{goel2023presto,
-  title     = {PRESTO: A Multilingual Dataset for Parsing Realistic Task-Oriented Dialogs},
-  abbr      = {EMNLP},
-  author    = {Goel, Rahul and Ammar, Waleed and Gupta, Aditya and Vashishtha, Siddharth and Sano, Motoki and Surani, Faiz and Chang, Max and Choe, HyunJeong and Greene, David and He, Kyle and others},
-  journal   = {arXiv preprint arXiv:2303.08954},
-  booktitle = {The 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP 2023) (to appear)},
-  pdf       = {https://arxiv.org/abs/2303.08954},
-  website   = {https://github.com/google-research-datasets/presto},
-  year      = {2023}
+@inproceedings{goel-etal-2023-presto,
+    title = "{PRESTO}: A Multilingual Dataset for Parsing Realistic Task-Oriented Dialogs",
+    abbr      = {EMNLP-long},
+    author = "Goel, Rahul  and
+      Ammar, Waleed  and
+      Gupta, Aditya  and
+      Vashishtha, Siddharth  and
+      Sano, Motoki  and
+      Surani, Faiz  and
+      Chang, Max  and
+      Choe, HyunJeong  and
+      Greene, David  and
+      He, Chuan  and
+      Nitisaroj, Rattima  and
+      Trukhina, Anna  and
+      Paul, Shachi  and
+      Shah, Pararth  and
+      Shah, Rushin  and
+      Yu, Zhou",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.667",
+    doi = "10.18653/v1/2023.emnlp-main.667",
+    pages = "10820--10833",
+    selected  = {true},
+    pdf       = {https://aclanthology.org/2023.emnlp-main.667},
+    website   = {https://github.com/google-research-datasets/presto},
+    abstract = "Research interest in task-oriented dialogs has increased as systems such as Google Assistant, Alexa and Siri have become ubiquitous in everyday life. However, the impact of academic research in this area has been limited by the lack of datasets that realistically capture the wide array of user pain points. To enable research on some of the more challenging aspects of parsing realistic conversations, we introduce PRESTO, a public dataset of over 550K contextual multilingual conversations between humans and virtual assistants. PRESTO contains a diverse array of challenges that occur in real-world NLU tasks such as disfluencies, code-switching, and revisions. It is the only large scale human generated conversational parsing dataset that provides structured context such as a user{'}s contacts and lists for each example. Our mT5 model based baselines demonstrate that the conversational phenomenon present in PRESTO are challenging to model, which is further pronounced in a low-resource setup.",
 }
 
-@article{gantt2022event,
+
+@inproceedings{gantt-etal-2023-event,
   title     = {On Event Individuation for Document-Level Information Extraction},
-  abbr      = {Findings-EMNLP},
-  author    = {Gantt, William and Kriz, Reno and Chen, Yunmo and Vashishtha, Siddharth and White, Aaron Steven},
-  booktitle = {Findings of the Association for Computational Linguistics: EMNLP},
-  pdf       = {https://arxiv.org/abs/2212.09702},
-  year      = {2022}
+  abbr      = {EMNLP Findings},
+  author    = {Gantt, William  and
+               Kriz, Reno  and
+               Chen, Yunmo  and
+               Vashishtha, Siddharth  and
+               White, Aaron},
+  editor    = {Bouamor, Houda  and
+               Pino, Juan  and
+               Bali, Kalika},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2023},
+  month     = dec,
+  year      = {2023},
+  address   = {Singapore},
+  publisher = {Association for Computational Linguistics},
+  url       = {https://aclanthology.org/2023.findings-emnlp.862},
+  doi       = {10.18653/v1/2023.findings-emnlp.862},
+  pages     = {12938--12958},
+  abstract  = {As information extraction (IE) systems have grown more adept at processing whole documents, the classic task of *template filling* has seen renewed interest as a benchmark for document-level IE. In this position paper, we call into question the suitability of template filling for this purpose. We argue that the task demands definitive answers to thorny questions of *event individuation* {---} the problem of distinguishing distinct events {---} about which even human experts disagree. Through an annotation study and error analysis, we show that this raises concerns about the usefulness of template filling metrics, the quality of datasets for the task, and the ability of models to learn it. Finally, we consider possible solutions.}
 }
 
 @inproceedings{vashishtha-etal-2019-fine,
