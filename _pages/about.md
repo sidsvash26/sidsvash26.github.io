@@ -16,9 +16,11 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hi! I am Siddharth (Sid). I am a fifth-year Computer Science Ph.D. student at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
+Hi! I am Siddharth (Sid). I am a Software Engineer at Google Gemini. I recently completed my Ph.D. in Computer Science at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
 
-My research focus is in Natural Language Understanding and Information Extraction. I work on building computational models of semantics in natural language text. In my previous work, I have worked on building models for extracting semantic information related to events -- event triggers, event chronology, event duration etc. I also collaborate with [Ben Van Durme](https://www.cs.jhu.edu/~vandurme/) and his group at Johns Hopkins University on projects related to Information Extraction.
+My PhD focussed in Natural Language Understanding and Information Extraction. I worked on building computational models of semantics in natural language text. During my PhD, I also worked on building models for extracting semantic information related to events -- event triggers, event chronology, event duration etc.
+
+<!-- I also collaborate with [Ben Van Durme](https://www.cs.jhu.edu/~vandurme/) and his group at Johns Hopkins University on projects related to Information Extraction. -->
 
 My papers are listed on the [publications](https://sidsvash26.github.io/publications) page. Full list of publications can be found at [Semantic Scholar](https://www.semanticscholar.org/author/Siddharth-Vashishtha/68972934)/[Google Scholar](https://scholar.google.com/citations?user=4Q4zhC0AAAAJ&hl=en)
 
