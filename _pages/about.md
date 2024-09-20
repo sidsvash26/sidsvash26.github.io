@@ -6,9 +6,9 @@ description: Computer Science PhD Student.
 
 profile:
   align: center
-  image: sid_pic_2.jpg
+  image: sidvash_swiss.jpg
   address: >
-    <p>PhD Student</p>
+    <p>Software Engineer</p>
     <p>Pronouns: he/him</p>
 
 news: false # includes a list of news items
