@@ -10,9 +10,7 @@ nav: true
 
 ## Contact
 
-<i class="fa fa-envelope"></i> vashishtha.sid [<a href="https://en.wikipedia.org/wiki/At_sign">nutella</a>] gmail.com
-
-<i class="fa fa-envelope"></i> svashis3 [<a href="https://en.wikipedia.org/wiki/At_sign">nutella</a>] cs.rochester.edu
+<i class="fa fa-envelope"></i> {lastname}.sid [<a href="https://en.wikipedia.org/wiki/At_sign">nutella</a>] gmail.com
 
 ---
 

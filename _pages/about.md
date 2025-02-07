@@ -16,9 +16,9 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hi! I am Sid, a Software Engineer at Google Gemini.
+Hi! I am Sid, a Software Engineer at Google Deepmind.
 
-I recently completed my Ph.D. in Computer Science at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
+I completed my Ph.D. in Computer Science at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
 
 My Ph.D. focussed on extracting information about events from document collections. During my Ph.D., I also worked on building models for extracting other types of semantic information related to events -- event triggers, event chronology, event duration etc.
 
