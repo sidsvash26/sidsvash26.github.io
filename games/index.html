@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>images | Siddharth Vashishtha</title>
+    <title>games | Siddharth Vashishtha</title>
     <meta name="author" content="Siddharth  Vashishtha">
     <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 ">
@@ -34,7 +34,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%87%B8&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="/blog/tag/images/">
+    <link rel="canonical" href="/games/">
     
     <!-- Dark Mode -->
     
@@ -83,8 +83,8 @@
               <li class="nav-item ">
                 <a class="nav-link" href="/assets/pdf/cv/SIDDHARTH_VASHISHTHA_RESUME.pdf">cv</a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="/games/">games</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="/games/">games<span class="sr-only">(current)</span></a>
               </li>
 
               <!-- Toogle theme mode -->
@@ -110,29 +110,103 @@
 
     <!-- Content -->
     <div class="container mt-5">
-      <div class="post">
+      <p>Welcome to my collection of simple HTML games, often created with the help of AI!</p>
 
-  <header class="post-header">
-    <h1 class="post-title"> <i class="fas fa-hashtag fa-sm"></i> images </h1>
-    <p class="post-description"> an archive of posts with this tag </p>
-  </header>
+<div class="game-list">
 
-  <article>
-    <div class="table-responsive">
-      <table class="table table-sm table-borderless">
-        
-        <tr>
-          <th scope="row">May 15, 2015</th>
-          <td>
-              <a class="post-link" href="/sample-posts/2015/05/15/images.html">a post with images</a>
-          </td>
-        </tr>
+  <div class="game-item">
+
+    <div class="game-media">
       
-      </table>
+        <img src="/assets/img/games/german_verb_forms.jpeg" alt="German Verb Forms Trainer Screenshot">
+      
+      <a href="/games/German_verb_forms.html" class="btn btn-primary" title="Play German Verb Forms Trainer">Play Game</a>
     </div>
-  </article>
+
+    <div class="game-details">
+      <h2>German Verb Forms Trainer</h2>
+      
+        <div class="game-description-box">
+          <p>Practice conjugating common German verbs in different tenses.</p>
+
+<p>This interactive game helps reinforce your memory of key verb forms required for basic German communication. It focuses primarily on present, perfect, and simple past tenses.</p>
+
+<p>Challenge yourself and see how quickly you can conjugate verbs like ‘haben’, ‘sein’, ‘gehen’, and ‘sprechen’!</p>
+
+        </div>
+      
+    </div>
+
+  </div>
+  <hr>
 
 </div>
+
+<style>
+/* Styles for the Games Page List - Now using Theme CSS Variables */
+.game-list {
+  margin-top: 20px;
+}
+
+.game-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.game-media {
+  flex: 0 0 300px;
+}
+
+.game-media img {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  /* Use theme's divider/border color */
+  border: 1px solid var(--global-divider-color, #eee);
+  margin-bottom: 15px;
+}
+
+.game-media .btn {
+  display: block;
+  text-align: center;
+}
+
+.game-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.game-details h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  /* Optional: Use theme's text color for heading too if needed */
+  /* color: var(--global-text-color); */
+}
+
+.game-description-box {
+  padding: 15px;
+  border-radius: 5px;
+  line-height: 1.6;
+  /* --- Use Theme CSS Variables --- */
+  background-color: var(--global-card-bg-color, #f9f9f9); /* Use card background */
+  color: var(--global-text-color, #333);             /* Use standard text color */
+  border: 1px solid var(--global-divider-color, #eee); /* Use divider/border color */
+}
+
+/* Separator */
+.game-list + hr,
+.game-item + hr {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border: 0;
+  /* Use theme's divider/border color */
+  border-top: 1px solid var(--global-divider-color, #eee);
+}
+</style>
+
 
     </div>
 
