@@ -12,149 +12,155 @@
         /* Use Inter font */
         body {
             font-family: 'Inter', sans-serif;
-            overflow: hidden; /* Prevent scrollbars from game elements */
+            /* Allow scrolling on small screens if content overflows */
+             overflow-y: auto;
         }
         /* Style for falling verb elements */
         .verb-drop {
             position: absolute;
             cursor: pointer;
-            transition: background-color 0.2s ease-in-out, transform 0.2s ease, top 0.05s linear; /* Faster top transition for smoother movement */
-            user-select: none; /* Prevent text selection */
-            min-width: 80px; /* Ensure minimum width */
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+            user-select: none;
+            min-width: 80px;
             text-align: center;
-            padding: 8px 12px; /* Add padding */
-            border-radius: 0.5rem; /* rounded-lg */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
-            background-color: #ffffff; /* bg-white */
-            border: 1px solid #e5e7eb; /* border border-gray-200 */
-            white-space: nowrap; /* Prevent long words from wrapping */
+            padding: 8px 12px;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            white-space: nowrap;
         }
         .verb-drop:hover {
             transform: scale(1.05);
-            background-color: #f3f4f6; /* hover:bg-gray-100 */
+            background-color: #f3f4f6;
         }
-        /* Style for the game area */
+        /* Style for the game area - Responsive Height */
         #game-area {
             position: relative;
-            height: 400px; /* Adjust height as needed */
-            border: 2px solid #d1d5db; /* border-2 border-gray-300 */
-            border-radius: 0.5rem; /* rounded-lg */
-            background-color: #f9fafb; /* bg-gray-50 */
-            overflow: hidden; /* Keep falling elements inside */
-            margin-top: 1rem; /* mt-4 */
+            height: 55vh; /* Default height for mobile */
+             min-height: 300px;
+             @media (min-width: 768px) { height: 400px; } /* Height for desktop */
+            border: 2px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #f9fafb;
+            overflow: hidden;
+            width: 100%;
         }
-        /* Simple animation for feedback */
-        @keyframes feedback-correct {
-            0% { background-color: #d1fae5; } /* bg-green-100 */
-            100% { background-color: #ebf5ff; } /* Back to default bg-blue-50 */
-        }
-        @keyframes feedback-incorrect {
-            0% { background-color: #fee2e2; } /* bg-red-100 */
-            100% { background-color: #ebf5ff; } /* Back to default bg-blue-50 */
-        }
-        .feedback-correct {
-            animation: feedback-correct 0.5s ease-out;
-        }
-        .feedback-incorrect {
-            animation: feedback-incorrect 0.5s ease-out;
-        }
-        /* Style for active mode button */
-        .mode-button.active {
-            background-color: #3b82f6; /* bg-blue-600 */
-            color: white;
-            font-weight: 600; /* semibold */
-        }
-         /* Default background for verb display */
-        #verb-display {
-             background-color: #ebf5ff; /* bg-blue-50 - lighter blue */
-        }
+        /* Feedback animations */
+        @keyframes feedback-correct { 0% { background-color: #d1fae5; } 100% { background-color: #ebf5ff; } }
+        @keyframes feedback-incorrect { 0% { background-color: #fee2e2; } 100% { background-color: #ebf5ff; } }
+        .feedback-correct { animation: feedback-correct 0.5s ease-out; }
+        .feedback-incorrect { animation: feedback-incorrect 0.5s ease-out; }
+        /* Active mode button */
+        .mode-button.active { background-color: #3b82f6; color: white; font-weight: 600; }
+        /* Default verb display background */
+        #verb-display { background-color: #ebf5ff; }
         /* Lives display */
-        .lives-heart {
-             color: #ef4444; /* red-500 */
-             display: inline-block;
-             font-size: 1.1em; /* Slightly larger heart */
-             margin-left: 2px;
-        }
-        /* Ensure the given info display takes adequate height */
-        #given-verb-info {
-            min-height: 28px; /* Adjust as needed based on font size */
+        .lives-heart { color: #ef4444; display: inline-block; font-size: 1.1em; margin-left: 2px; }
+        #given-verb-info { min-height: 28px; }
+        /* Speed Slider Styles */
+        .speed-control { display: flex; flex-direction: column; align-items: center; }
+        .speed-slider-container { display: flex; align-items: center; width: 100%; max-width: 250px; }
+        #speed-slider { flex-grow: 1; margin: 0 10px; cursor: pointer; }
+        #speed-slider:disabled { cursor: not-allowed; opacity: 0.6; }
+        .speed-labels { display: flex; justify-content: space-between; width: 100%; max-width: 250px; font-size: 0.75rem; color: #6b7280; margin-top: -5px; padding: 0 10px; }
+        /* Ensure message area has enough space */
+        #message-area {
+            min-height: 2.5rem; /* Give space for 2 lines */
+            line-height: 1.25rem;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+<body class="bg-gray-100 flex flex-col items-center p-4 min-h-screen">
 
-    <div class="w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">
+    <div class="w-full max-w-4xl bg-white p-4 md:p-6 rounded-lg shadow-lg flex flex-col">
         <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">German Verb Drop Game</h1>
 
-        <div class="mb-4 flex justify-center space-x-2">
-            <button data-mode="infinitive" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Infinitive</button>
-            <button data-mode="praeteritum" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Präteritum</button>
-            <button data-mode="partizip" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Partizip Perfekt</button>
-            <button data-mode="mixed" class="mode-button active px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Mixed</button>
-        </div>
-
-        <div id="verb-display" class="text-center p-4 rounded-md mb-4 border border-blue-300 grid grid-cols-2 gap-2 items-center">
+        <div id="verb-display" class="text-center p-3 rounded-md mb-4 border border-blue-300 grid grid-cols-2 gap-2 items-center w-full">
              <div>
                 <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Meaning</p>
-                <p class="text-xl font-semibold text-blue-800 mt-1" id="given-verb-info">-</p>
+                <p class="text-lg md:text-xl font-semibold text-blue-800 mt-1" id="given-verb-info">-</p>
                 <p class="text-sm text-gray-600" id="given-verb-english"></p>
             </div>
             <div class="border-l border-blue-200 pl-3">
                 <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Find</p>
-                <p class="text-xl font-bold text-purple-700 mt-1" id="target-form-type">-</p>
+                <p class="text-lg md:text-xl font-bold text-purple-700 mt-1" id="target-form-type">-</p>
             </div>
         </div>
 
+        <div class="flex flex-col md:flex-row gap-4 flex-grow">
 
-        <div class="flex justify-between items-center mb-4">
-             <div class="text-lg font-semibold text-gray-700 flex items-center space-x-4">
-                <span>Score: <span id="score" class="text-green-600 font-bold">0</span></span>
-                <span>Lives: <span id="lives" class="font-bold"></span></span>
+            <div class="w-full md:w-1/4 flex flex-col items-center md:items-stretch gap-4 order-2 md:order-1">
+                 <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <button data-mode="infinitive" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Infinitive</button>
+                    <button data-mode="praeteritum" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Präteritum</button>
+                    <button data-mode="partizip" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Partizip Perfekt</button>
+                    <button data-mode="mixed" class="mode-button active px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Mixed</button>
+                </div>
+                 <div class="speed-control w-full">
+                    <label for="speed-slider" class="text-sm font-medium text-gray-700 mb-1">Speed Level: <span id="speed-level-display">3</span></label>
+                    <div class="speed-slider-container">
+                        <input type="range" id="speed-slider" name="speed" min="1" max="4" step="1" value="3" class="w-full">
+                    </div>
+                     <div class="speed-labels">
+                        <span>1</span><span>2</span><span>3</span><span>4</span>
+                    </div>
+                </div>
+
+                 <div class="text-md md:text-lg font-semibold text-gray-700 flex flex-col items-center md:items-start w-full">
+                    <span class="mb-1">Score: <span id="score" class="text-green-600 font-bold">0</span></span>
+                    <span>Lives: <span id="lives" class="font-bold"></span></span>
                  </div>
-            <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out">
-                Start Game
-            </button>
-        </div>
 
-        <div id="message-area" class="text-center h-6 mb-2 text-lg font-medium"></div>
+                 <div id="message-area" class="text-center text-base md:text-lg font-medium w-full mb-2"></div>
 
-        <div id="game-area">
+                  <div class="w-full flex justify-center md:justify-start">
+                     <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto">
+                         Start Game
+                     </button>
+                 </div>
             </div>
-    </div>
 
-    <script>
+            <div class="w-full md:w-3/4 order-1 md:order-2 flex-grow">
+                <div id="game-area">
+                    </div>
+            </div>
+
+        </div> </div> <script>
         // --- Game Data ---
         const verbs = [
-            { infinitive: "anfangen", praeteritum: "fing an", partizip: "angefangen", english: "to begin" },
-            { infinitive: "antworten", praeteritum: "antwortete", partizip: "geantwortet", english: "to answer" },
-            { infinitive: "arbeiten", praeteritum: "arbeitete", partizip: "gearbeitet", english: "to work" },
-            { infinitive: "ärgern", praeteritum: "ärgerte", partizip: "geärgert", english: "to annoy" },
-            { infinitive: "aufräumen", praeteritum: "räumte auf", partizip: "aufgeräumt", english: "to clean up" },
-            { infinitive: "aufwachen", praeteritum: "wachte auf", partizip: "aufgewacht", english: "to wake up" },
-            { infinitive: "aussehen", praeteritum: "sah aus", partizip: "ausgesehen", english: "to look like" },
-            { infinitive: "baden", praeteritum: "badete", partizip: "gebadet", english: "to bathe" },
-            { infinitive: "bauen", praeteritum: "baute", partizip: "gebaut", english: "to build" },
-            { infinitive: "beeilen", praeteritum: "beeilte", partizip: "beeilt", english: "to hurry" },
-            { infinitive: "beginnen", praeteritum: "begann", partizip: "begonnen", english: "to begin" },
-            { infinitive: "bekommen", praeteritum: "bekam", partizip: "bekommen", english: "to get, receive" },
-            { infinitive: "bestellen", praeteritum: "bestellte", partizip: "bestellt", english: "to order" },
-            { infinitive: "besuchen", praeteritum: "besuchte", partizip: "besucht", english: "to visit" },
-            { infinitive: "beten", praeteritum: "betete", partizip: "gebetet", english: "to pray" }
+             { infinitive: "anfangen", praeteritum: "fing an", partizip: "angefangen", english: "to begin" },
+             { infinitive: "antworten", praeteritum: "antwortete", partizip: "geantwortet", english: "to answer" },
+             { infinitive: "arbeiten", praeteritum: "arbeitete", partizip: "gearbeitet", english: "to work" },
+             { infinitive: "ärgern", praeteritum: "ärgerte", partizip: "geärgert", english: "to annoy" },
+             { infinitive: "aufräumen", praeteritum: "räumte auf", partizip: "aufgeräumt", english: "to clean up" },
+             { infinitive: "aufwachen", praeteritum: "wachte auf", partizip: "aufgewacht", english: "to wake up" },
+             { infinitive: "aussehen", praeteritum: "sah aus", partizip: "ausgesehen", english: "to look like" },
+             { infinitive: "baden", praeteritum: "badete", partizip: "gebadet", english: "to bathe" },
+             { infinitive: "bauen", praeteritum: "baute", partizip: "gebaut", english: "to build" },
+             { infinitive: "beeilen", praeteritum: "beeilte", partizip: "beeilt", english: "to hurry" },
+             { infinitive: "beginnen", praeteritum: "begann", partizip: "begonnen", english: "to begin" },
+             { infinitive: "bekommen", praeteritum: "bekam", partizip: "bekommen", english: "to get, receive" },
+             { infinitive: "bestellen", praeteritum: "bestellte", partizip: "bestellt", english: "to order" },
+             { infinitive: "besuchen", praeteritum: "besuchte", partizip: "besucht", english: "to visit" },
+             { infinitive: "beten", praeteritum: "betete", partizip: "gebetet", english: "to pray" }
         ];
         const INITIAL_LIVES = 5;
-        const MIN_HORIZONTAL_SEPARATION = 60; // Minimum pixels between edges of falling words
+        const MIN_HORIZONTAL_SEPARATION = 50; // Adjusted slightly
 
         // --- DOM Elements ---
         const gameArea = document.getElementById('game-area');
         const scoreDisplay = document.getElementById('score');
         const livesDisplay = document.getElementById('lives');
         const givenVerbInfoDisplay = document.getElementById('given-verb-info');
-        const givenVerbEnglishDisplay = document.getElementById('given-verb-english'); // Kept reference, but cleared
+        const givenVerbEnglishDisplay = document.getElementById('given-verb-english');
         const targetFormTypeDisplay = document.getElementById('target-form-type');
         const startButton = document.getElementById('start-button');
         const messageArea = document.getElementById('message-area');
         const verbDisplayArea = document.getElementById('verb-display');
         const modeButtons = document.querySelectorAll('.mode-button');
+        const speedSlider = document.getElementById('speed-slider');
+        const speedLevelDisplay = document.getElementById('speed-level-display');
 
         // --- Game State ---
         let score = 0;
@@ -162,393 +168,220 @@
         let currentVerb = null;
         let targetFormType = '';
         let targetFormValue = '';
-        let fallingVerbs = []; // Stores { element, isCorrect, form, y, x, width }
+        let fallingVerbs = [];
         let gameLoopInterval = null;
         let isGameRunning = false;
         let isGameOver = false;
-        let fallSpeed = 1.5;
+        let fallSpeed = 1.6;
         let roundInProgress = false;
         let gameMode = 'mixed';
 
         // --- Game Logic ---
 
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
-
-        function getRandomVerb(excludeInfinitive = null) {
-            let newVerb;
-            do {
-                newVerb = verbs[getRandomInt(0, verbs.length)];
-            } while (excludeInfinitive && newVerb.infinitive === excludeInfinitive);
-            return newVerb;
-        }
-
-        function getDistractors(correctVerb, formTypeToGet, count) {
-            const distractors = new Set();
-            const correctFormValue = correctVerb[formTypeToGet];
-            while (distractors.size < count && distractors.size < verbs.length - 1) {
-                const randomVerb = getRandomVerb(correctVerb.infinitive);
-                const distractorForm = randomVerb[formTypeToGet];
-                if (distractorForm && distractorForm !== correctFormValue) {
-                    distractors.add(distractorForm);
-                }
+        function updateFallSpeed(level) { /* ... (no change) ... */
+            const levelNum = parseInt(level, 10);
+            speedLevelDisplay.textContent = levelNum;
+            switch(levelNum) {
+                case 1: fallSpeed = 0.8; break;
+                case 2: fallSpeed = 1.2; break;
+                case 3: fallSpeed = 1.6; break;
+                case 4: fallSpeed = 2.2; break;
+                default: fallSpeed = 1.6;
             }
-            return Array.from(distractors);
+             console.log(`Speed level ${levelNum}, fallSpeed set to ${fallSpeed}`);
         }
-
-        // Update lives display using heart icons
-        function updateLivesDisplay() {
-            let hearts = '';
-            for (let i = 0; i < lives; i++) {
-                hearts += '<span class="lives-heart">♥</span>';
-            }
-             for (let i = lives; i < INITIAL_LIVES; i++) {
-                 hearts += '<span class="lives-heart text-gray-300">♥</span>';
+        function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min)) + min; }
+        function getRandomVerb(excludeInfinitive = null) { /* ... (no change) ... */
+             let newVerb;
+             do { newVerb = verbs[getRandomInt(0, verbs.length)]; }
+             while (excludeInfinitive && newVerb.infinitive === excludeInfinitive);
+             return newVerb;
+        }
+        function getDistractors(correctVerb, formTypeToGet, count) { /* ... (no change) ... */
+             const distractors = new Set();
+             const correctFormValue = correctVerb[formTypeToGet];
+             while (distractors.size < count && distractors.size < verbs.length - 1) {
+                 const randomVerb = getRandomVerb(correctVerb.infinitive);
+                 const distractorForm = randomVerb[formTypeToGet];
+                 if (distractorForm && distractorForm !== correctFormValue) distractors.add(distractorForm);
              }
-            livesDisplay.innerHTML = hearts;
+             return Array.from(distractors);
         }
-
-        // Create a falling verb element with overlap avoidance
-        function createFallingVerbElement(verbForm, isCorrect) {
-            const verbElement = document.createElement('div');
-            verbElement.classList.add('verb-drop');
-            verbElement.textContent = verbForm;
-
-            document.body.appendChild(verbElement);
-            const elementWidth = verbElement.offsetWidth;
-            document.body.removeChild(verbElement);
-
-            const gameAreaWidth = gameArea.offsetWidth;
-            const maxLeft = gameAreaWidth > elementWidth + 20 ? gameAreaWidth - elementWidth - 10 : 5;
-
-            let potentialLeft;
-            let attempts = 0;
-            let positionFound = false;
-
-            while (attempts < 10 && !positionFound) {
-                potentialLeft = getRandomInt(10, maxLeft);
-                positionFound = true;
-                for (const existingVerb of fallingVerbs) {
-                    const existingRight = existingVerb.x + existingVerb.width;
-                    const potentialRight = potentialLeft + elementWidth;
-                    if (potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION &&
-                        potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION) {
-                        positionFound = false;
-                        break;
-                    }
-                }
-                attempts++;
-            }
-             if (!positionFound) {
+        function updateLivesDisplay() { /* ... (no change) ... */
+             let hearts = '';
+             for (let i = 0; i < lives; i++) hearts += '<span class="lives-heart">♥</span>';
+             for (let i = lives; i < INITIAL_LIVES; i++) hearts += '<span class="lives-heart text-gray-300">♥</span>';
+             livesDisplay.innerHTML = hearts;
+        }
+        function createFallingVerbElement(verbForm, isCorrect) { /* ... (no change) ... */
+             const verbElement = document.createElement('div');
+             verbElement.classList.add('verb-drop');
+             verbElement.textContent = verbForm;
+             document.body.appendChild(verbElement);
+             const elementWidth = verbElement.offsetWidth;
+             document.body.removeChild(verbElement);
+             const gameAreaWidth = gameArea.offsetWidth;
+             const maxLeft = gameAreaWidth > elementWidth + 20 ? gameAreaWidth - elementWidth - 10 : 5;
+             let potentialLeft;
+             let attempts = 0;
+             let positionFound = false;
+             while (attempts < 10 && !positionFound) {
                  potentialLeft = getRandomInt(10, maxLeft);
+                 positionFound = true;
+                 for (const existingVerb of fallingVerbs) {
+                     const existingRight = existingVerb.x + existingVerb.width;
+                     const potentialRight = potentialLeft + elementWidth;
+                     if (potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION && potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION) {
+                         positionFound = false; break;
+                     }
+                 }
+                 attempts++;
              }
-
-            verbElement.style.left = `${potentialLeft}px`;
-            verbElement.style.top = `-${getRandomInt(30, 100)}px`;
-            verbElement.dataset.correct = isCorrect;
-            verbElement.dataset.form = verbForm;
-            verbElement.addEventListener('click', handleVerbClick);
-            gameArea.appendChild(verbElement);
-
-            return {
-                element: verbElement,
-                isCorrect: isCorrect,
-                form: verbForm,
-                y: parseFloat(verbElement.style.top) || 0,
-                x: potentialLeft,
-                width: elementWidth
-            };
+             if (!positionFound) potentialLeft = getRandomInt(10, maxLeft);
+             verbElement.style.left = `${potentialLeft}px`;
+             verbElement.style.top = `-${getRandomInt(30, 100)}px`;
+             verbElement.dataset.correct = isCorrect;
+             verbElement.dataset.form = verbForm;
+             verbElement.addEventListener('click', handleVerbClick);
+             gameArea.appendChild(verbElement);
+             return { element: verbElement, isCorrect: isCorrect, form: verbForm, y: parseFloat(verbElement.style.top) || 0, x: potentialLeft, width: elementWidth };
         }
-
-        // Handle losing a life
-        function loseLife() {
-            if (!isGameRunning) return;
-            lives--;
-            updateLivesDisplay();
-            verbDisplayArea.classList.add('feedback-incorrect');
-            setTimeout(() => verbDisplayArea.classList.remove('feedback-incorrect'), 500);
-            if (lives <= 0) {
-                gameOver();
-            }
+        function loseLife() { /* ... (no change) ... */
+             if (!isGameRunning) return; lives--; updateLivesDisplay();
+             verbDisplayArea.classList.add('feedback-incorrect');
+             setTimeout(() => verbDisplayArea.classList.remove('feedback-incorrect'), 500);
+             if (lives <= 0) gameOver();
         }
-
-        // Handle clicking on a falling verb
+        // Modified messageArea className setting
         function handleVerbClick(event) {
-            if (!isGameRunning || !roundInProgress || isGameOver) return;
-
-            const clickedElement = event.target;
-            const isCorrect = clickedElement.dataset.correct === 'true';
-
-            if (isCorrect) {
-                score++;
-                scoreDisplay.textContent = score;
-                messageArea.textContent = 'Correct! Gut gemacht!';
-                messageArea.className = 'text-center h-6 mb-2 text-lg font-medium text-green-600';
-                verbDisplayArea.classList.add('feedback-correct');
-                setTimeout(() => verbDisplayArea.classList.remove('feedback-correct'), 500);
-                clickedElement.style.backgroundColor = '#a7f3d0';
-                clickedElement.style.borderColor = '#059669';
-                clickedElement.style.fontWeight = 'bold';
-
-                roundInProgress = false;
-                setTimeout(clearFallingVerbs, 300);
-                setTimeout(nextRound, 1000);
-
-            } else {
-                messageArea.textContent = `Incorrect! It was: ${targetFormValue}`;
-                messageArea.className = 'text-center h-6 mb-2 text-lg font-medium text-red-600';
-                clickedElement.style.backgroundColor = '#fee2e2';
-                clickedElement.style.borderColor = '#dc2626';
-                loseLife();
-
-                if (!isGameOver) {
-                    roundInProgress = false;
-                    setTimeout(clearFallingVerbs, 300);
-                    setTimeout(nextRound, 1500);
-                } else {
-                     clearFallingVerbs();
-                }
-            }
+             if (!isGameRunning || !roundInProgress || isGameOver) return;
+             const clickedElement = event.target;
+             const isCorrect = clickedElement.dataset.correct === 'true';
+             if (isCorrect) {
+                 score++; scoreDisplay.textContent = score;
+                 messageArea.textContent = 'Correct! Gut gemacht!';
+                 // Ensure class includes w-full and alignment
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-green-600 w-full mb-2';
+                 verbDisplayArea.classList.add('feedback-correct'); setTimeout(() => verbDisplayArea.classList.remove('feedback-correct'), 500);
+                 clickedElement.style.backgroundColor = '#a7f3d0'; clickedElement.style.borderColor = '#059669'; clickedElement.style.fontWeight = 'bold';
+                 roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1000);
+             } else {
+                 messageArea.textContent = `Incorrect! It was: ${targetFormValue}`;
+                 // Ensure class includes w-full and alignment
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full mb-2';
+                 clickedElement.style.backgroundColor = '#fee2e2'; clickedElement.style.borderColor = '#dc2626';
+                 loseLife();
+                 if (!isGameOver) { roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1500); }
+                 else { clearFallingVerbs(); }
+             }
         }
-
-        // Clear all falling verb elements
-        function clearFallingVerbs() {
-            fallingVerbs.forEach(item => item.element.remove());
-            fallingVerbs = [];
+        function clearFallingVerbs() { /* ... (no change) ... */
+             fallingVerbs.forEach(item => item.element.remove()); fallingVerbs = [];
         }
-
-        // Start the next round based on gameMode
-        function nextRound() {
-            if (!isGameRunning || isGameOver) return;
-
-            clearFallingVerbs();
-            messageArea.textContent = '';
-            roundInProgress = true;
-
-            currentVerb = getRandomVerb(currentVerb ? currentVerb.infinitive : null);
-
-            // --- MODIFICATION START ---
-            // Always use English meaning as the primary clue
-            const givenInfo = `"${currentVerb.english}"`; // Add quotes for clarity
-            const givenEnglish = ''; // Clear the secondary line
-            // --- MODIFICATION END ---
-
-            let targetTypeDisplay = '';
-            let formTypeForFallingWords = '';
-
-            // Determine the target form based on mode
-            switch (gameMode) {
-                 case 'infinitive':
-                    targetFormType = 'infinitive';
-                    targetTypeDisplay = 'Infinitive';
-                    formTypeForFallingWords = 'infinitive';
-                    break;
-                case 'praeteritum':
-                    targetFormType = 'praeteritum';
-                    targetTypeDisplay = 'Präteritum';
-                    formTypeForFallingWords = 'praeteritum';
-                    break;
-                case 'partizip':
-                    targetFormType = 'partizip';
-                    targetTypeDisplay = 'Partizip Perfekt';
-                    formTypeForFallingWords = 'partizip';
-                    break;
-                case 'mixed':
-                default:
-                    targetFormType = Math.random() < 0.5 ? 'praeteritum' : 'partizip';
-                    targetTypeDisplay = (targetFormType === 'praeteritum') ? 'Präteritum' : 'Partizip Perfekt';
-                    formTypeForFallingWords = targetFormType;
-                    break;
-            }
-
-            targetFormValue = currentVerb[targetFormType];
-
-            // Update the display area with the determined info
-            givenVerbInfoDisplay.textContent = givenInfo;
-            givenVerbEnglishDisplay.textContent = givenEnglish; // Set secondary line to empty
-            targetFormTypeDisplay.textContent = targetTypeDisplay;
-
-            // Create falling verbs
-            const distractors = getDistractors(currentVerb, formTypeForFallingWords, getRandomInt(2, 4));
-            const allFallingForms = [targetFormValue, ...distractors];
-            allFallingForms.sort(() => Math.random() - 0.5);
-
-            let spawnDelay = 0;
-            allFallingForms.forEach((form) => {
-                setTimeout(() => {
+        function nextRound() { /* ... (no change) ... */
+             if (!isGameRunning || isGameOver) return;
+             clearFallingVerbs(); messageArea.textContent = ''; roundInProgress = true; // Clear message at start of round
+             currentVerb = getRandomVerb(currentVerb ? currentVerb.infinitive : null);
+             const givenInfo = `"${currentVerb.english}"`; const givenEnglish = '';
+             let targetTypeDisplay = ''; let formTypeForFallingWords = '';
+             switch (gameMode) {
+                 case 'infinitive': targetFormType = 'infinitive'; targetTypeDisplay = 'Infinitive'; formTypeForFallingWords = 'infinitive'; break;
+                 case 'praeteritum': targetFormType = 'praeteritum'; targetTypeDisplay = 'Präteritum'; formTypeForFallingWords = 'praeteritum'; break;
+                 case 'partizip': targetFormType = 'partizip'; targetTypeDisplay = 'Partizip Perfekt'; formTypeForFallingWords = 'partizip'; break;
+                 case 'mixed': default: targetFormType = Math.random() < 0.5 ? 'praeteritum' : 'partizip'; targetTypeDisplay = (targetFormType === 'praeteritum') ? 'Präteritum' : 'Partizip Perfekt'; formTypeForFallingWords = targetFormType; break;
+             }
+             targetFormValue = currentVerb[targetFormType];
+             givenVerbInfoDisplay.textContent = givenInfo; givenVerbEnglishDisplay.textContent = givenEnglish; targetFormTypeDisplay.textContent = targetTypeDisplay;
+             const distractors = getDistractors(currentVerb, formTypeForFallingWords, getRandomInt(2, 4));
+             const allFallingForms = [targetFormValue, ...distractors]; allFallingForms.sort(() => Math.random() - 0.5);
+             let spawnDelay = 0;
+             allFallingForms.forEach((form) => {
+                 setTimeout(() => {
                      if (!roundInProgress || isGameOver) return;
-                    const isCorrect = form === targetFormValue;
-                    const verbData = createFallingVerbElement(form, isCorrect);
-                    if(verbData) {
-                        fallingVerbs.push(verbData);
-                    }
-                }, spawnDelay);
-                spawnDelay += getRandomInt(400, 900);
-            });
+                     const isCorrect = form === targetFormValue;
+                     const verbData = createFallingVerbElement(form, isCorrect);
+                     if(verbData) fallingVerbs.push(verbData);
+                 }, spawnDelay);
+                 spawnDelay += getRandomInt(400, 900);
+             });
         }
-
-
-        // Main game loop
+        // Modified messageArea className setting
         function gameLoop(timestamp) {
-            if (!isGameRunning || isGameOver) return;
-
-            const gameAreaHeight = gameArea.offsetHeight;
-            const verbsToRemove = [];
-
-            fallingVerbs.forEach((item, index) => {
-                item.y += fallSpeed;
-                item.element.style.top = `${item.y}px`;
-
-                if (item.y + item.element.offsetHeight >= gameAreaHeight) {
-                    verbsToRemove.push(index);
-                    item.element.remove();
-
-                    if (item.isCorrect && roundInProgress) {
-                        messageArea.textContent = `Missed! It was: ${targetFormValue}`;
-                        messageArea.className = 'text-center h-6 mb-2 text-lg font-medium text-orange-600';
-                        loseLife();
-                        if (!isGameOver) {
-                            roundInProgress = false;
-                            setTimeout(clearFallingVerbs, 300);
-                            setTimeout(nextRound, 1500);
-                        } else {
-                            clearFallingVerbs();
-                        }
-                    }
-                }
-            });
-
-            for (let i = verbsToRemove.length - 1; i >= 0; i--) {
-                fallingVerbs.splice(verbsToRemove[i], 1);
-            }
-
-            if (isGameRunning && !isGameOver) {
-                 gameLoopInterval = requestAnimationFrame(gameLoop);
-            }
+             if (!isGameRunning || isGameOver) return;
+             const gameAreaHeight = gameArea.offsetHeight; const verbsToRemove = [];
+             fallingVerbs.forEach((item, index) => {
+                 item.y += fallSpeed; item.element.style.top = `${item.y}px`;
+                 if (item.y + item.element.offsetHeight >= gameAreaHeight) {
+                     verbsToRemove.push(index); item.element.remove();
+                     if (item.isCorrect && roundInProgress) {
+                         messageArea.textContent = `Missed! It was: ${targetFormValue}`;
+                         // Ensure class includes w-full and alignment
+                         messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-600 w-full mb-2';
+                         loseLife();
+                         if (!isGameOver) { roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1500); }
+                         else { clearFallingVerbs(); }
+                     }
+                 }
+             });
+             for (let i = verbsToRemove.length - 1; i >= 0; i--) fallingVerbs.splice(verbsToRemove[i], 1);
+             if (isGameRunning && !isGameOver) gameLoopInterval = requestAnimationFrame(gameLoop);
         }
-
-         // Game Over function
+        // Modified messageArea className setting
         function gameOver() {
-            isGameRunning = false;
-            isGameOver = true;
-            roundInProgress = false;
-            if (gameLoopInterval) {
-                cancelAnimationFrame(gameLoopInterval);
-                gameLoopInterval = null;
-            }
-            clearFallingVerbs();
-
-            messageArea.textContent = `Game Over! Final Score: ${score}`;
-            messageArea.className = 'text-center h-6 mb-2 text-xl font-bold text-red-600';
-
-            startButton.textContent = 'Restart Game';
-            startButton.classList.replace('bg-red-500', 'bg-green-500');
-            startButton.classList.replace('hover:bg-red-600', 'hover:bg-green-600');
-
-             givenVerbInfoDisplay.textContent = '---';
-             givenVerbEnglishDisplay.textContent = ''; // Ensure secondary line is empty on game over too
-             targetFormTypeDisplay.textContent = '---';
+             isGameRunning = false; isGameOver = true; roundInProgress = false;
+             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval); clearFallingVerbs();
+             messageArea.textContent = `Game Over! Final Score: ${score}`;
+             // Ensure class includes w-full and alignment
+             messageArea.className = 'text-center text-xl font-bold text-red-600 w-full mb-2'; // Added mb-2
+             startButton.textContent = 'Restart Game'; startButton.classList.replace('bg-red-500', 'bg-green-500'); startButton.classList.replace('hover:bg-red-600', 'hover:bg-green-600');
+             givenVerbInfoDisplay.textContent = '---'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '---';
+             speedSlider.disabled = false;
         }
-
-
-        // Start the game (or restart)
-        function startGame() {
-            score = 0;
-            lives = INITIAL_LIVES;
-            isGameOver = false;
-            isGameRunning = true;
-            roundInProgress = false;
-
-            scoreDisplay.textContent = score;
-            updateLivesDisplay();
-
-            startButton.textContent = 'Stop Game';
-            startButton.classList.remove('bg-blue-500', 'bg-green-500', 'hover:bg-blue-600', 'hover:bg-green-600');
-            startButton.classList.add('bg-red-500', 'hover:bg-red-600');
-
-            clearFallingVerbs();
-            messageArea.textContent = '';
-             if (gameLoopInterval) {
-                cancelAnimationFrame(gameLoopInterval);
-            }
-
-            nextRound();
-            gameLoopInterval = requestAnimationFrame(gameLoop);
+        function startGame() { /* ... (no change) ... */
+             score = 0; lives = INITIAL_LIVES; isGameOver = false; isGameRunning = true; roundInProgress = false;
+             updateFallSpeed(speedSlider.value); scoreDisplay.textContent = score; updateLivesDisplay();
+             startButton.textContent = 'Stop Game'; startButton.classList.remove('bg-blue-500', 'bg-green-500', 'hover:bg-blue-600', 'hover:bg-green-600'); startButton.classList.add('bg-red-500', 'hover:bg-red-600');
+             speedSlider.disabled = true; clearFallingVerbs(); messageArea.textContent = ''; // Clear message on start
+             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval);
+             nextRound(); gameLoopInterval = requestAnimationFrame(gameLoop);
         }
-
-        // Stop the game (manual stop, not game over)
+        // Modified messageArea className setting
         function stopGame() {
              if (!isGameRunning || isGameOver) return;
-
-            isGameRunning = false;
-            roundInProgress = false;
-            startButton.textContent = 'Start Game';
-             startButton.classList.remove('bg-red-500', 'bg-green-500', 'hover:bg-red-600', 'hover:bg-green-600');
-             startButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
-
-            if (gameLoopInterval) {
-                cancelAnimationFrame(gameLoopInterval);
-                gameLoopInterval = null;
-            }
-
-            clearFallingVerbs();
-            givenVerbInfoDisplay.textContent = '-';
-            givenVerbEnglishDisplay.textContent = ''; // Ensure secondary line is empty when stopped
-            targetFormTypeDisplay.textContent = '-';
-            messageArea.textContent = 'Game stopped. Select a mode and start again!';
-            messageArea.className = 'text-center h-6 mb-2 text-lg font-medium text-gray-500';
+             isGameRunning = false; roundInProgress = false; startButton.textContent = 'Start Game';
+             startButton.classList.remove('bg-red-500', 'bg-green-500', 'hover:bg-red-600', 'hover:bg-green-600'); startButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
+             speedSlider.disabled = false; if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval);
+             clearFallingVerbs(); givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '-';
+             messageArea.textContent = 'Game stopped. Select mode/speed and start again!';
+             // Ensure class includes w-full and alignment
+             messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full mb-2';
         }
 
         // --- Event Listeners ---
-        startButton.addEventListener('click', () => {
-            if (isGameOver) {
-                startGame();
-            } else if (isGameRunning) {
-                stopGame();
-            } else {
-                startGame();
-            }
+        startButton.addEventListener('click', () => { /* ... (no change) ... */
+             if (isGameOver) startGame(); else if (isGameRunning) stopGame(); else startGame();
         });
-
-        // Mode selection listener
+        // Modified messageArea className setting
         modeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (isGameRunning) {
-                     messageArea.textContent = 'Stop the game to change mode!';
-                     messageArea.className = 'text-center h-6 mb-2 text-lg font-medium text-orange-500';
-                     setTimeout(() => { if(!isGameRunning && !isGameOver) messageArea.textContent = '';}, 2000);
-                    return;
-                }
-
-                 if (isGameOver) {
-                     isGameOver = false;
-                     startButton.textContent = 'Start Game';
-                     startButton.classList.remove('bg-green-500', 'hover:bg-green-600');
-                     startButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
-                     updateLivesDisplay();
-                 }
-
-                gameMode = button.dataset.mode;
-                modeButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                givenVerbInfoDisplay.textContent = '-';
-                givenVerbEnglishDisplay.textContent = ''; // Ensure secondary line is empty on mode change
-                targetFormTypeDisplay.textContent = '-';
-                messageArea.textContent = `Mode set to ${gameMode}. Click Start Game!`;
-                messageArea.className = 'text-center h-6 mb-2 text-lg font-medium text-gray-500';
-
-                console.log("Game mode changed to:", gameMode);
-            });
+             button.addEventListener('click', () => {
+                 if (isGameRunning) { messageArea.textContent = 'Stop the game to change mode!'; messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-500 w-full mb-2'; setTimeout(() => { if(!isGameRunning && !isGameOver) messageArea.textContent = '';}, 2000); return; }
+                 if (isGameOver) { isGameOver = false; startButton.textContent = 'Start Game'; startButton.classList.remove('bg-green-500', 'hover:bg-green-600'); startButton.classList.add('bg-blue-500', 'hover:bg-blue-600'); updateLivesDisplay(); }
+                 gameMode = button.dataset.mode; modeButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active');
+                 givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '-';
+                 messageArea.textContent = `Mode set to ${gameMode}. Click Start Game!`;
+                 // Ensure class includes w-full and alignment
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full mb-2';
+                 console.log("Game mode changed to:", gameMode);
+             });
         });
+        speedSlider.addEventListener('input', (event) => { updateFallSpeed(event.target.value); });
 
-         // Initial setup
-        updateLivesDisplay();
-        messageArea.textContent = 'Select a mode and click "Start Game"!';
-        messageArea.className = 'text-center h-6 mb-2 text-lg font-medium text-gray-500';
-        givenVerbInfoDisplay.textContent = '-'; // Initial state
-        givenVerbEnglishDisplay.textContent = ''; // Initial state empty
+        // --- Initial Setup ---
+        updateLivesDisplay(); updateFallSpeed(speedSlider.value);
+        messageArea.textContent = 'Select mode/speed and click "Start Game"!';
+        // Ensure class includes w-full and alignment
+        messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full mb-2';
+        givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; speedSlider.disabled = false;
 
     </script>
 
