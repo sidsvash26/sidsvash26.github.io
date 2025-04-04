@@ -37,8 +37,9 @@
         /* Style for the game area - Responsive Height */
         #game-area {
             position: relative;
-            height: 55vh; /* Default height for mobile */
-             min-height: 300px;
+            /* Adjusted mobile height slightly */
+            height: 50vh;
+             min-height: 280px; /* Adjusted min-height */
              @media (min-width: 768px) { height: 400px; } /* Height for desktop */
             border: 2px solid #d1d5db;
             border-radius: 0.5rem;
@@ -76,7 +77,7 @@
     <div class="w-full max-w-4xl bg-white p-4 md:p-6 rounded-lg shadow-lg flex flex-col">
         <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">German Verb Drop Game</h1>
 
-        <div id="verb-display" class="text-center p-3 rounded-md mb-4 border border-blue-300 grid grid-cols-2 gap-2 items-center w-full">
+        <div id="verb-display" class="text-center p-3 rounded-md mb-2 border border-blue-300 grid grid-cols-2 gap-2 items-center w-full">
              <div>
                 <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Meaning</p>
                 <p class="text-lg md:text-xl font-semibold text-blue-800 mt-1" id="given-verb-info">-</p>
@@ -88,45 +89,48 @@
             </div>
         </div>
 
+        <div class="text-md md:text-lg font-semibold text-gray-700 flex justify-between items-center w-full mb-3 px-1">
+           <span>Score: <span id="score" class="text-green-600 font-bold">0</span></span>
+           <span>Lives: <span id="lives" class="font-bold"></span></span>
+        </div>
+
+
         <div class="flex flex-col md:flex-row gap-4 flex-grow">
 
-            <div class="w-full md:w-1/4 flex flex-col items-center md:items-stretch gap-4 order-2 md:order-1">
-                 <div class="flex flex-wrap justify-center md:justify-start gap-2">
+             <div class="w-full md:w-3/4 order-1">
+                <div id="game-area">
+                    </div>
+            </div>
+
+            <div class="w-full md:w-1/4 flex flex-col items-center md:items-stretch gap-3 order-2">
+
+                 <div class="w-full flex justify-center md:justify-start order-1">
+                     <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto">
+                         Start Game
+                     </button>
+                 </div>
+
+                 <div id="message-area" class="text-center text-base md:text-lg font-medium w-full order-2"></div>
+
+
+                 <div class="flex flex-wrap justify-center md:justify-start gap-2 order-3">
                     <button data-mode="infinitive" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Infinitive</button>
                     <button data-mode="praeteritum" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Präteritum</button>
-                    <button data-mode="partizip" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Partizip Perfekt</button>
-                    <button data-mode="mixed" class="mode-button active px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Mixed</button>
+                    <button data-mode="partizip" class="mode-button active px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Partizip Perfekt</button>
+                    <button data-mode="mixed" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Mixed</button>
                 </div>
-                 <div class="speed-control w-full">
-                    <label for="speed-slider" class="text-sm font-medium text-gray-700 mb-1">Speed Level: <span id="speed-level-display">3</span></label>
+
+                 <div class="speed-control w-full order-4">
+                    <label for="speed-slider" class="text-sm font-medium text-gray-700 mb-1">Speed Level: <span id="speed-level-display">1</span></label>
                     <div class="speed-slider-container">
-                        <input type="range" id="speed-slider" name="speed" min="1" max="4" step="1" value="3" class="w-full">
+                        <input type="range" id="speed-slider" name="speed" min="1" max="4" step="1" value="1" class="w-full">
                     </div>
                      <div class="speed-labels">
                         <span>1</span><span>2</span><span>3</span><span>4</span>
                     </div>
                 </div>
 
-                 <div class="text-md md:text-lg font-semibold text-gray-700 flex flex-col items-center md:items-start w-full">
-                    <span class="mb-1">Score: <span id="score" class="text-green-600 font-bold">0</span></span>
-                    <span>Lives: <span id="lives" class="font-bold"></span></span>
-                 </div>
-
-                 <div id="message-area" class="text-center text-base md:text-lg font-medium w-full mb-2"></div>
-
-                  <div class="w-full flex justify-center md:justify-start">
-                     <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto">
-                         Start Game
-                     </button>
-                 </div>
-            </div>
-
-            <div class="w-full md:w-3/4 order-1 md:order-2 flex-grow">
-                <div id="game-area">
-                    </div>
-            </div>
-
-        </div> </div> <script>
+            </div> </div> </div> <script>
         // --- Game Data ---
         const verbs = [
              { infinitive: "anfangen", praeteritum: "fing an", partizip: "angefangen", english: "to begin" },
@@ -146,7 +150,7 @@
              { infinitive: "beten", praeteritum: "betete", partizip: "gebetet", english: "to pray" }
         ];
         const INITIAL_LIVES = 5;
-        const MIN_HORIZONTAL_SEPARATION = 50; // Adjusted slightly
+        const MIN_HORIZONTAL_SEPARATION = 50;
 
         // --- DOM Elements ---
         const gameArea = document.getElementById('game-area');
@@ -172,32 +176,39 @@
         let gameLoopInterval = null;
         let isGameRunning = false;
         let isGameOver = false;
-        let fallSpeed = 1.6;
+        let fallSpeed = 0.8; // Initial speed based on default slider value 1
         let roundInProgress = false;
-        let gameMode = 'mixed';
+        let gameMode = 'partizip'; // Default mode set to Partizip Perfekt
 
         // --- Game Logic ---
 
-        function updateFallSpeed(level) { /* ... (no change) ... */
+        // Function to map slider level (1-4) to fall speed
+        function updateFallSpeed(level) {
             const levelNum = parseInt(level, 10);
-            speedLevelDisplay.textContent = levelNum;
+            speedLevelDisplay.textContent = levelNum; // Update display
             switch(levelNum) {
-                case 1: fallSpeed = 0.8; break;
-                case 2: fallSpeed = 1.2; break;
-                case 3: fallSpeed = 1.6; break;
-                case 4: fallSpeed = 2.2; break;
-                default: fallSpeed = 1.6;
+                case 1: fallSpeed = 0.8; break;  // Slowest
+                case 2: fallSpeed = 1.2; break;  // Slow
+                case 3: fallSpeed = 1.6; break;  // Normal
+                case 4: fallSpeed = 2.2; break;  // Fast
+                default: fallSpeed = 0.8; // Default to level 1 speed
             }
              console.log(`Speed level ${levelNum}, fallSpeed set to ${fallSpeed}`);
         }
+
+        // Get a random integer between min (inclusive) and max (exclusive)
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min)) + min; }
-        function getRandomVerb(excludeInfinitive = null) { /* ... (no change) ... */
+
+        // Get a random verb from the list, ensuring it's not the same as the last one
+        function getRandomVerb(excludeInfinitive = null) {
              let newVerb;
              do { newVerb = verbs[getRandomInt(0, verbs.length)]; }
              while (excludeInfinitive && newVerb.infinitive === excludeInfinitive);
              return newVerb;
         }
-        function getDistractors(correctVerb, formTypeToGet, count) { /* ... (no change) ... */
+
+        // Get distractor verb forms of a specific type
+        function getDistractors(correctVerb, formTypeToGet, count) {
              const distractors = new Set();
              const correctFormValue = correctVerb[formTypeToGet];
              while (distractors.size < count && distractors.size < verbs.length - 1) {
@@ -207,52 +218,76 @@
              }
              return Array.from(distractors);
         }
-        function updateLivesDisplay() { /* ... (no change) ... */
+
+        // Update lives display using heart icons
+        function updateLivesDisplay() {
              let hearts = '';
              for (let i = 0; i < lives; i++) hearts += '<span class="lives-heart">♥</span>';
              for (let i = lives; i < INITIAL_LIVES; i++) hearts += '<span class="lives-heart text-gray-300">♥</span>';
              livesDisplay.innerHTML = hearts;
         }
-        function createFallingVerbElement(verbForm, isCorrect) { /* ... (no change) ... */
+
+        // Create a falling verb element with overlap avoidance
+        function createFallingVerbElement(verbForm, isCorrect) {
              const verbElement = document.createElement('div');
              verbElement.classList.add('verb-drop');
              verbElement.textContent = verbForm;
-             document.body.appendChild(verbElement);
+             document.body.appendChild(verbElement); // Temporarily add to measure width
              const elementWidth = verbElement.offsetWidth;
-             document.body.removeChild(verbElement);
-             const gameAreaWidth = gameArea.offsetWidth;
-             const maxLeft = gameAreaWidth > elementWidth + 20 ? gameAreaWidth - elementWidth - 10 : 5;
+             document.body.removeChild(verbElement); // Remove temporary element
+
+             // Ensure gameArea has width before calculating maxLeft
+             const gameAreaWidth = gameArea.offsetWidth || 300; // Use a fallback width if needed initially
+             const maxLeft = gameAreaWidth > elementWidth + 20 ? gameAreaWidth - elementWidth - 10 : 5; // Max possible left position
+
              let potentialLeft;
              let attempts = 0;
              let positionFound = false;
+
+             // Try to find a non-overlapping horizontal position
              while (attempts < 10 && !positionFound) {
                  potentialLeft = getRandomInt(10, maxLeft);
-                 positionFound = true;
+                 positionFound = true; // Assume it's good initially
+
+                 // Check against existing falling verbs
                  for (const existingVerb of fallingVerbs) {
                      const existingRight = existingVerb.x + existingVerb.width;
                      const potentialRight = potentialLeft + elementWidth;
-                     if (potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION && potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION) {
-                         positionFound = false; break;
+
+                     // Check for overlap: if new verb's range overlaps existing verb's range (with margin)
+                     if (potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION &&
+                         potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION) {
+                         positionFound = false; // Overlap detected
+                         break;
                      }
                  }
                  attempts++;
              }
-             if (!positionFound) potentialLeft = getRandomInt(10, maxLeft);
+              // If still no position found after attempts, just use the last random one
+              if (!positionFound) {
+                  potentialLeft = getRandomInt(10, maxLeft);
+              }
+
              verbElement.style.left = `${potentialLeft}px`;
-             verbElement.style.top = `-${getRandomInt(30, 100)}px`;
+             verbElement.style.top = `-${getRandomInt(30, 100)}px`; // Start slightly above the view
              verbElement.dataset.correct = isCorrect;
              verbElement.dataset.form = verbForm;
              verbElement.addEventListener('click', handleVerbClick);
              gameArea.appendChild(verbElement);
+
+             // Return necessary info for tracking
              return { element: verbElement, isCorrect: isCorrect, form: verbForm, y: parseFloat(verbElement.style.top) || 0, x: potentialLeft, width: elementWidth };
         }
-        function loseLife() { /* ... (no change) ... */
+
+        // Handle losing a life
+        function loseLife() {
              if (!isGameRunning) return; lives--; updateLivesDisplay();
              verbDisplayArea.classList.add('feedback-incorrect');
              setTimeout(() => verbDisplayArea.classList.remove('feedback-incorrect'), 500);
              if (lives <= 0) gameOver();
         }
-        // Modified messageArea className setting
+
+        // Handle clicking on a falling verb
         function handleVerbClick(event) {
              if (!isGameRunning || !roundInProgress || isGameOver) return;
              const clickedElement = event.target;
@@ -260,27 +295,29 @@
              if (isCorrect) {
                  score++; scoreDisplay.textContent = score;
                  messageArea.textContent = 'Correct! Gut gemacht!';
-                 // Ensure class includes w-full and alignment
-                 messageArea.className = 'text-center text-base md:text-lg font-medium text-green-600 w-full mb-2';
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-green-600 w-full order-2'; // Keep order
                  verbDisplayArea.classList.add('feedback-correct'); setTimeout(() => verbDisplayArea.classList.remove('feedback-correct'), 500);
                  clickedElement.style.backgroundColor = '#a7f3d0'; clickedElement.style.borderColor = '#059669'; clickedElement.style.fontWeight = 'bold';
                  roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1000);
              } else {
                  messageArea.textContent = `Incorrect! It was: ${targetFormValue}`;
-                 // Ensure class includes w-full and alignment
-                 messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full mb-2';
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full order-2'; // Keep order
                  clickedElement.style.backgroundColor = '#fee2e2'; clickedElement.style.borderColor = '#dc2626';
                  loseLife();
                  if (!isGameOver) { roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1500); }
                  else { clearFallingVerbs(); }
              }
         }
-        function clearFallingVerbs() { /* ... (no change) ... */
+
+        // Clear all falling verb elements
+        function clearFallingVerbs() {
              fallingVerbs.forEach(item => item.element.remove()); fallingVerbs = [];
         }
-        function nextRound() { /* ... (no change) ... */
+
+        // Start the next round based on gameMode
+        function nextRound() {
              if (!isGameRunning || isGameOver) return;
-             clearFallingVerbs(); messageArea.textContent = ''; roundInProgress = true; // Clear message at start of round
+             clearFallingVerbs(); messageArea.textContent = ''; roundInProgress = true;
              currentVerb = getRandomVerb(currentVerb ? currentVerb.infinitive : null);
              const givenInfo = `"${currentVerb.english}"`; const givenEnglish = '';
              let targetTypeDisplay = ''; let formTypeForFallingWords = '';
@@ -305,83 +342,97 @@
                  spawnDelay += getRandomInt(400, 900);
              });
         }
-        // Modified messageArea className setting
+
+        // Main game loop using requestAnimationFrame
         function gameLoop(timestamp) {
              if (!isGameRunning || isGameOver) return;
              const gameAreaHeight = gameArea.offsetHeight; const verbsToRemove = [];
              fallingVerbs.forEach((item, index) => {
-                 item.y += fallSpeed; item.element.style.top = `${item.y}px`;
+                 item.y += fallSpeed; // Use the current fallSpeed value
+                 item.element.style.top = `${item.y}px`;
+
+                 // Check if verb reached the bottom
                  if (item.y + item.element.offsetHeight >= gameAreaHeight) {
                      verbsToRemove.push(index); item.element.remove();
+                     // If the MISSED one was the CORRECT answer for an active round
                      if (item.isCorrect && roundInProgress) {
                          messageArea.textContent = `Missed! It was: ${targetFormValue}`;
-                         // Ensure class includes w-full and alignment
-                         messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-600 w-full mb-2';
+                         messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-600 w-full order-2'; // Keep order
                          loseLife();
                          if (!isGameOver) { roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1500); }
                          else { clearFallingVerbs(); }
                      }
                  }
              });
+             // Remove missed verbs from the tracking array
              for (let i = verbsToRemove.length - 1; i >= 0; i--) fallingVerbs.splice(verbsToRemove[i], 1);
+             // Continue the loop only if game is still running
              if (isGameRunning && !isGameOver) gameLoopInterval = requestAnimationFrame(gameLoop);
         }
-        // Modified messageArea className setting
+
+        // Game Over function
         function gameOver() {
              isGameRunning = false; isGameOver = true; roundInProgress = false;
              if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval); clearFallingVerbs();
              messageArea.textContent = `Game Over! Final Score: ${score}`;
-             // Ensure class includes w-full and alignment
-             messageArea.className = 'text-center text-xl font-bold text-red-600 w-full mb-2'; // Added mb-2
+             messageArea.className = 'text-center text-xl font-bold text-red-600 w-full order-2'; // Keep order
              startButton.textContent = 'Restart Game'; startButton.classList.replace('bg-red-500', 'bg-green-500'); startButton.classList.replace('hover:bg-red-600', 'hover:bg-green-600');
              givenVerbInfoDisplay.textContent = '---'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '---';
-             speedSlider.disabled = false;
+             speedSlider.disabled = false; // Re-enable slider on game over
         }
-        function startGame() { /* ... (no change) ... */
+
+        // Start the game (or restart)
+        function startGame() {
              score = 0; lives = INITIAL_LIVES; isGameOver = false; isGameRunning = true; roundInProgress = false;
-             updateFallSpeed(speedSlider.value); scoreDisplay.textContent = score; updateLivesDisplay();
+             updateFallSpeed(speedSlider.value); // Ensure speed is set correctly on start
+             scoreDisplay.textContent = score; updateLivesDisplay();
              startButton.textContent = 'Stop Game'; startButton.classList.remove('bg-blue-500', 'bg-green-500', 'hover:bg-blue-600', 'hover:bg-green-600'); startButton.classList.add('bg-red-500', 'hover:bg-red-600');
-             speedSlider.disabled = true; clearFallingVerbs(); messageArea.textContent = ''; // Clear message on start
-             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval);
+             speedSlider.disabled = true; // Disable slider while game is running
+             clearFallingVerbs(); messageArea.textContent = ''; // Clear message on start
+             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval); // Clear any residual loop
              nextRound(); gameLoopInterval = requestAnimationFrame(gameLoop);
         }
-        // Modified messageArea className setting
+
+        // Stop the game (manual stop, not game over)
         function stopGame() {
              if (!isGameRunning || isGameOver) return;
              isGameRunning = false; roundInProgress = false; startButton.textContent = 'Start Game';
              startButton.classList.remove('bg-red-500', 'bg-green-500', 'hover:bg-red-600', 'hover:bg-green-600'); startButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
-             speedSlider.disabled = false; if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval);
+             speedSlider.disabled = false; // Re-enable slider when stopped
+             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval);
              clearFallingVerbs(); givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '-';
              messageArea.textContent = 'Game stopped. Select mode/speed and start again!';
-             // Ensure class includes w-full and alignment
-             messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full mb-2';
+             messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2'; // Keep order
         }
 
         // --- Event Listeners ---
-        startButton.addEventListener('click', () => { /* ... (no change) ... */
+        startButton.addEventListener('click', () => {
              if (isGameOver) startGame(); else if (isGameRunning) stopGame(); else startGame();
         });
-        // Modified messageArea className setting
+
         modeButtons.forEach(button => {
              button.addEventListener('click', () => {
-                 if (isGameRunning) { messageArea.textContent = 'Stop the game to change mode!'; messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-500 w-full mb-2'; setTimeout(() => { if(!isGameRunning && !isGameOver) messageArea.textContent = '';}, 2000); return; }
+                 // Prevent mode change while running
+                 if (isGameRunning) { messageArea.textContent = 'Stop the game to change mode!'; messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-500 w-full order-2'; setTimeout(() => { if(!isGameRunning && !isGameOver) messageArea.textContent = '';}, 2000); return; }
+                 // Reset game over state if changing mode after game over
                  if (isGameOver) { isGameOver = false; startButton.textContent = 'Start Game'; startButton.classList.remove('bg-green-500', 'hover:bg-green-600'); startButton.classList.add('bg-blue-500', 'hover:bg-blue-600'); updateLivesDisplay(); }
+                 // Update mode
                  gameMode = button.dataset.mode; modeButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active');
+                 // Reset displays
                  givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '-';
                  messageArea.textContent = `Mode set to ${gameMode}. Click Start Game!`;
-                 // Ensure class includes w-full and alignment
-                 messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full mb-2';
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2'; // Keep order
                  console.log("Game mode changed to:", gameMode);
              });
         });
+
         speedSlider.addEventListener('input', (event) => { updateFallSpeed(event.target.value); });
 
         // --- Initial Setup ---
-        updateLivesDisplay(); updateFallSpeed(speedSlider.value);
+        updateLivesDisplay(); updateFallSpeed(speedSlider.value); // Update based on slider's default value (now 1)
         messageArea.textContent = 'Select mode/speed and click "Start Game"!';
-        // Ensure class includes w-full and alignment
-        messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full mb-2';
-        givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; speedSlider.disabled = false;
+        messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2'; // Keep order
+        givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; speedSlider.disabled = false; // Ensure slider is enabled initially
 
     </script>
 
