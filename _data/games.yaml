@@ -1,0 +1,17 @@
+# _data/games.yml
+
+- title: "German Verb Forms Trainer"
+  description: | # Use the pipe symbol for multi-line literal string
+    Practice conjugating common German verbs in different tenses.
+
+    This interactive game helps reinforce your memory of key verb forms required for basic German communication. It focuses primarily on present, perfect, and simple past tenses.
+
+    Challenge yourself and see how quickly you can conjugate verbs like 'haben', 'sein', 'gehen', and 'sprechen'!
+  image: "/assets/img/games/german_verb_forms.jpeg"
+  url: "/games/German_verb_forms.html"
+# --- Add new games below this line ---
+
+# - title: "Another Game Title"
+#   description: "A brief description of the other game."
+#   image: "/assets/images/games/another_game.png"
+#   url: "/games/another_game.html"
