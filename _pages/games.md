@@ -34,28 +34,28 @@ Welcome to my collection of simple HTML games, often created with the help of AI
 </div>
 
 <style>
-/* Styles for the Games Page List - Now using Theme CSS Variables */
+/* --- Base Styles (Desktop First) --- */
 .game-list {
   margin-top: 20px;
 }
 
 .game-item {
-  display: flex;
+  display: flex; /* Side-by-side layout by default */
   align-items: flex-start;
-  gap: 25px;
+  gap: 25px; /* Space between image and details */
   margin-bottom: 40px;
 }
 
 .game-media {
-  flex: 0 0 300px;
+  flex: 0 0 300px; /* Fixed width for image/button area on desktop */
+  /* max-width: 300px; */ /* Redundant with flex-basis */
 }
 
 .game-media img {
   display: block;
-  width: 100%;
-  max-width: 300px;
+  width: 100%; /* Image fills its container */
+  max-width: 300px; /* Max image width */
   height: auto;
-  /* Use theme's divider/border color */
   border: 1px solid var(--global-divider-color, #eee);
   margin-bottom: 15px;
 }
@@ -66,25 +66,22 @@ Welcome to my collection of simple HTML games, often created with the help of AI
 }
 
 .game-details {
-  flex: 1;
-  min-width: 0;
+  flex: 1; /* Takes remaining space on desktop */
+  min-width: 0; /* Prevents flex overflow */
 }
 
 .game-details h2 {
   margin-top: 0;
   margin-bottom: 15px;
-  /* Optional: Use theme's text color for heading too if needed */
-  /* color: var(--global-text-color); */
 }
 
 .game-description-box {
   padding: 15px;
   border-radius: 5px;
   line-height: 1.6;
-  /* --- Use Theme CSS Variables --- */
-  background-color: var(--global-card-bg-color, #f9f9f9); /* Use card background */
-  color: var(--global-text-color, #333);             /* Use standard text color */
-  border: 1px solid var(--global-divider-color, #eee); /* Use divider/border color */
+  background-color: var(--global-card-bg-color, #f9f9f9);
+  color: var(--global-text-color, #333);
+  border: 1px solid var(--global-divider-color, #eee);
 }
 
 /* Separator */
@@ -93,7 +90,42 @@ Welcome to my collection of simple HTML games, often created with the help of AI
   margin-top: 40px;
   margin-bottom: 40px;
   border: 0;
-  /* Use theme's divider/border color */
   border-top: 1px solid var(--global-divider-color, #eee);
 }
+
+/* --- Mobile Styles (screens up to 767px wide) --- */
+@media (max-width: 767px) {
+  .game-item {
+    flex-direction: column; /* Stack elements vertically */
+    gap: 15px; /* Reduce gap for vertical stacking */
+  }
+
+  .game-media {
+    flex-basis: auto; /* Allow width to be flexible */
+    width: 100%; /* Take full width */
+    max-width: 300px; /* Optional: Still limit max width */
+    margin-left: auto;  /* Center the media block if max-width applies */
+    margin-right: auto; /* Center the media block if max-width applies */
+  }
+
+  .game-media img {
+     /* Max width is already handled by container, ensure it scales */
+     width: 100%; /* Ensure image uses container width */
+     max-width: 300px; /* Match container max-width if set */
+  }
+
+  .game-details {
+    flex-basis: auto; /* Allow width to be flexible */
+    width: 100%; /* Take full width */
+  }
+
+  .game-details h2 {
+     text-align: center; /* Optional: Center heading on mobile */
+  }
+
+   .game-description-box {
+      /* Add any mobile-specific adjustments if needed */
+   }
+}
+
 </style>
