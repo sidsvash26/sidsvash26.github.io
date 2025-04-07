@@ -21,30 +21,30 @@
             cursor: pointer;
             transition: background-color 0.2s ease-in-out, transform 0.2s ease;
             user-select: none;
-            min-width: 80px;
+            min-width: 80px; /* Minimum width */
             text-align: center;
             padding: 8px 12px;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            background-color: #ffffff;
-            border: 1px solid #e5e7eb;
-            white-space: nowrap;
+            border-radius: 0.5rem; /* Rounded corners */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Shadow */
+            background-color: #ffffff; /* White background */
+            border: 1px solid #e5e7eb; /* Light gray border */
+            white-space: nowrap; /* Prevent text wrapping */
+            font-weight: 500; /* Slightly bolder text */
         }
         .verb-drop:hover {
-            transform: scale(1.05);
-            background-color: #f3f4f6;
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: #f3f4f6; /* Lighter gray on hover */
         }
         /* Style for the game area - Responsive Height */
         #game-area {
             position: relative;
-            /* Adjusted mobile height slightly */
-            height: 50vh;
-             min-height: 280px; /* Adjusted min-height */
-             @media (min-width: 768px) { height: 400px; } /* Height for desktop */
-            border: 2px solid #d1d5db;
-            border-radius: 0.5rem;
-            background-color: #f9fafb;
-            overflow: hidden;
+            height: 50vh; /* Use viewport height */
+             min-height: 300px; /* Increased minimum height */
+             @media (min-width: 768px) { height: 450px; } /* Taller height for desktop */
+            border: 2px solid #d1d5db; /* Gray border */
+            border-radius: 0.5rem; /* Rounded corners */
+            background-color: #f9fafb; /* Very light gray background */
+            overflow: hidden; /* Hide words falling outside */
             width: 100%;
         }
         /* Feedback animations */
@@ -55,10 +55,10 @@
         /* Active mode button */
         .mode-button.active { background-color: #3b82f6; color: white; font-weight: 600; }
         /* Default verb display background */
-        #verb-display { background-color: #ebf5ff; }
+        #verb-display { background-color: #ebf5ff; } /* Light blue background */
         /* Lives display */
-        .lives-heart { color: #ef4444; display: inline-block; font-size: 1.1em; margin-left: 2px; }
-        #given-verb-info { min-height: 28px; }
+        .lives-heart { color: #ef4444; display: inline-block; font-size: 1.2em; margin-left: 3px; } /* Slightly larger hearts */
+        #given-verb-info { min-height: 28px; } /* Ensure space */
         /* Speed Slider Styles */
         .speed-control { display: flex; flex-direction: column; align-items: center; }
         .speed-slider-container { display: flex; align-items: center; width: 100%; max-width: 250px; }
@@ -69,6 +69,23 @@
         #message-area {
             min-height: 2.5rem; /* Give space for 2 lines */
             line-height: 1.25rem;
+        }
+         /* Verb count selector styles */
+        .verb-count-control { display: flex; flex-direction: column; align-items: center; margin-top: 5px; }
+        #verb-count-select {
+            padding: 4px 8px;
+            border-radius: 0.375rem;
+            border: 1px solid #d1d5db;
+            background-color: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            min-width: 80px; /* Ensure decent width */
+            text-align: center;
+        }
+        #verb-count-select:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            background-color: #f9fafb;
         }
     </style>
 </head>
@@ -81,8 +98,7 @@
              <div>
                 <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Meaning</p>
                 <p class="text-lg md:text-xl font-semibold text-blue-800 mt-1" id="given-verb-info">-</p>
-                <p class="text-sm text-gray-600" id="given-verb-english"></p>
-            </div>
+                <p class="text-sm text-gray-600" id="given-verb-english"></p> </div>
             <div class="border-l border-blue-200 pl-3">
                 <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Find</p>
                 <p class="text-lg md:text-xl font-bold text-purple-700 mt-1" id="target-form-type">-</p>
@@ -93,7 +109,6 @@
            <span>Score: <span id="score" class="text-green-600 font-bold">0</span></span>
            <span>Lives: <span id="lives" class="font-bold"></span></span>
         </div>
-
 
         <div class="flex flex-col md:flex-row gap-4 flex-grow">
 
@@ -112,7 +127,6 @@
 
                  <div id="message-area" class="text-center text-base md:text-lg font-medium w-full order-2"></div>
 
-
                  <div class="flex flex-wrap justify-center md:justify-start gap-2 order-3">
                     <button data-mode="infinitive" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Infinitive</button>
                     <button data-mode="praeteritum" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Präteritum</button>
@@ -120,7 +134,13 @@
                     <button data-mode="mixed" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Mixed</button>
                 </div>
 
-                 <div class="speed-control w-full order-4">
+                <div class="verb-count-control w-full order-4">
+                    <label for="verb-count-select" class="text-sm font-medium text-gray-700 mb-1">Verbs to Practice:</label>
+                    <select id="verb-count-select" name="verb-count">
+                        </select>
+                </div>
+
+                 <div class="speed-control w-full order-5">
                     <label for="speed-slider" class="text-sm font-medium text-gray-700 mb-1">Speed Level: <span id="speed-level-display">1</span></label>
                     <div class="speed-slider-container">
                         <input type="range" id="speed-slider" name="speed" min="1" max="4" step="1" value="1" class="w-full">
@@ -133,6 +153,7 @@
             </div> </div> </div> <script>
         // --- Game Data ---
         const verbs = [
+             // Original Verbs
              { infinitive: "anfangen", praeteritum: "fing an", partizip: "angefangen", english: "to begin" },
              { infinitive: "antworten", praeteritum: "antwortete", partizip: "geantwortet", english: "to answer" },
              { infinitive: "arbeiten", praeteritum: "arbeitete", partizip: "gearbeitet", english: "to work" },
@@ -143,21 +164,32 @@
              { infinitive: "baden", praeteritum: "badete", partizip: "gebadet", english: "to bathe" },
              { infinitive: "bauen", praeteritum: "baute", partizip: "gebaut", english: "to build" },
              { infinitive: "beeilen", praeteritum: "beeilte", partizip: "beeilt", english: "to hurry" },
-             { infinitive: "beginnen", praeteritum: "begann", partizip: "begonnen", english: "to begin" },
+             { infinitive: "beginnen", praeteritum: "begann", partizip: "begonnen", english: "to begin" }, // Synonym for anfangen
              { infinitive: "bekommen", praeteritum: "bekam", partizip: "bekommen", english: "to get, receive" },
              { infinitive: "bestellen", praeteritum: "bestellte", partizip: "bestellt", english: "to order" },
              { infinitive: "besuchen", praeteritum: "besuchte", partizip: "besucht", english: "to visit" },
-             { infinitive: "beten", praeteritum: "betete", partizip: "gebetet", english: "to pray" }
+             { infinitive: "beten", praeteritum: "betete", partizip: "gebetet", english: "to pray" },
+             // --- New Verbs Added ---
+             { infinitive: "bewerben", praeteritum: "bewarb", partizip: "beworben", english: "to apply" },
+             { infinitive: "bezahlen", praeteritum: "bezahlte", partizip: "bezahlt", english: "to pay for" },
+             { infinitive: "biegen", praeteritum: "bog", partizip: "gebogen", english: "to turn, bend" }, // Note: Partizip II is 'gebogen'
+             { infinitive: "bieten", praeteritum: "bot", partizip: "geboten", english: "to offer" },
+             { infinitive: "bitten", praeteritum: "bat", partizip: "gebeten", english: "to ask for" }
+             // Add more verbs here if needed
         ];
+        const TOTAL_VERBS_AVAILABLE = verbs.length;
+
+        // --- Game Constants ---
         const INITIAL_LIVES = 5;
-        const MIN_HORIZONTAL_SEPARATION = 50;
+        const MIN_HORIZONTAL_SEPARATION = 80; // Increased separation to reduce overlap chance
+        const MIN_VERTICAL_SEPARATION = 40; // Added minimum vertical separation for spawning
 
         // --- DOM Elements ---
         const gameArea = document.getElementById('game-area');
         const scoreDisplay = document.getElementById('score');
         const livesDisplay = document.getElementById('lives');
         const givenVerbInfoDisplay = document.getElementById('given-verb-info');
-        const givenVerbEnglishDisplay = document.getElementById('given-verb-english');
+        const givenVerbEnglishDisplay = document.getElementById('given-verb-english'); // Kept but unused for now
         const targetFormTypeDisplay = document.getElementById('target-form-type');
         const startButton = document.getElementById('start-button');
         const messageArea = document.getElementById('message-area');
@@ -165,20 +197,24 @@
         const modeButtons = document.querySelectorAll('.mode-button');
         const speedSlider = document.getElementById('speed-slider');
         const speedLevelDisplay = document.getElementById('speed-level-display');
+        const verbCountSelect = document.getElementById('verb-count-select'); // New verb count dropdown
 
         // --- Game State ---
         let score = 0;
         let lives = INITIAL_LIVES;
-        let currentVerb = null;
-        let targetFormType = '';
-        let targetFormValue = '';
-        let fallingVerbs = [];
-        let gameLoopInterval = null;
+        let currentVerb = null;         // The verb object for the current round
+        let targetFormType = '';      // e.g., 'praeteritum', 'partizip'
+        let targetFormValues = [];    // Array of correct answers (handles synonyms)
+        let fallingVerbs = [];        // Array to track falling verb elements and their data
+        let gameLoopInterval = null;    // ID for requestAnimationFrame
         let isGameRunning = false;
-        let isGameOver = false;
-        let fallSpeed = 0.8; // Initial speed based on default slider value 1
-        let roundInProgress = false;
-        let gameMode = 'partizip'; // Default mode set to Partizip Perfekt
+        let isGameOver = false;       // Includes both losing all lives and completing verbs
+        let fallSpeed = 0.8;          // Initial speed based on default slider value 1
+        let roundInProgress = false;    // Flag to indicate if player can interact
+        let gameMode = 'partizip';    // Default mode set to Partizip Perfekt
+        let verbsToPracticeCount = TOTAL_VERBS_AVAILABLE; // How many unique verbs to practice this game
+        let practicedVerbs = new Set(); // Set to store infinitives of correctly practiced verbs
+        let targetVerbPool = [];      // Subset of verbs for the current game if not practicing all
 
         // --- Game Logic ---
 
@@ -193,28 +229,56 @@
                 case 4: fallSpeed = 2.2; break;  // Fast
                 default: fallSpeed = 0.8; // Default to level 1 speed
             }
-             console.log(`Speed level ${levelNum}, fallSpeed set to ${fallSpeed}`);
         }
 
         // Get a random integer between min (inclusive) and max (exclusive)
         function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min)) + min; }
 
-        // Get a random verb from the list, ensuring it's not the same as the last one
-        function getRandomVerb(excludeInfinitive = null) {
-             let newVerb;
-             do { newVerb = verbs[getRandomInt(0, verbs.length)]; }
-             while (excludeInfinitive && newVerb.infinitive === excludeInfinitive);
-             return newVerb;
+        // *** MODIFIED: Selects verb based on practice pool and practiced status ***
+        // Get a random verb for the next round
+        function getNextVerb() {
+            let availableVerbs;
+
+            // Determine the pool of verbs to choose from
+            if (targetVerbPool.length > 0) {
+                // Filter the target pool to get verbs not yet practiced
+                availableVerbs = targetVerbPool.filter(verb => !practicedVerbs.has(verb.infinitive));
+            } else {
+                // Filter the main verbs list to get verbs not yet practiced
+                availableVerbs = verbs.filter(verb => !practicedVerbs.has(verb.infinitive));
+            }
+
+            // If no unpracticed verbs are left in the pool, the game should end (handled in handleVerbClick)
+            // But as a fallback, return null if somehow called when no verbs are left.
+            if (availableVerbs.length === 0) {
+                console.warn("getNextVerb called when no unpracticed verbs remain.");
+                return null;
+            }
+
+            // Select a random verb from the available ones
+            const randomIndex = getRandomInt(0, availableVerbs.length);
+            return availableVerbs[randomIndex];
         }
+
 
         // Get distractor verb forms of a specific type
         function getDistractors(correctVerb, formTypeToGet, count) {
              const distractors = new Set();
-             const correctFormValue = correctVerb[formTypeToGet];
-             while (distractors.size < count && distractors.size < verbs.length - 1) {
-                 const randomVerb = getRandomVerb(correctVerb.infinitive);
+             const correctForms = getCorrectForms(correctVerb, formTypeToGet); // Get all correct forms (for synonyms)
+             const pool = targetVerbPool.length > 0 ? targetVerbPool : verbs; // Use the correct pool for distractors too
+
+             while (distractors.size < count && distractors.size < pool.length - 1) {
+                 // Get a random verb from the relevant pool, ensuring it's not the correct verb
+                 let randomVerb;
+                 do {
+                     randomVerb = pool[getRandomInt(0, pool.length)];
+                 } while (randomVerb.infinitive === correctVerb.infinitive);
+
                  const distractorForm = randomVerb[formTypeToGet];
-                 if (distractorForm && distractorForm !== correctFormValue) distractors.add(distractorForm);
+                 // Ensure distractor exists and is not one of the correct answers
+                 if (distractorForm && !correctForms.includes(distractorForm)) {
+                     distractors.add(distractorForm);
+                 }
              }
              return Array.from(distractors);
         }
@@ -222,217 +286,524 @@
         // Update lives display using heart icons
         function updateLivesDisplay() {
              let hearts = '';
-             for (let i = 0; i < lives; i++) hearts += '<span class="lives-heart">♥</span>';
-             for (let i = lives; i < INITIAL_LIVES; i++) hearts += '<span class="lives-heart text-gray-300">♥</span>';
+             for (let i = 0; i < lives; i++) hearts += '<span class="lives-heart">♥</span>'; // Red heart for life
+             for (let i = lives; i < INITIAL_LIVES; i++) hearts += '<span class="lives-heart text-gray-300">♥</span>'; // Gray heart for lost life
              livesDisplay.innerHTML = hearts;
         }
 
-        // Create a falling verb element with overlap avoidance
+        // Create a falling verb element with better overlap avoidance
         function createFallingVerbElement(verbForm, isCorrect) {
              const verbElement = document.createElement('div');
              verbElement.classList.add('verb-drop');
              verbElement.textContent = verbForm;
-             document.body.appendChild(verbElement); // Temporarily add to measure width
-             const elementWidth = verbElement.offsetWidth;
-             document.body.removeChild(verbElement); // Remove temporary element
 
-             // Ensure gameArea has width before calculating maxLeft
-             const gameAreaWidth = gameArea.offsetWidth || 300; // Use a fallback width if needed initially
-             const maxLeft = gameAreaWidth > elementWidth + 20 ? gameAreaWidth - elementWidth - 10 : 5; // Max possible left position
+             // Append temporarily to measure width accurately
+             document.body.appendChild(verbElement);
+             const elementWidth = verbElement.offsetWidth;
+             document.body.removeChild(verbElement);
+
+             const gameAreaWidth = gameArea.offsetWidth || 300; // Use fallback if needed
+             const maxLeft = Math.max(10, gameAreaWidth - elementWidth - 10); // Ensure at least 10px padding
 
              let potentialLeft;
+             let potentialTop;
              let attempts = 0;
+             const MAX_ATTEMPTS = 20; // Increased attempts
              let positionFound = false;
 
-             // Try to find a non-overlapping horizontal position
-             while (attempts < 10 && !positionFound) {
+             // Try to find a non-overlapping position
+             while (attempts < MAX_ATTEMPTS && !positionFound) {
                  potentialLeft = getRandomInt(10, maxLeft);
+                 potentialTop = -getRandomInt(30, 100); // Start randomly above the view
                  positionFound = true; // Assume it's good initially
 
                  // Check against existing falling verbs
                  for (const existingVerb of fallingVerbs) {
+                     // Skip check if element doesn't exist (might have been removed)
+                     if (!existingVerb.element) continue;
+
                      const existingRight = existingVerb.x + existingVerb.width;
                      const potentialRight = potentialLeft + elementWidth;
+                     // Use offsetHeight if available, otherwise estimate
+                     const existingHeight = existingVerb.element.offsetHeight || 50;
+                     const existingBottom = existingVerb.y + existingHeight;
 
-                     // Check for overlap: if new verb's range overlaps existing verb's range (with margin)
-                     if (potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION &&
-                         potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION) {
+                     // Check for HORIZONTAL overlap (with increased separation)
+                     const horizontalOverlap = potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION &&
+                                              potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION;
+
+                     // Check for VERTICAL overlap (only check if starting near another word)
+                     const verticalOverlap = potentialTop < existingBottom + MIN_VERTICAL_SEPARATION &&
+                                             potentialTop + 50 > existingVerb.y - MIN_VERTICAL_SEPARATION; // 50 is approx height
+
+                     if (horizontalOverlap && verticalOverlap) {
                          positionFound = false; // Overlap detected
                          break;
                      }
                  }
                  attempts++;
              }
-              // If still no position found after attempts, just use the last random one
-              if (!positionFound) {
-                  potentialLeft = getRandomInt(10, maxLeft);
-              }
+
+             // If still no position found after attempts, place it near the top-center as a fallback
+             if (!positionFound) {
+                 potentialLeft = Math.max(10, (gameAreaWidth - elementWidth) / 2 + getRandomInt(-30, 30)); // Center-ish
+                 potentialTop = -getRandomInt(30, 60); // Start reliably high
+             }
 
              verbElement.style.left = `${potentialLeft}px`;
-             verbElement.style.top = `-${getRandomInt(30, 100)}px`; // Start slightly above the view
-             verbElement.dataset.correct = isCorrect;
-             verbElement.dataset.form = verbForm;
+             verbElement.style.top = `${potentialTop}px`;
+             verbElement.dataset.correct = isCorrect; // Store if this form is a correct answer
+             verbElement.dataset.form = verbForm;     // Store the actual verb form text
              verbElement.addEventListener('click', handleVerbClick);
              gameArea.appendChild(verbElement);
 
              // Return necessary info for tracking
-             return { element: verbElement, isCorrect: isCorrect, form: verbForm, y: parseFloat(verbElement.style.top) || 0, x: potentialLeft, width: elementWidth };
+             return { element: verbElement, isCorrect: isCorrect, form: verbForm, y: potentialTop, x: potentialLeft, width: elementWidth };
         }
+
 
         // Handle losing a life
         function loseLife() {
-             if (!isGameRunning) return; lives--; updateLivesDisplay();
+             if (!isGameRunning || isGameOver) return;
+             lives--;
+             updateLivesDisplay();
+             // Flash the verb display area red
              verbDisplayArea.classList.add('feedback-incorrect');
              setTimeout(() => verbDisplayArea.classList.remove('feedback-incorrect'), 500);
-             if (lives <= 0) gameOver();
-        }
-
-        // Handle clicking on a falling verb
-        function handleVerbClick(event) {
-             if (!isGameRunning || !roundInProgress || isGameOver) return;
-             const clickedElement = event.target;
-             const isCorrect = clickedElement.dataset.correct === 'true';
-             if (isCorrect) {
-                 score++; scoreDisplay.textContent = score;
-                 messageArea.textContent = 'Correct! Gut gemacht!';
-                 messageArea.className = 'text-center text-base md:text-lg font-medium text-green-600 w-full order-2'; // Keep order
-                 verbDisplayArea.classList.add('feedback-correct'); setTimeout(() => verbDisplayArea.classList.remove('feedback-correct'), 500);
-                 clickedElement.style.backgroundColor = '#a7f3d0'; clickedElement.style.borderColor = '#059669'; clickedElement.style.fontWeight = 'bold';
-                 roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1000);
-             } else {
-                 messageArea.textContent = `Incorrect! It was: ${targetFormValue}`;
-                 messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full order-2'; // Keep order
-                 clickedElement.style.backgroundColor = '#fee2e2'; clickedElement.style.borderColor = '#dc2626';
-                 loseLife();
-                 if (!isGameOver) { roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1500); }
-                 else { clearFallingVerbs(); }
+             if (lives <= 0) {
+                 gameOver("Game Over! You ran out of lives."); // Pass specific message
              }
         }
 
-        // Clear all falling verb elements
+        // Get all correct forms for a given verb and form type (handles synonyms)
+        function getCorrectForms(verb, formType) {
+            const forms = new Set();
+            if (!verb || !verb[formType]) return []; // Safety check
+
+            forms.add(verb[formType]); // Add the form of the primary verb
+
+            // Specifically handle the "to begin" synonym pair
+            if (verb.english === "to begin") {
+                const synonym = verbs.find(v => v.english === "to begin" && v.infinitive !== verb.infinitive);
+                if (synonym && synonym[formType]) {
+                    forms.add(synonym[formType]);
+                }
+            }
+            return Array.from(forms);
+        }
+
+        // *** MODIFIED: Checks for game completion ***
+        // Handle clicking on a falling verb
+        function handleVerbClick(event) {
+             if (!isGameRunning || !roundInProgress || isGameOver) return;
+
+             const clickedElement = event.target;
+             const clickedForm = clickedElement.dataset.form;
+
+             // Check if the clicked form is one of the acceptable target forms
+             const isCorrectClick = targetFormValues.includes(clickedForm);
+
+             if (isCorrectClick) {
+                 score++;
+                 scoreDisplay.textContent = score;
+                 messageArea.textContent = 'Correct! Gut gemacht!';
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-green-600 w-full order-2';
+                 verbDisplayArea.classList.add('feedback-correct');
+                 setTimeout(() => verbDisplayArea.classList.remove('feedback-correct'), 500);
+
+                 // Visually confirm the correct choice
+                 clickedElement.style.backgroundColor = '#a7f3d0'; // Light green
+                 clickedElement.style.borderColor = '#059669'; // Darker green
+                 clickedElement.style.fontWeight = 'bold';
+
+                 // *** Add current verb to practiced set ***
+                 practicedVerbs.add(currentVerb.infinitive);
+
+                 roundInProgress = false; // Stop interaction for this round
+                 setTimeout(clearFallingVerbs, 300); // Clear words after a short delay
+
+                 // *** Check if the required number of verbs have been practiced ***
+                 if (practicedVerbs.size >= verbsToPracticeCount) {
+                     setTimeout(() => gameComplete(), 1000); // Call game complete after delay
+                 } else {
+                     setTimeout(nextRound, 1000); // Start next round after a longer delay
+                 }
+
+             } else {
+                 // Display the first correct answer if multiple existed (e.g., for synonyms)
+                 messageArea.textContent = `Incorrect! It was: ${targetFormValues[0] || '???'}`; // Added fallback
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full order-2';
+
+                 // Visually mark the incorrect choice
+                 clickedElement.style.backgroundColor = '#fee2e2'; // Light red
+                 clickedElement.style.borderColor = '#dc2626'; // Darker red
+
+                 loseLife(); // Lose a life
+
+                 if (!isGameOver) {
+                     roundInProgress = false; // Stop interaction
+                     setTimeout(clearFallingVerbs, 300);
+                     setTimeout(nextRound, 1500); // Longer delay after incorrect answer
+                 } else {
+                     // If game over (due to lives), clear immediately
+                     clearFallingVerbs();
+                 }
+             }
+        }
+
+        // Clear all falling verb elements from the DOM and the tracking array
         function clearFallingVerbs() {
-             fallingVerbs.forEach(item => item.element.remove()); fallingVerbs = [];
+             fallingVerbs.forEach(item => {
+                 if (item.element && item.element.parentNode) {
+                     item.element.remove();
+                 }
+             });
+             fallingVerbs = []; // Reset the tracking array
         }
 
         // Start the next round based on gameMode
         function nextRound() {
              if (!isGameRunning || isGameOver) return;
-             clearFallingVerbs(); messageArea.textContent = ''; roundInProgress = true;
-             currentVerb = getRandomVerb(currentVerb ? currentVerb.infinitive : null);
-             const givenInfo = `"${currentVerb.english}"`; const givenEnglish = '';
-             let targetTypeDisplay = ''; let formTypeForFallingWords = '';
-             switch (gameMode) {
-                 case 'infinitive': targetFormType = 'infinitive'; targetTypeDisplay = 'Infinitive'; formTypeForFallingWords = 'infinitive'; break;
-                 case 'praeteritum': targetFormType = 'praeteritum'; targetTypeDisplay = 'Präteritum'; formTypeForFallingWords = 'praeteritum'; break;
-                 case 'partizip': targetFormType = 'partizip'; targetTypeDisplay = 'Partizip Perfekt'; formTypeForFallingWords = 'partizip'; break;
-                 case 'mixed': default: targetFormType = Math.random() < 0.5 ? 'praeteritum' : 'partizip'; targetTypeDisplay = (targetFormType === 'praeteritum') ? 'Präteritum' : 'Partizip Perfekt'; formTypeForFallingWords = targetFormType; break;
+
+             clearFallingVerbs();
+             messageArea.textContent = ''; // Clear previous messages
+
+             // Select the next verb to practice
+             currentVerb = getNextVerb();
+
+             // If getNextVerb returns null (shouldn't happen if completion check is correct, but safety first)
+             if (!currentVerb) {
+                 console.error("Failed to get next verb, ending game.");
+                 gameComplete(); // Or gameOver? Decide based on desired behavior
+                 return;
              }
-             targetFormValue = currentVerb[targetFormType];
-             givenVerbInfoDisplay.textContent = givenInfo; givenVerbEnglishDisplay.textContent = givenEnglish; targetFormTypeDisplay.textContent = targetTypeDisplay;
-             const distractors = getDistractors(currentVerb, formTypeForFallingWords, getRandomInt(2, 4));
-             const allFallingForms = [targetFormValue, ...distractors]; allFallingForms.sort(() => Math.random() - 0.5);
-             let spawnDelay = 0;
+
+             roundInProgress = true; // Allow interaction for the new round
+
+             const givenInfo = `"${currentVerb.english}"`; // Display English meaning
+             const givenEnglish = ''; // Clear secondary display if not used
+
+             let targetTypeDisplay = ''; // Text for the UI (e.g., "Präteritum")
+             let formTypeForFallingWords = ''; // Key to access verb forms (e.g., 'praeteritum')
+
+             // Determine the target form based on the selected game mode
+             switch (gameMode) {
+                 case 'infinitive': targetFormType = 'infinitive'; targetTypeDisplay = 'Infinitive'; break;
+                 case 'praeteritum': targetFormType = 'praeteritum'; targetTypeDisplay = 'Präteritum'; break;
+                 case 'partizip': targetFormType = 'partizip'; targetTypeDisplay = 'Partizip Perfekt'; break;
+                 case 'mixed': default: targetFormType = Math.random() < 0.5 ? 'praeteritum' : 'partizip'; targetTypeDisplay = (targetFormType === 'praeteritum') ? 'Präteritum' : 'Partizip Perfekt'; break;
+             }
+             formTypeForFallingWords = targetFormType; // Use the same form type for distractors
+
+             // Get all correct forms (handles synonyms)
+             targetFormValues = getCorrectForms(currentVerb, targetFormType);
+
+             // Update the UI display
+             givenVerbInfoDisplay.textContent = givenInfo;
+             givenVerbEnglishDisplay.textContent = givenEnglish;
+             targetFormTypeDisplay.textContent = targetTypeDisplay;
+
+             // Get distractor words (forms of other verbs)
+             const distractors = getDistractors(currentVerb, formTypeForFallingWords, getRandomInt(2, 4)); // 2 to 4 distractors
+
+             // Combine correct answer(s) and distractors, then shuffle
+             const allFallingForms = [...targetFormValues, ...distractors];
+             allFallingForms.sort(() => Math.random() - 0.5); // Shuffle the array
+
+             let spawnDelay = 0; // Initial delay before the first word appears
+
+             // Create and spawn each falling word element with a delay
              allFallingForms.forEach((form) => {
                  setTimeout(() => {
+                     // Only spawn if the round is still active and game not over
                      if (!roundInProgress || isGameOver) return;
-                     const isCorrect = form === targetFormValue;
+
+                     // Determine if the current form being spawned is a correct answer
+                     const isCorrect = targetFormValues.includes(form);
                      const verbData = createFallingVerbElement(form, isCorrect);
-                     if(verbData) fallingVerbs.push(verbData);
+                     if (verbData) {
+                         fallingVerbs.push(verbData); // Add to tracking array
+                     }
                  }, spawnDelay);
-                 spawnDelay += getRandomInt(400, 900);
+                 spawnDelay += getRandomInt(500, 1000); // Random delay between word spawns
              });
         }
 
-        // Main game loop using requestAnimationFrame
+        // Main game loop using requestAnimationFrame for smooth animation
         function gameLoop(timestamp) {
-             if (!isGameRunning || isGameOver) return;
-             const gameAreaHeight = gameArea.offsetHeight; const verbsToRemove = [];
+             if (!isGameRunning || isGameOver) return; // Stop loop if game isn't active
+
+             const gameAreaHeight = gameArea.offsetHeight;
+             const verbsToRemove = []; // Keep track of verbs that reach the bottom
+
+             // Update position of each falling verb
              fallingVerbs.forEach((item, index) => {
-                 item.y += fallSpeed; // Use the current fallSpeed value
+                 // Safety check if element was removed prematurely
+                 if (!item.element || !item.element.parentNode) {
+                     verbsToRemove.push(index);
+                     return;
+                 }
+
+                 item.y += fallSpeed; // Move down based on current speed setting
                  item.element.style.top = `${item.y}px`;
 
-                 // Check if verb reached the bottom
+                 // Check if verb element has reached or passed the bottom of the game area
                  if (item.y + item.element.offsetHeight >= gameAreaHeight) {
-                     verbsToRemove.push(index); item.element.remove();
-                     // If the MISSED one was the CORRECT answer for an active round
+                     verbsToRemove.push(index); // Mark for removal
+                     item.element.remove(); // Remove from DOM
+
+                     // Check if the MISSED word was a CORRECT answer for the active round
                      if (item.isCorrect && roundInProgress) {
-                         messageArea.textContent = `Missed! It was: ${targetFormValue}`;
-                         messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-600 w-full order-2'; // Keep order
-                         loseLife();
-                         if (!isGameOver) { roundInProgress = false; setTimeout(clearFallingVerbs, 300); setTimeout(nextRound, 1500); }
-                         else { clearFallingVerbs(); }
+                         messageArea.textContent = `Missed! It was: ${targetFormValues[0] || '???'}`; // Show the first correct answer
+                         messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-600 w-full order-2';
+                         loseLife(); // Player loses a life for missing the correct answer
+
+                         if (!isGameOver) {
+                             roundInProgress = false; // Stop interaction for this round
+                             setTimeout(clearFallingVerbs, 300); // Clear remaining words
+                             setTimeout(nextRound, 1500); // Start next round after delay
+                         } else {
+                             clearFallingVerbs(); // Clear immediately if game over (due to lives)
+                         }
                      }
                  }
              });
-             // Remove missed verbs from the tracking array
-             for (let i = verbsToRemove.length - 1; i >= 0; i--) fallingVerbs.splice(verbsToRemove[i], 1);
+
+             // Remove missed verbs from the tracking array (iterate backwards to avoid index issues)
+             for (let i = verbsToRemove.length - 1; i >= 0; i--) {
+                 fallingVerbs.splice(verbsToRemove[i], 1);
+             }
+
              // Continue the loop only if game is still running
-             if (isGameRunning && !isGameOver) gameLoopInterval = requestAnimationFrame(gameLoop);
+             if (isGameRunning && !isGameOver) {
+                 gameLoopInterval = requestAnimationFrame(gameLoop);
+             }
         }
 
-        // Game Over function
-        function gameOver() {
-             isGameRunning = false; isGameOver = true; roundInProgress = false;
-             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval); clearFallingVerbs();
-             messageArea.textContent = `Game Over! Final Score: ${score}`;
-             messageArea.className = 'text-center text-xl font-bold text-red-600 w-full order-2'; // Keep order
-             startButton.textContent = 'Restart Game'; startButton.classList.replace('bg-red-500', 'bg-green-500'); startButton.classList.replace('hover:bg-red-600', 'hover:bg-green-600');
-             givenVerbInfoDisplay.textContent = '---'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '---';
-             speedSlider.disabled = false; // Re-enable slider on game over
+        // *** MODIFIED: Generic Game Over / Completion handler ***
+        // Ends the game, displaying a specific message
+        function endSequence(message, isCompletion = false) {
+             isGameRunning = false;
+             isGameOver = true; // Use a single flag for any end state
+             roundInProgress = false; // Ensure no lingering interactions
+
+             if (gameLoopInterval) {
+                 cancelAnimationFrame(gameLoopInterval); // Stop the animation loop
+                 gameLoopInterval = null;
+             }
+             clearFallingVerbs(); // Remove any remaining words
+
+             // Display final message (completion or game over)
+             messageArea.textContent = message;
+             // Style differently for completion vs. game over by lives
+             messageArea.className = `text-center text-xl font-bold ${isCompletion ? 'text-green-600' : 'text-red-600'} w-full order-2`;
+
+             // Update start button to allow restarting
+             startButton.textContent = 'Restart Game';
+             startButton.classList.remove('bg-red-500', 'hover:bg-red-600');
+             startButton.classList.add('bg-green-500', 'hover:bg-green-600'); // Use green for restart
+
+             // Reset displays
+             givenVerbInfoDisplay.textContent = '---';
+             givenVerbEnglishDisplay.textContent = '';
+             targetFormTypeDisplay.textContent = '---';
+
+             // Re-enable controls
+             speedSlider.disabled = false;
+             verbCountSelect.disabled = false;
         }
 
+        // Specific function for game over due to lives
+        function gameOver(reasonMessage) {
+             endSequence(`${reasonMessage} Final Score: ${score}`, false);
+        }
+
+        // Specific function for game completion
+        function gameComplete() {
+             const completionMessage = `Congratulations! You practiced all ${verbsToPracticeCount} verbs! Final Score: ${score}`;
+             endSequence(completionMessage, true);
+        }
+
+
+        // *** MODIFIED: Initializes verb pool and count ***
         // Start the game (or restart)
         function startGame() {
-             score = 0; lives = INITIAL_LIVES; isGameOver = false; isGameRunning = true; roundInProgress = false;
-             updateFallSpeed(speedSlider.value); // Ensure speed is set correctly on start
-             scoreDisplay.textContent = score; updateLivesDisplay();
-             startButton.textContent = 'Stop Game'; startButton.classList.remove('bg-blue-500', 'bg-green-500', 'hover:bg-blue-600', 'hover:bg-green-600'); startButton.classList.add('bg-red-500', 'hover:bg-red-600');
-             speedSlider.disabled = true; // Disable slider while game is running
-             clearFallingVerbs(); messageArea.textContent = ''; // Clear message on start
-             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval); // Clear any residual loop
-             nextRound(); gameLoopInterval = requestAnimationFrame(gameLoop);
+             // Reset game state variables
+             score = 0;
+             lives = INITIAL_LIVES;
+             isGameOver = false;
+             isGameRunning = true;
+             roundInProgress = false; // Will be set true in nextRound
+             practicedVerbs = new Set(); // Clear practiced verbs set
+             targetVerbPool = []; // Clear specific verb pool
+
+             // --- Determine number of verbs and pool ---
+             const selectedValue = verbCountSelect.value;
+             if (selectedValue === 'all') {
+                 verbsToPracticeCount = TOTAL_VERBS_AVAILABLE;
+                 targetVerbPool = []; // Use all verbs
+             } else {
+                 verbsToPracticeCount = parseInt(selectedValue, 10);
+                 // Create a shuffled subset of verbs for this game
+                 targetVerbPool = [...verbs].sort(() => 0.5 - Math.random()).slice(0, verbsToPracticeCount);
+             }
+             // ---
+
+             updateFallSpeed(speedSlider.value); // Ensure speed is set correctly based on slider
+             scoreDisplay.textContent = score;
+             updateLivesDisplay(); // Show initial lives
+
+             // Update start button appearance and text
+             startButton.textContent = 'Stop Game';
+             startButton.classList.remove('bg-blue-500', 'bg-green-500', 'hover:bg-blue-600', 'hover:bg-green-600');
+             startButton.classList.add('bg-red-500', 'hover:bg-red-600'); // Red for stop
+
+             // Disable controls
+             speedSlider.disabled = true;
+             verbCountSelect.disabled = true;
+
+             clearFallingVerbs(); // Clear any previous words
+             messageArea.textContent = ''; // Clear any previous messages
+
+             if (gameLoopInterval) {
+                 cancelAnimationFrame(gameLoopInterval); // Clear any residual loop
+             }
+
+             nextRound(); // Start the first round
+             if (!isGameOver) { // Only start loop if game didn't end immediately (e.g., 0 verbs selected)
+                 gameLoopInterval = requestAnimationFrame(gameLoop); // Start the game loop
+             }
         }
 
         // Stop the game (manual stop, not game over)
         function stopGame() {
-             if (!isGameRunning || isGameOver) return;
-             isGameRunning = false; roundInProgress = false; startButton.textContent = 'Start Game';
-             startButton.classList.remove('bg-red-500', 'bg-green-500', 'hover:bg-red-600', 'hover:bg-green-600'); startButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
-             speedSlider.disabled = false; // Re-enable slider when stopped
-             if (gameLoopInterval) cancelAnimationFrame(gameLoopInterval);
-             clearFallingVerbs(); givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '-';
-             messageArea.textContent = 'Game stopped. Select mode/speed and start again!';
-             messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2'; // Keep order
+             if (!isGameRunning || isGameOver) return; // Only stop if running
+
+             isGameRunning = false;
+             roundInProgress = false; // Stop interactions
+
+             // Update button text and appearance
+             startButton.textContent = 'Start Game';
+             startButton.classList.remove('bg-red-500', 'bg-green-500', 'hover:bg-red-600', 'hover:bg-green-600');
+             startButton.classList.add('bg-blue-500', 'hover:bg-blue-600'); // Blue for start
+
+             // Re-enable controls
+             speedSlider.disabled = false;
+             verbCountSelect.disabled = false;
+
+             if (gameLoopInterval) {
+                 cancelAnimationFrame(gameLoopInterval); // Stop the animation loop
+                 gameLoopInterval = null;
+             }
+
+             clearFallingVerbs(); // Remove falling words
+             // Reset displays to initial state
+             givenVerbInfoDisplay.textContent = '-';
+             givenVerbEnglishDisplay.textContent = '';
+             targetFormTypeDisplay.textContent = '-';
+             messageArea.textContent = 'Game stopped. Select options and start again!';
+             messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
         }
 
+        // --- NEW: Populate Verb Count Dropdown ---
+        function populateVerbCountDropdown() {
+            verbCountSelect.innerHTML = ''; // Clear existing options
+
+            const options = [5, 10, 15]; // Base options
+
+            // Add options only if they are less than or equal to the total number of verbs
+            options.forEach(num => {
+                if (num <= TOTAL_VERBS_AVAILABLE) {
+                    const option = document.createElement('option');
+                    option.value = num;
+                    option.textContent = num;
+                    verbCountSelect.appendChild(option);
+                }
+            });
+
+            // Add the "All" option
+            const allOption = document.createElement('option');
+            allOption.value = 'all';
+            allOption.textContent = `All (${TOTAL_VERBS_AVAILABLE})`;
+            verbCountSelect.appendChild(allOption);
+
+            // Set default selection (optional, could be 'all' or the smallest number)
+            verbCountSelect.value = 'all'; // Default to all
+        }
+
+
         // --- Event Listeners ---
+
+        // Start/Stop/Restart button click handler
         startButton.addEventListener('click', () => {
-             if (isGameOver) startGame(); else if (isGameRunning) stopGame(); else startGame();
+             if (isGameOver) {
+                 startGame(); // If game was over, restart
+             } else if (isGameRunning) {
+                 stopGame(); // If running, stop
+             } else {
+                 startGame(); // If stopped or initial state, start
+             }
         });
 
+        // Mode selection button click handler
         modeButtons.forEach(button => {
              button.addEventListener('click', () => {
-                 // Prevent mode change while running
-                 if (isGameRunning) { messageArea.textContent = 'Stop the game to change mode!'; messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-500 w-full order-2'; setTimeout(() => { if(!isGameRunning && !isGameOver) messageArea.textContent = '';}, 2000); return; }
+                 // Prevent mode change while game is actively running
+                 if (isGameRunning) {
+                     messageArea.textContent = 'Stop the game to change mode!';
+                     messageArea.className = 'text-center text-base md:text-lg font-medium text-orange-500 w-full order-2';
+                     setTimeout(() => { if (!isGameRunning && !isGameOver) messageArea.textContent = ''; }, 2000);
+                     return;
+                 }
                  // Reset game over state if changing mode after game over
-                 if (isGameOver) { isGameOver = false; startButton.textContent = 'Start Game'; startButton.classList.remove('bg-green-500', 'hover:bg-green-600'); startButton.classList.add('bg-blue-500', 'hover:bg-blue-600'); updateLivesDisplay(); }
+                 if (isGameOver) {
+                     isGameOver = false;
+                     startButton.textContent = 'Start Game';
+                     startButton.classList.remove('bg-green-500', 'hover:bg-green-600');
+                     startButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                     updateLivesDisplay(); // Reset lives display visually
+                 }
                  // Update mode
-                 gameMode = button.dataset.mode; modeButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active');
+                 gameMode = button.dataset.mode;
+                 modeButtons.forEach(btn => btn.classList.remove('active'));
+                 button.classList.add('active');
                  // Reset displays
-                 givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; targetFormTypeDisplay.textContent = '-';
-                 messageArea.textContent = `Mode set to ${gameMode}. Click Start Game!`;
-                 messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2'; // Keep order
-                 console.log("Game mode changed to:", gameMode);
+                 givenVerbInfoDisplay.textContent = '-';
+                 givenVerbEnglishDisplay.textContent = '';
+                 targetFormTypeDisplay.textContent = '-';
+                 messageArea.textContent = `Mode set to ${button.textContent}. Click Start Game!`;
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
              });
         });
 
-        speedSlider.addEventListener('input', (event) => { updateFallSpeed(event.target.value); });
+        // Speed slider input handler
+        speedSlider.addEventListener('input', (event) => {
+            updateFallSpeed(event.target.value); // Update speed based on slider value
+        });
+
+        // Verb count dropdown change handler
+        verbCountSelect.addEventListener('change', () => {
+            // This primarily affects the *next* game start.
+            // Optional: Update message area if desired.
+             if (!isGameRunning && !isGameOver) {
+                 const selectedText = verbCountSelect.options[verbCountSelect.selectedIndex].text;
+                 messageArea.textContent = `Practice set to ${selectedText} verbs. Click Start Game!`;
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
+             }
+        });
 
         // --- Initial Setup ---
-        updateLivesDisplay(); updateFallSpeed(speedSlider.value); // Update based on slider's default value (now 1)
-        messageArea.textContent = 'Select mode/speed and click "Start Game"!';
-        messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2'; // Keep order
-        givenVerbInfoDisplay.textContent = '-'; givenVerbEnglishDisplay.textContent = ''; speedSlider.disabled = false; // Ensure slider is enabled initially
+        // Run once when the page loads
+        populateVerbCountDropdown(); // Add options to the verb count selector
+        updateLivesDisplay(); // Show initial lives (full)
+        updateFallSpeed(speedSlider.value); // Set initial speed based on slider's default value
+        messageArea.textContent = 'Select options and click "Start Game"!';
+        messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
+        givenVerbInfoDisplay.textContent = '-'; // Initial placeholder
+        givenVerbEnglishDisplay.textContent = ''; // Initial placeholder
+        // Ensure controls are enabled initially
+        speedSlider.disabled = false;
+        verbCountSelect.disabled = false;
 
     </script>
 
