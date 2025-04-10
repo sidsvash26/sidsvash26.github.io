@@ -1,5 +1,15 @@
 # _data/games.yml
 
+- title: "German Vocabulary Flashcards"
+  description: | # Use the pipe symbol for multi-line literal string
+    Master German vocabulary with this interactive flashcard game.
+
+    Practice German A1 words, complete with example sentences. Choose between English-to-German or German-to-English translation, and focus your learning by selecting specific chapters.
+
+    Test yourself by marking cards as correct or wrong, track your score, and navigate easily through the deck. A great tool for reinforcing vocabulary for any learning level!
+  image: "/assets/img/games/german_vocab_flashcards.png"
+  url: "/games/german_vocab_flashcards.html"
+
 - title: "German Verb Forms Trainer"
   description: | # Use the pipe symbol for multi-line literal string
     Practice conjugating common German verbs in different tenses.
@@ -10,7 +20,6 @@
   image: "/assets/img/games/german_verb_forms.png"
   url: "/games/german_verb_forms.html"
 # --- Add new games below this line ---
-
 # - title: "Another Game Title"
 #   description: "A brief description of the other game."
 #   image: "/assets/images/games/another_game.png"
