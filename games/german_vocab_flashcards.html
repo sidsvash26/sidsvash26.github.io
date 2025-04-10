@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Vocabulary Flashcards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for the flashcard flip */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Tailwind gray-100 */
+        }
+        .flashcard-container {
+            perspective: 1000px;
+            min-height: 250px;
+            margin-bottom: 1rem; /* Space below card before status/assessment */
+        }
+        .flashcard {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+            cursor: default;
+        }
+        .flashcard.no-interaction {
+             pointer-events: none;
+             cursor: default;
+        }
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 1rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            text-align: center;
+            user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+        }
+        .flashcard-front {
+            background-color: #ffffff; /* white */
+            color: #1f2937; /* gray-800 */
+        }
+        .flashcard-back {
+            background-color: #4b5563; /* gray-600 */
+            color: #ffffff; /* white */
+            transform: rotateY(180deg);
+        }
+        .word-display {
+            font-size: 1.875rem; /* text-3xl */
+            line-height: 2.25rem;
+            font-weight: 700; /* font-bold */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .example-sentence {
+            font-size: 1rem; /* text-base */
+            line-height: 1.5rem;
+            font-style: italic;
+            color: #e5e7eb; /* gray-200 */
+        }
+        /* Basic button styling */
+        button, select {
+             transition: all 0.2s ease-in-out;
+        }
+        button:hover:not(:disabled), select:hover {
+            opacity: 0.85;
+        }
+        button:active:not(:disabled) {
+             transform: scale(0.98);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        /* Loading indicator styles */
+        .loader {
+          border: 5px solid #f3f3f3;
+          border-top: 5px solid #3498db;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+          margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Hide/Show element smoothly */
+        .hidden-smooth {
+            opacity: 0; visibility: hidden; height: 0;
+            margin-top: 0 !important; margin-bottom: 0 !important;
+            padding-top: 0 !important; padding-bottom: 0 !important;
+            transition: opacity 0.3s ease, visibility 0.3s ease, height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+            overflow: hidden;
+        }
+        .visible-smooth {
+             opacity: 1; visibility: visible; height: auto;
+             margin-top: 0.5rem; /* mt-2 */
+             transition: opacity 0.3s ease 0.1s, visibility 0.3s ease 0.1s, height 0.3s ease 0.1s, margin 0.3s ease 0.1s, padding 0.3s ease 0.1s;
+        }
+        /* Styles for the status display */
+         #card-status-display { font-weight: 500; }
+         .status-correct { color: #16a34a; } /* green-600 */
+         .status-wrong { color: #dc2626; } /* red-600 */
+         .card-status-base { text-align: center; }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg w-full max-w-2xl mx-auto">
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">German Vocabulary Flashcards</h1>
+
+        <div id="loading" class="text-center text-gray-600 my-10">
+            <div class="loader"></div>
+            Loading vocabulary...
+        </div>
+
+        <div id="error-message" class="hidden text-center text-red-600 mb-6 p-3 bg-red-100 rounded-lg"></div>
+
+        <div id="controls" class="hidden mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
+                <div class="flex-1 min-w-0">
+                    <label for="chapter-select" class="block text-sm font-medium text-gray-700 mb-1">Chapter:</label>
+                    <select id="chapter-select" name="chapter" class="w-full mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm cursor-pointer">
+                        <option value="all">All Chapters</option>
+                        </select>
+                </div>
+
+                <fieldset class="flex-shrink-0">
+                    <legend class="block text-sm font-medium text-gray-700 mb-1 md:text-center">Direction:</legend>
+                    <div class="flex items-center justify-start md:justify-center space-x-4 mt-1">
+                        <div class="flex items-center">
+                            <input id="eng-to-ger" name="direction" type="radio" value="eng-ger" checked class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 cursor-pointer">
+                            <label for="eng-to-ger" class="ml-2 block text-sm text-gray-900 cursor-pointer">ENG → GER</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="ger-to-eng" name="direction" type="radio" value="ger-eng" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 cursor-pointer">
+                            <label for="ger-to-eng" class="ml-2 block text-sm text-gray-900 cursor-pointer">GER → ENG</label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                 <div class="flex-shrink-0 mt-2 md:mt-0 self-center md:self-end">
+                    <button id="shuffle-button" class="w-full md:w-auto px-4 py-2 bg-purple-600 text-white rounded-md shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 text-sm font-medium">
+                        Shuffle Deck
+                    </button>
+                 </div>
+            </div>
+        </div>
+
+        <div id="flashcard-area" class="hidden mb-6">
+            <div id="flashcard-container" class="flashcard-container">
+                <div id="flashcard" class="flashcard">
+                    <div class="flashcard-face flashcard-front">
+                        <span id="card-front-content" class="word-display">Loading...</span>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <span id="card-back-translation" class="word-display"></span>
+                        <span id="card-back-example" class="example-sentence"></span>
+                    </div>
+                </div>
+            </div>
+
+             <div id="card-status-display" class="card-status-base hidden-smooth h-6"></div> <div id="assessment-controls" class="assessment-controls hidden-smooth text-center mt-4 space-y-3">
+                 <p class="text-sm text-gray-600 italic">Be truthful to yourself!</p>
+                 <div class="flex justify-center items-center gap-3 sm:gap-4">
+                     <button id="correct-button" class="px-4 py-2 sm:px-5 sm:py-2 bg-green-600 text-white rounded-md shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-sm sm:text-base">
+                         I knew it! 👍
+                     </button>
+                     <button id="wrong-button" class="px-4 py-2 sm:px-5 sm:py-2 bg-red-600 text-white rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-sm sm:text-base">
+                         Didn't know 👎
+                     </button>
+                 </div>
+            </div>
+        </div>
+
+        <div id="navigation-area" class="hidden mt-8 pt-4 border-t border-gray-200">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                 <div class="text-center sm:text-left">
+                     <span id="card-counter" class="text-sm text-gray-600 mr-4">Card 0 of 0</span>
+                     <span id="score-display" class="text-sm font-medium text-indigo-700">Score: 0 / 0</span>
+                 </div>
+                 <div class="flex justify-center items-center space-x-3 w-full sm:w-auto">
+                     <button id="prev-button" class="flex-1 sm:flex-none px-4 py-2 sm:px-6 bg-gray-500 text-white rounded-md shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 text-sm font-medium">
+                        Previous
+                     </button>
+                     <button id="next-button" class="flex-1 sm:flex-none px-4 py-2 sm:px-6 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-sm font-medium">
+                        Next
+                     </button>
+                 </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const googleSheetCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQEmR6UEXuebbHyZ66KbVf_hbJwU_Gwj9qkkzmRjGh9wLebiYXvCMBB3ukupbhXCP4mF5VJCuh3im3H/pub?gid=0&single=true&output=csv';
+
+        // --- DOM Elements ---
+        const loadingIndicator = document.getElementById('loading');
+        const errorMessageDiv = document.getElementById('error-message');
+        const controlsDiv = document.getElementById('controls');
+        const flashcardAreaDiv = document.getElementById('flashcard-area');
+        const navigationAreaDiv = document.getElementById('navigation-area'); // Get navigation area
+        const chapterSelect = document.getElementById('chapter-select');
+        const directionRadios = document.querySelectorAll('input[name="direction"]');
+        const flashcard = document.getElementById('flashcard');
+        const cardFrontContent = document.getElementById('card-front-content');
+        const cardBackTranslation = document.getElementById('card-back-translation');
+        const cardBackExample = document.getElementById('card-back-example');
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+        const shuffleButton = document.getElementById('shuffle-button');
+        const cardCounter = document.getElementById('card-counter');
+        const assessmentControls = document.getElementById('assessment-controls');
+        const correctButton = document.getElementById('correct-button');
+        const wrongButton = document.getElementById('wrong-button');
+        const scoreDisplay = document.getElementById('score-display');
+        const cardStatusDisplay = document.getElementById('card-status-display');
+
+
+        // --- Game State ---
+        let allVocabulary = [];
+        let currentDeck = [];
+        let currentCardIndex = 0;
+        let currentDirection = 'eng-ger';
+        let chapters = new Set();
+        let backfaceUpdateTimeout = null;
+
+
+        // --- Utility Functions ---
+        function shuffleArray(array) { /* ... (no changes) ... */
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        function parseCSV(csvText) { /* ... (no changes) ... */
+            const lines = csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(line => line.trim() !== '');
+            if (lines.length < 2) return [];
+            const headers = lines[0].split(',').map(h => h.trim());
+            const chapterIndex = headers.indexOf('chapter');
+            const sectionIndex = headers.indexOf('section');
+            const germanIndex = headers.indexOf('word_german');
+            const englishIndex = headers.indexOf('word_english');
+            const exampleIndex = headers.indexOf('example_sentence');
+            if ([chapterIndex, germanIndex, englishIndex, exampleIndex].includes(-1)) {
+                 console.error("CSV header missing required columns. Found:", headers);
+                 showError("Error parsing CSV. Check columns: 'chapter', 'word_german', 'word_english', 'example_sentence'.");
+                 return [];
+            }
+            const vocabulary = [];
+            chapters.clear();
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/^"|"$/g, ''));
+                if (values.length >= headers.length) {
+                     const germanWord = values[germanIndex];
+                     const englishWord = values[englishIndex];
+                     const chapter = values[chapterIndex];
+                     if (chapter && germanWord && englishWord) {
+                        vocabulary.push({ chapter: chapter, section: values[sectionIndex] || '', german: germanWord, english: englishWord, example: values[exampleIndex] || '' });
+                        if (chapter) chapters.add(chapter);
+                     } else { console.warn(`Skipping row ${i+1} due to missing essential data:`, lines[i]); }
+                } else { console.warn(`Skipping row ${i+1} due to incorrect column count:`, lines[i]); }
+            }
+            return vocabulary;
+         }
+        function showError(message) { /* ... (no changes) ... */
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.classList.remove('hidden');
+            loadingIndicator.classList.add('hidden');
+            controlsDiv.classList.add('hidden');
+            flashcardAreaDiv.classList.add('hidden');
+            navigationAreaDiv.classList.add('hidden'); // Hide navigation on error
+        }
+        async function loadVocabulary() { /* ... (updated to show/hide navigation) ... */
+             loadingIndicator.classList.remove('hidden');
+             errorMessageDiv.classList.add('hidden');
+             controlsDiv.classList.add('hidden');
+             flashcardAreaDiv.classList.add('hidden');
+             navigationAreaDiv.classList.add('hidden'); // Hide nav initially
+             try {
+                 const response = await fetch(`${googleSheetCsvUrl}&t=${new Date().getTime()}`);
+                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                 const csvText = await response.text();
+                 if (!csvText || csvText.trim().split('\n').length < 2) { showError("Fetched data is empty or invalid."); return; }
+                 allVocabulary = parseCSV(csvText);
+                 if (allVocabulary.length === 0 && !errorMessageDiv.textContent) { showError("No valid vocabulary data found in the sheet."); return; }
+                 else if (allVocabulary.length > 0) {
+                     populateChapterSelect();
+                     if (!listenersAttached) setupEventListeners(); // Setup listeners only once
+                     filterAndStartDeck();
+                     loadingIndicator.classList.add('hidden');
+                     controlsDiv.classList.remove('hidden');
+                     flashcardAreaDiv.classList.remove('hidden');
+                     navigationAreaDiv.classList.remove('hidden'); // Show nav when ready
+                 }
+             } catch (error) { console.error('Error loading or parsing vocabulary:', error); showError(`Failed to load vocabulary data: ${error.message}`); }
+        }
+        function populateChapterSelect() { /* ... (no changes) ... */
+            chapterSelect.innerHTML = '<option value="all">All Chapters</option>';
+            const sortedChapters = Array.from(chapters).sort((a, b) => {
+                 const numA = parseFloat(a); const numB = parseFloat(b);
+                 if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+                 return String(a).localeCompare(String(b), undefined, {numeric: true});
+            });
+            sortedChapters.forEach(chapter => {
+                const option = document.createElement('option'); option.value = chapter; option.textContent = `Chapter ${chapter}`; chapterSelect.appendChild(option);
+            });
+        }
+        function updateScoreDisplay() { /* ... (no changes) ... */
+             let currentScore = 0;
+             let currentTotalAnswered = 0;
+             currentDeck.forEach(card => {
+                 if (card.status === 'correct') { currentScore++; currentTotalAnswered++; }
+                 else if (card.status === 'wrong') { currentTotalAnswered++; }
+             });
+             scoreDisplay.textContent = `Score: ${currentScore} / ${currentTotalAnswered}`;
+        }
+        function filterAndStartDeck() { /* ... (updated to show/hide navigation) ... */
+            const selectedChapter = chapterSelect.value;
+            let filteredVocab;
+            if (selectedChapter === 'all') { filteredVocab = [...allVocabulary]; }
+            else { filteredVocab = allVocabulary.filter(word => String(word.chapter) === String(selectedChapter)); }
+            currentDeck = filteredVocab.map(card => ({ ...card, status: 'unattempted' }));
+            if (currentDeck.length === 0) {
+                 if (selectedChapter !== 'all') { showError(`No vocabulary found for Chapter ${selectedChapter}.`); }
+                 else if (allVocabulary.length === 0) { showError("No vocabulary loaded at all."); }
+                 else { // "All chapters" selected, but somehow empty (shouldn't happen)
+                    errorMessageDiv.classList.add('hidden'); // Hide error if switching to "All" and it has data
+                 }
+                 flashcardAreaDiv.classList.add('hidden');
+                 navigationAreaDiv.classList.add('hidden'); // Hide nav if no cards
+                 cardCounter.textContent = "Card 0 of 0";
+                 updateScoreDisplay(); return;
+            } else {
+                 errorMessageDiv.classList.add('hidden');
+                 flashcardAreaDiv.classList.remove('hidden');
+                 navigationAreaDiv.classList.remove('hidden'); // Show nav if cards exist
+            }
+            shuffleArray(currentDeck); currentCardIndex = 0; updateScoreDisplay(); displayCard();
+        }
+
+        function displayCard() { /* ... (no functional changes needed for layout) ... */
+            if (currentDeck.length === 0) {
+                cardFrontContent.textContent = "No cards"; cardBackTranslation.textContent = ""; cardBackExample.textContent = "";
+                cardCounter.textContent = `Card 0 of 0`; prevButton.disabled = true; nextButton.disabled = true;
+                flashcard.classList.add('no-interaction'); assessmentControls.classList.add('hidden-smooth');
+                cardStatusDisplay.classList.add('hidden-smooth');
+                return;
+            }
+
+            currentCardIndex = Math.max(0, Math.min(currentCardIndex, currentDeck.length - 1));
+            const cardData = currentDeck[currentCardIndex];
+
+            if (backfaceUpdateTimeout) { clearTimeout(backfaceUpdateTimeout); backfaceUpdateTimeout = null; }
+
+            const englishWord = cardData.english || "[Missing English]";
+            const germanWord = cardData.german || "[Missing German]";
+            const exampleSentence = cardData.example || '(No example sentence provided)';
+
+            if (currentDirection === 'eng-ger') { cardFrontContent.textContent = englishWord; }
+            else { cardFrontContent.textContent = germanWord; }
+
+            cardCounter.textContent = `Card ${currentCardIndex + 1} of ${currentDeck.length}`;
+            updateScoreDisplay();
+
+            assessmentControls.classList.add('hidden-smooth');
+            cardStatusDisplay.classList.remove('visible-smooth', 'status-correct', 'status-wrong');
+            cardStatusDisplay.classList.add('hidden-smooth');
+            cardStatusDisplay.textContent = '';
+            flashcard.classList.remove('no-interaction');
+
+            if (cardData.status === 'unattempted') {
+                flashcard.classList.remove('is-flipped');
+                backfaceUpdateTimeout = setTimeout(() => {
+                    if (currentDirection === 'eng-ger') { cardBackTranslation.textContent = germanWord; }
+                    else { cardBackTranslation.textContent = englishWord; }
+                    cardBackExample.textContent = exampleSentence;
+                    backfaceUpdateTimeout = null;
+                }, 150);
+            } else {
+                flashcard.classList.add('is-flipped');
+                flashcard.classList.add('no-interaction');
+                if (currentDirection === 'eng-ger') { cardBackTranslation.textContent = germanWord; }
+                else { cardBackTranslation.textContent = englishWord; }
+                cardBackExample.textContent = exampleSentence;
+                cardStatusDisplay.classList.remove('hidden-smooth');
+                cardStatusDisplay.classList.add('visible-smooth');
+                if (cardData.status === 'correct') {
+                    cardStatusDisplay.textContent = '✓ Marked as Correct';
+                    cardStatusDisplay.classList.add('status-correct'); cardStatusDisplay.classList.remove('status-wrong');
+                } else {
+                    cardStatusDisplay.textContent = '✗ Marked as Wrong';
+                    cardStatusDisplay.classList.add('status-wrong'); cardStatusDisplay.classList.remove('status-correct');
+                }
+            }
+
+            prevButton.disabled = (currentCardIndex === 0);
+            if (cardData.status === 'unattempted' && flashcard.classList.contains('is-flipped')) { nextButton.disabled = true; }
+            else { nextButton.disabled = false; }
+        }
+
+        function goToNextCard() { /* ... (no changes) ... */
+             if (currentDeck.length > 0) {
+                currentCardIndex++;
+                if (currentCardIndex >= currentDeck.length) { currentCardIndex = 0; }
+                displayCard();
+            }
+        }
+        function goToPreviousCard() { /* ... (no changes) ... */
+             if (currentDeck.length > 0) {
+                currentCardIndex--;
+                if (currentCardIndex < 0) { currentCardIndex = currentDeck.length - 1; }
+                displayCard();
+            }
+        }
+        function handleFlip() { /* ... (no changes) ... */
+            if (currentDeck.length > 0 && currentDeck[currentCardIndex].status === 'unattempted' && !flashcard.classList.contains('is-flipped')) {
+                 if (backfaceUpdateTimeout) {
+                    clearTimeout(backfaceUpdateTimeout);
+                    const cardData = currentDeck[currentCardIndex];
+                    const germanWord = cardData.german || "[Missing German]"; const englishWord = cardData.english || "[Missing English]"; const exampleSentence = cardData.example || '(No example sentence provided)';
+                    if (currentDirection === 'eng-ger') { cardBackTranslation.textContent = germanWord; } else { cardBackTranslation.textContent = englishWord; }
+                    cardBackExample.textContent = exampleSentence; backfaceUpdateTimeout = null;
+                 }
+                flashcard.classList.add('is-flipped'); assessmentControls.classList.remove('hidden-smooth');
+                nextButton.disabled = true; flashcard.classList.add('no-interaction');
+            }
+        }
+        function handleAssessment(wasCorrect) { /* ... (no changes) ... */
+            if (currentDeck.length > 0) {
+                const cardData = currentDeck[currentCardIndex];
+                if (cardData.status === 'unattempted') {
+                    cardData.status = wasCorrect ? 'correct' : 'wrong';
+                    updateScoreDisplay(); goToNextCard();
+                } else { console.warn("Attempted to assess an already assessed card."); goToNextCard(); }
+            }
+        }
+
+        // --- Event Listener Setup ---
+        let listenersAttached = false;
+        function setupEventListeners() { /* ... (no changes) ... */
+             if (listenersAttached) return;
+             flashcard.addEventListener('click', handleFlip);
+             nextButton.addEventListener('click', goToNextCard);
+             prevButton.addEventListener('click', goToPreviousCard);
+             shuffleButton.addEventListener('click', () => { filterAndStartDeck(); });
+             chapterSelect.addEventListener('change', filterAndStartDeck);
+             directionRadios.forEach(radio => {
+                 radio.addEventListener('change', (event) => {
+                     currentDirection = event.target.value;
+                     if (currentDeck.length > 0) { displayCard(); }
+                 });
+             });
+             correctButton.addEventListener('click', () => handleAssessment(true));
+             wrongButton.addEventListener('click', () => handleAssessment(false));
+             listenersAttached = true;
+             console.log("Event listeners attached.");
+        }
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', loadVocabulary);
+
+    </script>
+
+</body>
+</html>
