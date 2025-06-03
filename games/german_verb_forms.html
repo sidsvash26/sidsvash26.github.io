@@ -174,8 +174,55 @@
              { infinitive: "bezahlen", praeteritum: "bezahlte", partizip: "bezahlt", english: "to pay for" },
              { infinitive: "biegen", praeteritum: "bog", partizip: "gebogen", english: "to turn, bend" }, // Note: Partizip II is 'gebogen'
              { infinitive: "bieten", praeteritum: "bot", partizip: "geboten", english: "to offer" },
-             { infinitive: "bitten", praeteritum: "bat", partizip: "gebeten", english: "to ask for" }
+             { infinitive: "bitten", praeteritum: "bat", partizip: "gebeten", english: "to ask for" },
              // Add more verbs here if needed
+            { infinitive: "bleiben", praeteritum: "blieb", partizip: "geblieben", english: "to stay" },
+            { infinitive: "blicken", praeteritum: "blickte", partizip: "geblickt", english: "to look, glance" },
+            { infinitive: "brauchen", praeteritum: "brauchte", partizip: "gebraucht", english: "to need, use" },
+            { infinitive: "brechen", praeteritum: "brach", partizip: "gebrochen", english: "to break" },
+            { infinitive: "bringen", praeteritum: "brachte", partizip: "gebracht", english: "to bring" },
+            { infinitive: "besprechen", praeteritum: "besprach", partizip: "besprochen", english: "to discuss" },
+            { infinitive: "bürsten", praeteritum: "bürstete", partizip: "gebürstet", english: "to brush" },
+            { infinitive: "danken", praeteritum: "dankte", partizip: "gedankt", english: "to thank" },
+            { infinitive: "dauern", praeteritum: "dauerte", partizip: "gedauert", english: "to last" },
+            { infinitive: "denken", praeteritum: "dachte", partizip: "gedacht", english: "to think" },
+            { infinitive: "diskutieren", praeteritum: "diskutierte", partizip: "diskutiert", english: "to discuss" },
+            { infinitive: "drücken", praeteritum: "drückte", partizip: "gedrückt", english: "to press" },
+            { infinitive: "duschen", praeteritum: "duschte", partizip: "geduscht", english: "to shower" },
+            { infinitive: "empfehlen", praeteritum: "empfahl", partizip: "empfohlen", english: "to recommend" },
+            { infinitive: "entscheiden", praeteritum: "entschied", partizip: "entschieden", english: "to decide" },
+            { infinitive: "entschuldigen", praeteritum: "entschuldigte", partizip: "entschuldigt", english: "to excuse oneself" },
+            { infinitive: "entspannen", praeteritum: "entspannte", partizip: "entspannt", english: "to relax" },
+            { infinitive: "erinnern", praeteritum: "erinnerte", partizip: "erinnert", english: "to remember" },
+            { infinitive: "erkälten", praeteritum: "erkältete", partizip: "erkältet", english: "to catch a cold" },
+            { infinitive: "erkennen", praeteritum: "erkannte", partizip: "erkannt", english: "to recognize" },
+            { infinitive: "erklären", praeteritum: "erklärte", partizip: "erklärt", english: "to explain" },
+            { infinitive: "erlauben", praeteritum: "erlaubte", partizip: "erlaubt", english: "to allow, permit" },
+            { infinitive: "erleben", praeteritum: "erlebte", partizip: "erlebt", english: "to experience" },
+            { infinitive: "erzählen", praeteritum: "erzählte", partizip: "erzählt", english: "to tell about" },
+            { infinitive: "essen", praeteritum: "aß", partizip: "gegessen", english: "to eat" },
+            { infinitive: "fahren", praeteritum: "fuhr", partizip: "gefahren", english: "to drive, go" },
+            { infinitive: "fallen", praeteritum: "fiel", partizip: "gefallen", english: "to fall" },
+            { infinitive: "fangen", praeteritum: "fing", partizip: "gefangen", english: "to catch" },
+            { infinitive: "faulenzen", praeteritum: "faulenzte", partizip: "gefaulenzt", english: "to be lazy" },
+            { infinitive: "fehlen", praeteritum: "fehlte", partizip: "gefehlt", english: "to be missing / to be absent" },
+            { infinitive: "feiern", praeteritum: "feierte", partizip: "gefeiert", english: "to celebrate" },
+            { infinitive: "finden", praeteritum: "fand", partizip: "gefunden", english: "to find" },
+            { infinitive: "fliegen", praeteritum: "flog", partizip: "geflogen", english: "to fly" },
+            { infinitive: "folgen", praeteritum: "folgte", partizip: "gefolgt", english: "to follow" },
+            { infinitive: "fönen", praeteritum: "fönte", partizip: "gefönt", english: "to blow dry" },
+            { infinitive: "fotografieren", praeteritum: "fotografierte", partizip: "fotografiert", english: "to photograph" },
+            { infinitive: "fragen", praeteritum: "fragte", partizip: "gefragt", english: "to ask" },
+            { infinitive: "freuen", praeteritum: "freute", partizip: "gefreut", english: "to be happy" },
+            { infinitive: "fühlen", praeteritum: "fühlte", partizip: "gefühlt", english: "to feel" },
+            { infinitive: "geben", praeteritum: "gab", partizip: "gegeben", english: "to give" },
+            { infinitive: "gefallen", praeteritum: "gefiel", partizip: "gefallen", english: "to be pleasing, like" },
+            { infinitive: "gehen", praeteritum: "ging", partizip: "gegangen", english: "to go" },
+            { infinitive: "gehören", praeteritum: "gehörte", partizip: "gehört", english: "to belong to" },
+            { infinitive: "gewinnen", praeteritum: "gewann", partizip: "gewonnen", english: "to winn" }, // Note: "winn" kept as in raw data
+            { infinitive: "glauben", praeteritum: "glaubte", partizip: "geglaubt", english: "to believe, think" },
+            { infinitive: "gratulieren", praeteritum: "gratulierte", partizip: "gratuliert", english: "to congratulate" }
+                // Add more verbs here if needed
         ];
         const TOTAL_VERBS_AVAILABLE = verbs.length;
 
@@ -709,11 +756,28 @@
         function populateVerbCountDropdown() {
             verbCountSelect.innerHTML = ''; // Clear existing options
 
-            const options = [5, 10, 15]; // Base options
+            const distinctOptions = new Set();
+            const step = 5;
 
-            // Add options only if they are less than or equal to the total number of verbs
-            options.forEach(num => {
-                if (num <= TOTAL_VERBS_AVAILABLE) {
+            // Add multiples of 5 that are less than or equal to TOTAL_VERBS_AVAILABLE
+            for (let i = step; i <= TOTAL_VERBS_AVAILABLE; i += step) {
+                distinctOptions.add(i);
+            }
+
+            // Add TOTAL_VERBS_AVAILABLE itself if it's a positive number
+            // (it will be caught by the loop if it's a multiple of step,
+            // this ensures it's added if it's not, or if it's smaller than step)
+            if (TOTAL_VERBS_AVAILABLE > 0) {
+                distinctOptions.add(TOTAL_VERBS_AVAILABLE);
+            }
+
+            // Convert Set to array and sort numerically
+            const sortedOptions = Array.from(distinctOptions).sort((a, b) => a - b);
+
+            // Populate the select element with the sorted distinct options
+            sortedOptions.forEach(num => {
+                // Only add if the number is > 0, to avoid a "0" option if TOTAL_VERBS_AVAILABLE is 0
+                if (num > 0) {
                     const option = document.createElement('option');
                     option.value = num;
                     option.textContent = num;
@@ -727,8 +791,11 @@
             allOption.textContent = `All (${TOTAL_VERBS_AVAILABLE})`;
             verbCountSelect.appendChild(allOption);
 
-            // Set default selection (optional, could be 'all' or the smallest number)
-            verbCountSelect.value = 'all'; // Default to all
+            // Set default selection
+            // If there are no numeric options (e.g. TOTAL_VERBS_AVAILABLE is 0),
+            // 'all' will be the only one and thus selected.
+            // Otherwise, default to 'all'.
+            verbCountSelect.value = 'all';
         }
 
 
