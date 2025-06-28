@@ -109,7 +109,7 @@ contact_note: >
 # Analytics and search engine verification
 # -----------------------------------------------------------------------------
 
-google_analytics: # your Google Analytics measurement ID (format: G-XXXXXXXXXX)
+google_analytics: G-4NRCL6L9PS # your Google Analytics measurement ID (format: G-XXXXXXXXXX)
 panelbear_analytics: # panelbear analytics site ID (format: XXXXXXXXX)
 
 google_site_verification: # your google-site-verification ID (Google Search Console)
@@ -119,7 +119,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-# blog_name: al-folio # blog_name will be displayed in your blog page
+blog_name: Blog # blog_name will be displayed in your blog page
 # blog_nav_title: blog # your blog must have a title for it to be displayed in the nav bar
 # blog_description: a simple whitespace theme for academics
 # permalink: /blog/:year/:title/
@@ -251,7 +251,7 @@ jekyll-archives:
     tag: "/blog/tag/:name/"
     category: "/blog/category/:name/"
 
-display_tags: ["formatting", "images", "links", "math", "code"] # this tags will be dispalyed on the front page of your blog
+display_tags: ["bollywood"] # this tags will be dispalyed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
@@ -352,7 +352,7 @@ jekyll-diagrams:
 # Optional Features
 # -----------------------------------------------------------------------------
 
-enable_google_analytics: false # enables google analytics
+enable_google_analytics: true # enables google analytics
 enable_panelbear_analytics: false # enables panelbear analytics
 enable_google_verification: false # enables google site verification
 enable_bing_verification: false # enables bing site verification

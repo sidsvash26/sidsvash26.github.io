@@ -1,0 +1,20 @@
+# _data/blog.yaml
+
+- title: "The Khan Test: Who is Bollywood's True 'King' of Female Representation?"
+  description: |
+    We put the films of Shahrukh, Salman, and Aamir Khan to the Bechdel Test. The results reveal a stunning 'persona fingerprint' of their stardom.
+  image: "/assets/img/blog/aaa_bollywood.jpg"
+  url: "/blog/bollywood.html"
+  tags:
+    - bollywood
+    - bechdel test
+    - gender
+    - analysis
+# --- Add new blog posts below this line ---
+# - title: "Another Blog Title"
+#   description: "A brief description of the blog post."
+#   image: "/assets/img/blog/another_blog.png"
+#   url: "/blog/another_blog.html"
+#   tags:
+#     - tag1
+#     - tag2
