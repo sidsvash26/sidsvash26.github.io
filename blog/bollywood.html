@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO and Blog Metadata -->
+    <title>The Khan Test: Who is Bollywood's True 'King' of Female Representation?</title>
+    <meta name="description" content="We put the films of Shahrukh, Salman, and Aamir Khan to the Bechdel Test. The results reveal a stunning 'persona fingerprint' of their stardom.">
+    <meta name="keywords" content="bollywood, cinema, analysis, feminism, shahrukh khan, salman khan, aamir khan, bechdel test">
+    <meta name="author" content="Your Blog Name">
+
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS for Components -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind's gray-50 */
+        }
+
+        /* Custom styles for score cards */
+        .score-card {
+            border: 1px solid #e5e7eb; /* gray-200 */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .score-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .score-card-aamir { border-top: 5px solid #3b82f6; } /* blue-500 */
+        .score-card-aamir .score { color: #3b82f6; }
+        .score-card-shahrukh { border-top: 5px solid #f97316; } /* orange-500 */
+        .score-card-shahrukh .score { color: #f97316; }
+        .score-card-salman { border-top: 5px solid #ef4444; } /* red-500 */
+        .score-card-salman .score { color: #ef4444; }
+
+        /* Custom styles for collapsible details/summary */
+        details summary {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        details summary:hover {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        details summary::before {
+            content: '►';
+            margin-right: 0.5rem;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+        details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+
+        /* Filmography table styles */
+        .film-table .pass {
+            color: #16a34a; /* green-600 */
+            font-weight: 600;
+        }
+        .film-table .fail {
+            color: #dc2626; /* red-600 */
+            font-weight: 600;
+        }
+
+        /* Decade Chart Styles */
+        .chart-bar {
+            transition: opacity 0.2s ease-in-out;
+        }
+        .chart-bar:hover {
+            opacity: 0.85;
+        }
+        .chart-label {
+            transition: font-weight 0.2s ease-in-out;
+        }
+        .bar-group:hover .chart-label {
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Main Blog Container -->
+    <div class="container mx-auto max-w-4xl px-4 py-8 md:py-12">
+        
+        <header class="mb-8 md:mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">The Khan Test: Who is Bollywood's True 'King' of Female Representation?</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">We put the films of Shahrukh, Salman, and Aamir Khan to the Bechdel Test. The results reveal a stunning 'persona fingerprint' of their stardom.</p>
+        </header>
+
+        <main class="prose lg:prose-xl max-w-none">
+            
+            <figure class="mb-8">
+                <img src="https://placehold.co/1200x600/334155/f8fafc?text=The+Three+Khans" alt="A symbolic image of the three Khans" class="rounded-lg shadow-lg w-full">
+                <figcaption class="text-center text-sm text-gray-500 mt-2">The triumvirate that has defined an era of Bollywood.</figcaption>
+            </figure>
+
+            <p class="lead text-xl">For over three decades, the landscape of Bollywood has been defined by a triumvirate of superstars: <strong>Shahrukh Khan, Salman Khan, and Aamir Khan</strong>. Their choices don't just create blockbuster films; they shape cultural conversations and reflect societal norms.</p>
+
+            <p>But in the cinematic worlds built around these colossal male stars, how much space is actually given to women? Do they have their own stories, concerns, and conversations? To find out, we applied a simple but powerful tool: <strong>The Bechdel-Wallace Test</strong>.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md my-8 border-l-4 border-blue-500">
+                <h3 class="text-2xl font-bold mt-0">What is the Bechdel Test?</h3>
+                <p>It’s a simple measure of female presence in fiction. To pass, a film must meet three criteria:</p>
+                <ol class="list-decimal pl-5">
+                    <li>It has to have at least two named women in it...</li>
+                    <li>...who talk to each other...</li>
+                    <li>...about something besides a man.</li>
+                </ol>
+                <p class="mb-0">This test isn't a measure of a film's quality or a "feminist" stamp of approval. It’s a low bar that acts as a barometer for the bare minimum of female interaction. When we applied it to the filmographies of the three Khans, the results were staggering.</p>
+            </div>
+
+            <!-- The Final Scorecard Section -->
+            <section class="my-12">
+                <h2 class="text-3xl font-bold text-center mb-8">The Final Scorecard: A Clear Hierarchy</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Aamir Khan Card -->
+                    <div class="score-card score-card-aamir bg-white rounded-lg p-6 text-center shadow-lg">
+                        <div class="text-2xl font-bold text-gray-500">#1</div>
+                        <div class="score text-6xl font-extrabold my-2">42%</div>
+                        <div class="text-2xl font-bold text-gray-900">Aamir Khan</div>
+                        <p class="text-gray-600 mt-2">The Perfectionist & The Producer</p>
+                    </div>
+                    <!-- Shahrukh Khan Card -->
+                    <div class="score-card score-card-shahrukh bg-white rounded-lg p-6 text-center shadow-lg">
+                        <div class="text-2xl font-bold text-gray-500">#2</div>
+                        <div class="score text-6xl font-extrabold my-2">35%</div>
+                        <div class="text-2xl font-bold text-gray-900">Shahrukh Khan</div>
+                        <p class="text-gray-600 mt-2">The Mainstream Median</p>
+                    </div>
+                    <!-- Salman Khan Card -->
+                    <div class="score-card score-card-salman bg-white rounded-lg p-6 text-center shadow-lg">
+                        <div class="text-2xl font-bold text-gray-500">#3</div>
+                        <div class="score text-6xl font-extrabold my-2">15%</div>
+                        <div class="text-2xl font-bold text-gray-900">Salman Khan</div>
+                        <p class="text-gray-600 mt-2">The 'Bhai' of the Masses</p>
+                    </div>
+                </div>
+            </section>
+            
+            <hr class="my-12 border-gray-300">
+
+            <!-- Persona Analysis Section -->
+            <section>
+                <h2 class="text-3xl font-bold text-center mb-10">The Persona Fingerprint: Why the Scores Differ</h2>
+
+                <div class="space-y-12">
+                    <!-- Aamir Analysis -->
+                    <div>
+                        <h3 class="text-2xl font-bold">1. Aamir Khan: The Perfectionist's Paradox (42%)</h3>
+                        <p>Aamir Khan's top position is no surprise. His brand is built on "quality," issue-based cinema. Films like <strong>Lagaan</strong>, <strong>Dangal</strong>, and <strong>Secret Superstar</strong> are often ensemble pieces that naturally create a broader social world, allowing women to have conversations independent of the hero. The "Producer Effect" is real: films from Aamir Khan Productions are his most consistent passes.</p>
+                        <p>However, a 42% score means most of his films still fail. This is the "Aamir Khan Paradox": even progressive themes are often framed through a male-savior lens (<strong>PK</strong>, <strong>Ghajini</strong>), isolating female characters within the hero's journey.</p>
+                        <details class="bg-white rounded-lg border border-gray-200 mt-4">
+                            <summary class="font-semibold p-4 text-gray-700">See Aamir Khan's Filmography Analysis</summary>
+                            <div class="p-4 border-t border-gray-200 overflow-x-auto">
+                                <table class="film-table min-w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th class="p-2 text-left font-bold">Film</th>
+                                            <th class="p-2 text-left font-bold">Year</th>
+                                            <th class="p-2 text-left font-bold">Result</th>
+                                            <th class="p-2 text-left font-bold">Justification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="aamir-abridged-list">
+                                        <tr><td class="p-2">Jo Jeeta Wohi Sikandar</td><td class="p-2">1992</td><td class="p-2 pass">Pass</td><td class="p-2">Anjali and her friend discuss school life, competitions, and their futures.</td></tr>
+                                        <tr><td class="p-2">Lagaan</td><td class="p-2">2001</td><td class="p-2 pass">Pass</td><td class="p-2">Village women discuss the drought, tax, and supporting the team.</td></tr>
+                                        <tr><td class="p-2">Ghajini</td><td class="p-2">2008</td><td class="p-2 fail">Fail</td><td class="p-2">Kalpana exists only in flashbacks and has no meaningful conversations with any other named woman.</td></tr>
+                                    </tbody>
+                                    <tbody id="aamir-full-list"></tbody>
+                                </table>
+                                <div class="text-center mt-4" id="aamir-controls">
+                                    <button id="load-aamir-full" class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors">Show Full List (43 Films)</button>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Shahrukh Analysis -->
+                    <div>
+                        <h3 class="text-2xl font-bold">2. Shahrukh Khan: The Romance Trap (35%)</h3>
+                        <p>SRK's score places him as the quintessential mainstream standard. His legacy as the "King of Romance" is also his biggest handicap in this test. The "Romance Trap" in iconic films like <strong>Kuch Kuch Hota Hai</strong> centers the universe so tightly around the hero-heroine relationship that it invalidates female friendships in favor of romantic rivalry.</p>
+                        <p>His passes come when he steps <em>outside</em> this persona. <strong>Chak De! India</strong> is a masterclass in passing. <strong>Dear Zindagi</strong> allows its female protagonist a world of her own. Even the classic <strong>Dilwale Dulhania Le Jayenge</strong> passes because it gives Simran a female world (her mother and sister) to confide in beyond her love for Raj.</p>
+                        <details class="bg-white rounded-lg border border-gray-200 mt-4">
+                            <summary class="font-semibold p-4 text-gray-700">See Shahrukh Khan's Filmography Analysis</summary>
+                             <div class="p-4 border-t border-gray-200 overflow-x-auto">
+                                <table class="film-table min-w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th class="p-2 text-left font-bold">Film</th>
+                                            <th class="p-2 text-left font-bold">Year</th>
+                                            <th class="p-2 text-left font-bold">Result</th>
+                                            <th class="p-2 text-left font-bold">Justification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="shahrukh-abridged-list">
+                                        <tr><td class="p-2">DDLJ</td><td class="p-2">1995</td><td class="p-2 pass">Pass</td><td class="p-2">Simran and her mother/sister discuss her dreams, life, and arranged marriage.</td></tr>
+                                        <tr><td class="p-2">Kuch Kuch Hota Hai</td><td class="p-2">1998</td><td class="p-2 fail">Fail</td><td class="p-2">Anjali and Tina's relationship is entirely defined by their connection to Rahul.</td></tr>
+                                        <tr><td class="p-2">Chak De! India</td><td class="p-2">2007</td><td class="p-2 pass">Pass</td><td class="p-2">The female hockey players constantly talk about strategy, teamwork, and personal issues.</td></tr>
+                                    </tbody>
+                                    <tbody id="shahrukh-full-list"></tbody>
+                                </table>
+                                <div class="text-center mt-4" id="shahrukh-controls">
+                                    <button id="load-shahrukh-full" class="bg-orange-600 text-white font-bold py-2 px-4 rounded hover:bg-orange-700 transition-colors">Show Full List (78 Films)</button>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Salman Analysis -->
+                    <div>
+                        <h3 class="text-2xl font-bold">3. Salman Khan: The 'Bhai' Narrative Gravity Well (15%)</h3>
+                        <p>Salman Khan's shockingly low score is the direct result of his post-2009 "Bhai" persona. His blockbuster formula—seen in <strong>Wanted</strong>, <strong>Dabangg</strong>, <strong>Bodyguard</strong>—creates a "narrative gravity well." The star is so immense that he warps the story around him, pulling every character into his orbit.</p>
+                        <p>In this model, the heroine's role is reduced to a damsel, a conquest, or a decoration. The few passes are stark exceptions. <strong>Hum Aapke Hain Koun..!</strong> is a strong pass. More recently, films like <strong>Bajrangi Bhaijaan</strong> and <strong>Sultan</strong> passed because the plot demanded a world beyond the hero.</p>
+                         <details class="bg-white rounded-lg border border-gray-200 mt-4">
+                            <summary class="font-semibold p-4 text-gray-700">See Salman Khan's Filmography Analysis</summary>
+                             <div class="p-4 border-t border-gray-200 overflow-x-auto">
+                                <table class="film-table min-w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th class="p-2 text-left font-bold">Film</th>
+                                            <th class="p-2 text-left font-bold">Year</th>
+                                            <th class="p-2 text-left font-bold">Result</th>
+                                            <th class="p-2 text-left font-bold">Justification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="salman-abridged-list">
+                                        <tr><td class="p-2">Hum Aapke Hain Koun..!</td><td class="p-2">1994</td><td class="p-2 pass">Pass</td><td class="p-2">Sisters Nisha and Pooja have numerous conversations about family, songs, and pregnancy.</td></tr>
+                                        <tr><td class="p-2">Dabangg</td><td class="p-2">2010</td><td class="p-2 fail">Fail</td><td class="p-2">Rajjo is a passive character defined by her interactions with the hero, Chulbul Pandey.</td></tr>
+                                        <tr><td class="p-2">Bajrangi Bhaijaan</td><td class="p-2">2015</td><td class="p-2 pass">Pass</td><td class="p-2">Munni's mother in Pakistan has conversations with other village women about her lost daughter.</td></tr>
+                                    </tbody>
+                                    <tbody id="salman-full-list"></tbody>
+                                </table>
+                                <div class="text-center mt-4" id="salman-controls">
+                                    <button id="load-salman-full" class="bg-red-600 text-white font-bold py-2 px-4 rounded hover:bg-red-700 transition-colors">Show Full List (86 Films)</button>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+            
+            <hr class="my-12 border-gray-300">
+
+            <!-- Decade Chart Section -->
+            <section class="my-12">
+                <h2 class="text-3xl font-bold text-center mb-10">Charting the Change: A Tale of Three Decades</h2>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-end h-64 md:h-80 border-b border-gray-300">
+                        <!-- Decade 1990s -->
+                        <div class="flex-1 flex flex-col items-center bar-group h-full">
+                            <div class="flex items-end h-full w-full justify-center space-x-1">
+                                <div class="w-1/4 chart-bar bg-blue-500 rounded-t" title="Aamir Khan: 28%" style="height: 28%;"></div>
+                                <div class="w-1/4 chart-bar bg-orange-500 rounded-t" title="Shahrukh Khan: 31%" style="height: 31%;"></div>
+                                <div class="w-1/4 chart-bar bg-red-500 rounded-t" title="Salman Khan: 9%" style="height: 9%;"></div>
+                            </div>
+                            <div class="chart-label text-center text-sm font-semibold mt-2 py-2">1988-1999</div>
+                        </div>
+                        <!-- Decade 2000s -->
+                        <div class="flex-1 flex flex-col items-center bar-group h-full">
+                            <div class="flex items-end h-full w-full justify-center space-x-1">
+                                <div class="w-1/4 chart-bar bg-blue-500 rounded-t" title="Aamir Khan: 55%" style="height: 55%;"></div>
+                                <div class="w-1/4 chart-bar bg-orange-500 rounded-t" title="Shahrukh Khan: 40%" style="height: 40%;"></div>
+                                <div class="w-1/4 chart-bar bg-red-500 rounded-t" title="Salman Khan: 16%" style="height: 16%;"></div>
+                            </div>
+                            <div class="chart-label text-center text-sm font-semibold mt-2 py-2">2000-2009</div>
+                        </div>
+                        <!-- Decade 2010s -->
+                        <div class="flex-1 flex flex-col items-center bar-group h-full">
+                            <div class="flex items-end h-full w-full justify-center space-x-1">
+                                <div class="w-1/4 chart-bar bg-blue-500 rounded-t" title="Aamir Khan: 50%" style="height: 50%;"></div>
+                                <div class="w-1/4 chart-bar bg-orange-500 rounded-t" title="Shahrukh Khan: 36%" style="height: 36%;"></div>
+                                <div class="w-1/4 chart-bar bg-red-500 rounded-t" title="Salman Khan: 24%" style="height: 24%;"></div>
+                            </div>
+                            <div class="chart-label text-center text-sm font-semibold mt-2 py-2">2010-Present</div>
+                        </div>
+                    </div>
+                    <!-- Legend -->
+                    <div class="flex justify-center items-center space-x-4 mt-4 text-xs text-gray-600">
+                        <span class="flex items-center"><span class="h-3 w-3 rounded-full bg-blue-500 mr-2"></span>Aamir</span>
+                        <span class="flex items-center"><span class="h-3 w-3 rounded-full bg-orange-500 mr-2"></span>Shahrukh</span>
+                        <span class="flex items-center"><span class="h-3 w-3 rounded-full bg-red-500 mr-2"></span>Salman</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Conclusion -->
+            <section class="mt-12 bg-gray-100 rounded-lg p-8">
+                <h2 class="text-3xl font-bold text-center mb-6">Conclusion: The Structural Power of Stardom</h2>
+                <p>The Khan Test proves that the brand each star has built is the single biggest factor in determining the narrative space given to women in their films. Male stardom exerts a powerful force, and centering a hero often requires de-centering everyone else.</p>
+                <p class="mb-0">While things are slowly changing, this analysis is a stark illustration of who gets to be the center of the story, and who is often left in the silent margins.</p>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-12 py-6 border-t border-gray-200">
+            <p class="text-gray-500">&copy; 2024 Your Blog Name. All rights reserved.</p>
+        </footer>
+
+    </div>
+    
+    <script>
+        // Data for all films
+        const filmData = {
+            aamir: [
+                { title: 'Holi', year: 1984, result: 'Fail', justification: 'The narrative centers on male college students; women are peripheral.' },
+                { title: 'Qayamat Se Qayamat Tak', year: 1988, result: 'Fail', justification: 'The two heroines\' families are rivals; their conversations are about the hero.' },
+                { title: 'Raakh', year: 1989, result: 'Fail', justification: 'The female lead is a victim whose tragedy motivates the male hero; she doesn\'t speak to other women.' },
+                { title: 'Love Love Love', year: 1989, result: 'Fail', justification: 'The heroine and her mother only discuss the hero and the villain.' },
+                { title: 'Awwal Number', year: 1990, result: 'Fail', justification: 'No two named female characters have a conversation.' },
+                { title: 'Tum Mere Ho', year: 1990, result: 'Fail', justification: 'The heroine is isolated and only interacts with the male lead.' },
+                { title: 'Dil', year: 1990, result: 'Fail', justification: 'The two main female characters are rivals and only talk about the hero.' },
+                { title: 'Deewana Mujh Sa Nahin', year: 1990, result: 'Fail', justification: 'The heroine\'s conversations with her friend are exclusively about the male lead.' },
+                { title: 'Jawani Zindabad', year: 1990, result: 'Fail', justification: 'Female characters lack independent conversations.' },
+                { title: 'Afsana Pyaar Ka', year: 1991, result: 'Fail', justification: 'Romance-centric plot isolates the heroine from other women.' },
+                { title: 'Dil Hai Ke Manta Nahin', year: 1991, result: 'Fail', justification: 'The heroine\'s conversations with other women are about her father or the hero.' },
+                { title: 'Daulat Ki Jung', year: 1992, result: 'Fail', justification: 'The heroines\' mothers talk, but only about the feud involving the men.' },
+                { title: 'Jo Jeeta Wohi Sikandar', year: 1992, result: 'Pass', justification: 'Anjali and her friend discuss school life, competitions, and their futures.' },
+                { title: 'Parampara', year: 1993, result: 'Fail', justification: 'The female characters\' conversations are entirely about the men in their feuding families.' },
+                { title: 'Hum Hain Rahi Pyar Ke', year: 1993, result: 'Pass', justification: 'Vyjayanti and the children\'s mother (in flashbacks) discuss family and life.' },
+                { title: 'Andaz Apna Apna', year: 1994, result: 'Fail', justification: 'Raveena and Karishma are rivals whose interactions are about the male leads.' },
+                { title: 'Baazi', year: 1995, result: 'Fail', justification: 'The heroine is a plot device for the hero\'s mission with no female interaction.' },
+                { title: 'Aatank Hi Aatank', year: 1995, result: 'Fail', justification: 'Female characters are marginal and do not interact with each other.' },
+                { title: 'Rangeela', year: 1995, result: 'Pass', justification: 'Mili and her friend discuss her dreams of becoming an actress and their lives.' },
+                { title: 'Akele Hum Akele Tum', year: 1995, result: 'Fail', justification: 'The wife\'s significant interactions are solely with men.' },
+                { title: 'Raja Hindustani', year: 1996, result: 'Fail', justification: 'The heroine and her stepmother\'s conversations are about the hero or her father.' },
+                { title: 'Ishq', year: 1997, result: 'Fail', justification: 'The two heroines are friends, but their conversations revolve around their boyfriends.' },
+                { title: 'Ghulam', year: 1998, result: 'Fail', justification: 'Alisha is isolated and only interacts with the male protagonist.' },
+                { title: 'Sarfarosh', year: 1999, result: 'Fail', justification: 'Seema\'s character is defined by her relationship with the hero; no independent conversations.' },
+                { title: 'Mann', year: 1999, result: 'Fail', justification: 'Priya\'s conversations with her friend are about the hero and their relationship.' },
+                { title: 'Earth', year: 1999, result: 'Pass', justification: 'Shanta and Lenny\'s mother discuss the escalating violence of the partition and their safety.' },
+                { title: 'Mela', year: 2000, result: 'Fail', justification: 'Roopa is a damsel in distress with no female confidantes or conversations.' },
+                { title: 'Lagaan', year: 2001, result: 'Pass', justification: 'Village women, including Gauri and her mother, discuss the drought, tax, and supporting the team.' },
+                { title: 'Dil Chahta Hai', year: 2001, result: 'Pass', justification: 'Shalini and Pooja have brief conversations about their lives and plans.' },
+                { title: 'Mangal Pandey: The Rising', year: 2005, result: 'Fail', justification: 'The main female characters, Heera and Jwala, do not interact with each other.' },
+                { title: 'Rang De Basanti', year: 2006, result: 'Pass', justification: 'Sue talks with Sonia about the progress of her documentary and their friends.' },
+                { title: 'Fanaa', year: 2006, result: 'Fail', justification: 'Zooni is narratively isolated from other women, particularly after losing her sight.' },
+                { title: 'Taare Zameen Par', year: 2007, result: 'Pass', justification: 'The mother, Maya, has conversations with teachers and other mothers about her son\'s struggles.' },
+                { title: 'Ghajini', year: 2008, result: 'Fail', justification: 'Kalpana exists only in flashbacks and has no meaningful conversations with any other named woman.' },
+                { title: '3 Idiots', year: 2009, result: 'Pass', justification: 'Pia and her sister Mona have a significant conversation about their family\'s financial and emotional pressures.' },
+                { title: 'Dhobi Ghat', year: 2010, result: 'Pass', justification: 'Shai and Yasmin (via video diaries) have their own narrative arcs; Yasmin talks to her sister.' },
+                { title: 'Talaash: The Answer Lies Within', year: 2012, result: 'Pass', justification: 'Roshni (the wife) and Rosie/Simran (the sex worker) have a conversation.' },
+                { title: 'Dhoom 3', year: 2013, result: 'Fail', justification: 'Aaliya is an isolated performer who only interacts with the male leads.' },
+                { title: 'PK', year: 2014, result: 'Fail', justification: 'Despite a female protagonist, Jaggu\'s primary conversations are with men.' },
+                { title: 'Dangal', year: 2016, result: 'Pass', justification: 'Geeta and Babita Phogat have numerous conversations about their training, wrestling, and aspirations.' },
+                { title: 'Secret Superstar', year: 2017, result: 'Pass', justification: 'The film\'s entire narrative is built on the mother-daughter relationship and their conversations.' },
+                { title: 'Thugs of Hindostan', year: 2018, result: 'Fail', justification: 'The two female leads, Zafira and Suraiyya, do not have a conversation.' },
+                { title: 'Laal Singh Chaddha', year: 2022, result: 'Fail', justification: 'Rupa is the sole significant female character and is narratively isolated from other women.' }
+            ],
+            shahrukh: [
+                { title: 'Deewana', year: 1992, result: 'Fail', justification: 'The heroine\'s interactions are all with the men in her life.'},
+                { title: 'Chamatkar', year: 1992, result: 'Fail', justification: 'The two female characters do not speak to each other.'},
+                { title: 'Raju Ban Gaya Gentleman', year: 1992, result: 'Pass', justification: 'Renu and Sapna discuss their careers, ambitions, and friendship.'},
+                { title: 'Dil Aashna Hai', year: 1992, result: 'Pass', justification: 'Laila and her mother discuss her past and her search for her birth mother.'},
+                { title: 'Maya Memsaab', year: 1993, result: 'Pass', justification: 'Maya discusses her desires and frustrations with her female friend.'},
+                { title: 'King Uncle', year: 1993, result: 'Fail', justification: 'The young girl Munna only talks to men or about her desire for a family.'},
+                { title: 'Baazigar', year: 1993, result: 'Fail', justification: 'Sisters Priya and Seema only talk about the male lead before Seema\'s death.'},
+                { title: 'Darr', year: 1993, result: 'Fail', justification: 'Kiran is the object of obsession and has no independent female conversations.'},
+                { title: 'Kabhi Haan Kabhi Naa', year: 1994, result: 'Pass', justification: 'Anna and her friend discuss their band, life, and future plans.'},
+                { title: 'Anjaam', year: 1994, result: 'Fail', justification: 'Despite a female protagonist, she is isolated in her suffering and revenge plot.'},
+                { title: 'Karan Arjun', year: 1995, result: 'Fail', justification: 'The two heroines barely interact; the mother is isolated in her faith.'},
+                { title: 'Zamaana Deewana', year: 1995, result: 'Fail', justification: 'The two female leads are part of a plot to unite their parents and only talk about men.'},
+                { title: 'Guddu', year: 1995, result: 'Fail', justification: 'The heroine\'s health crisis is the central plot; she does not talk to other women.'},
+                { title: 'Oh Darling! Yeh Hai India!', year: 1995, result: 'Fail', justification: 'The female lead is a former Miss India who interacts almost exclusively with the hero.'},
+                { title: 'Dilwale Dulhania Le Jayenge', year: 1995, result: 'Pass', justification: 'Simran and her mother/sister discuss her dreams, life, and arranged marriage.'},
+                { title: 'Ram Jaane', year: 1995, result: 'Fail', justification: 'The heroine is a love interest caught between two men.'},
+                { title: 'Trimurti', year: 1995, result: 'Fail', justification: 'The female lead\'s role is limited to being the hero\'s love interest.'},
+                { title: 'English Babu Desi Mem', year: 1996, result: 'Fail', justification: 'The heroine\'s interactions are all centered on the male characters.'},
+                { title: 'Chaahat', year: 1996, result: 'Fail', justification: 'The two female characters are rivals for the hero\'s affection.'},
+                { title: 'Army', year: 1996, result: 'Fail', justification: 'The heroine\'s quest for revenge is male-centric; no qualifying conversations.'},
+                { title: 'Koyla', year: 1997, result: 'Fail', justification: 'The heroine is a mute girl who is victimized and has no female conversations.'},
+                { title: 'Yes Boss', year: 1997, result: 'Fail', justification: 'The heroine\'s conversations with other women are about her career and the hero.'},
+                { title: 'Pardes', year: 1997, result: 'Pass', justification: 'Ganga and her friend from the village discuss her impending marriage and life in America.'},
+                { title: 'Dil To Pagal Hai', year: 1997, result: 'Fail', justification: 'Pooja and Nisha are rivals for the hero\'s affection; their talks are about him.'},
+                { title: 'Duplicate', year: 1998, result: 'Fail', justification: 'The two female leads are love interests for the two versions of the hero.'},
+                { title: 'Dil Se..', year: 1998, result: 'Fail', justification: 'Meghna is a mysterious figure who doesn\'t talk to other women.'},
+                { title: 'Kuch Kuch Hota Hai', year: 1998, result: 'Fail', justification: 'Anjali and Tina\'s relationship is entirely defined by their connection to Rahul.'},
+                { title: 'Baadshah', year: 1999, result: 'Fail', justification: 'The heroine is part of the hero\'s mission and doesn\'t interact with other women.'},
+                { title: 'Phir Bhi Dil Hai Hindustani', year: 2000, result: 'Pass', justification: 'Ria and a fellow journalist discuss a story.'},
+                { title: 'Hey Ram', year: 2000, result: 'Pass', justification: 'Aparna and Mythili have conversations about their lives during the partition.'},
+                { title: 'Josh', year: 2000, result: 'Fail', justification: 'Shirley\'s interactions are with her brother and the hero.'},
+                { title: 'Har Dil Jo Pyar Karega', year: 2000, result: 'Fail', justification: 'The two heroines are rivals for the same man and only discuss him.'},
+                { title: 'Mohabbatein', year: 2000, result: 'Fail', justification: 'The female characters are isolated in their respective tragic love stories.'},
+                { title: 'One 2 Ka 4', year: 2001, result: 'Fail', justification: 'The heroine is an undercover agent with no female interactions.'},
+                { title: 'Aśoka', year: 2001, result: 'Pass', justification: 'Kaurwaki and her lady-in-waiting discuss the prince and the kingdom\'s safety.'},
+                { title: 'Kabhi Khushi Kabhie Gham', year: 2001, result: 'Fail', justification: 'All female conversations revolve around the men in the family.'},
+                { title: 'Hum Tumhare Hain Sanam', year: 2002, result: 'Fail', justification: 'The heroine\'s conversations with her friend are about her husband.'},
+                { title: 'Devdas', year: 2002, result: 'Pass', justification: 'Paro and Chandramukhi discuss their own dignity and choices, not just Devdas.'},
+                { title: 'Shakti: The Power', year: 2002, result: 'Fail', justification: 'The heroine is isolated in her struggle against a patriarchal family.'},
+                { title: 'Saathiya', year: 2002, result: 'Pass', justification: 'Suhani and her sister Dina discuss their lives and marital problems.'},
+                { title: 'Chalte Chalte', year: 2003, result: 'Fail', justification: 'Priya\'s conversations with her friend are about her relationship with the hero.'},
+                { title: 'Kal Ho Naa Ho', year: 2003, result: 'Pass', justification: 'Naina and her friend Sweetu discuss family, friendship, and their lives in New York.'},
+                { title: 'Yeh Lamhe Judaai Ke', year: 2004, result: 'Fail', justification: 'The female characters are rivals and only discuss the male lead.'},
+                { title: 'Main Hoon Na', year: 2004, result: 'Pass', justification: 'Sanjana and her teacher Chandni have a brief conversation about her studies and attitude.'},
+                { title: 'Veer-Zaara', year: 2004, result: 'Pass', justification: 'Zaara and her female lawyer discuss her case and life in prison.'},
+                { title: 'Swades', year: 2004, result: 'Pass', justification: 'Gita and other village women discuss local issues like education and electricity.'},
+                { title: 'Silsiilay', year: 2005, result: 'Pass', justification: 'The film follows three women who discuss their respective relationships and lives.'},
+                { title: 'Paheli', year: 2005, result: 'Pass', justification: 'Lachchi and her sister-in-law discuss her husband\'s absence and the ghost.'},
+                { title: 'Kabhi Alvida Naa Kehna', year: 2006, result: 'Pass', justification: 'Maya and Rhea have a conversation about their respective unhappy marriages.'},
+                { title: 'Don: The Chase Begins Again', year: 2006, result: 'Fail', justification: 'Roma is isolated in her quest for revenge against the hero.'},
+                { title: 'Chak De! India', year: 2007, result: 'Pass', justification: 'The female hockey players constantly talk about strategy, teamwork, and personal issues.'},
+                { title: 'Om Shanti Om', year: 2007, result: 'Fail', justification: 'Shantipriya is isolated; her mother only talks about her career in relation to men.'},
+                { title: 'Bhoothnath', year: 2008, result: 'Fail', justification: 'The mother\'s conversations are all related to her son or husband.'},
+                { title: 'Rab Ne Bana Di Jodi', year: 2008, result: 'Fail', justification: 'Taani has no female friends and her conversations are with the hero.'},
+                { title: 'Luck by Chance', year: 2009, result: 'Pass', justification: 'Sona and her friend discuss their struggles and careers in the film industry.'},
+                { title: 'Billu', year: 2009, result: 'Pass', justification: 'Bindiya talks with other village women about their lives and the visiting superstar.'},
+                { title: 'Dulha Mil Gaya', year: 2010, result: 'Fail', justification: 'The two female leads\' conversations revolve around the male protagonist.'},
+                { title: 'My Name Is Khan', year: 2010, result: 'Pass', justification: 'Mandira talks with her friend and other mothers about her son\'s death and her grief.'},
+                { title: 'Ra.One', year: 2011, result: 'Fail', justification: 'Sonia has no significant conversations with another named woman.'},
+                { title: 'Don 2', year: 2011, result: 'Fail', justification: 'Roma is defined solely by her cat-and-mouse game with the male protagonist.'},
+                { title: 'Jab Tak Hai Jaan', year: 2012, result: 'Fail', justification: 'Meera and Akira barely interact, and when they do, it\'s about the hero.'},
+                { title: 'Chennai Express', year: 2013, result: 'Fail', justification: 'Meenamma is surrounded by men and has no female allies to talk to.'},
+                { title: 'Bhoothnath Returns', year: 2014, result: 'Fail', justification: 'No two named female characters have a conversation.'},
+                { title: 'Happy New Year', year: 2014, result: 'Fail', justification: 'Mohini, the sole female team member, does not converse with another woman.'},
+                { title: 'Dilwale', year: 2015, result: 'Fail', justification: 'The two female leads have limited interaction, which centers on the male leads.'},
+                { title: 'Fan', year: 2016, result: 'Fail', justification: 'The film is entirely focused on the male protagonist and his male obsession.'},
+                { title: 'Ae Dil Hai Mushkil', year: 2016, result: 'Pass', justification: 'Alizeh and Saba discuss poetry and life, independent of the male lead.'},
+                { title: 'Dear Zindagi', year: 2016, result: 'Pass', justification: 'Kaira talks to her female friends about her career and her mother about their past.'},
+                { title: 'Raees', year: 2017, result: 'Fail', justification: 'The heroine is a marginal character with no female interactions.'},
+                { title: 'Tubelight', year: 2017, result: 'Fail', justification: 'The female lead and her mother\'s conversations are about the missing father.'},
+                { title: 'Jab Harry Met Sejal', year: 2017, result: 'Fail', justification: 'Sejal\'s journey is entirely about finding her ring and her relationship with the hero.'},
+                { title: 'Zero', year: 2018, result: 'Fail', justification: 'The two female leads, Aafia and Babita, only interact in relation to the hero.'},
+                { title: 'Rocketry: The Nambi Effect', year: 2022, result: 'Fail', justification: 'The few female characters do not interact with each other.'},
+                { title: 'Brahmāstra: Part One – Shiva', year: 2022, result: 'Fail', justification: 'Isha\'s interactions are almost exclusively with the male protagonist.'},
+                { title: 'Pathaan', year: 2023, result: 'Fail', justification: 'The female lead, Rubina, is a spy who primarily interacts with the male protagonist.'},
+                { title: 'Jawan', year: 2023, result: 'Pass', justification: 'The core team of women have multiple conversations about their missions and backstories.'},
+                { title: 'Tiger 3', year: 2023, result: 'Pass', justification: 'Zoya and a fellow female agent discuss their mission strategy.'},
+                { title: 'Dunki', year: 2023, result: 'Pass', justification: 'Manu and her friend discuss their plans and dreams of going to London.'}
+            ],
+            salman: [
+                { title: 'Biwi Ho To Aisi', year: 1988, result: 'Fail', justification: 'The main female characters only talk about the men in the family.'},
+                { title: 'Maine Pyar Kiya', year: 1989, result: 'Fail', justification: 'Suman\'s interactions with other women are about the hero, Prem.'},
+                { title: 'Baaghi: A Rebel for Love', year: 1990, result: 'Fail', justification: 'The heroine is a sex worker who only interacts with male characters.'},
+                { title: 'Sanam Bewafa', year: 1991, result: 'Fail', justification: 'The heroine is isolated in a family feud centered on men.'},
+                { title: 'Patthar Ke Phool', year: 1991, result: 'Fail', justification: 'The heroine\'s interactions are solely with the hero and other male characters.'},
+                { title: 'Kurbaan', year: 1991, result: 'Fail', justification: 'The heroine has no significant conversations with other women.'},
+                { title: 'Saajan', year: 1991, result: 'Fail', justification: 'The heroine is the point of a love triangle and doesn\'t talk to other women.'},
+                { title: 'Love', year: 1991, result: 'Fail', justification: 'The female lead\'s conversations with her mother are about the hero.'},
+                { title: 'Suryavanshi', year: 1992, result: 'Fail', justification: 'The heroine is a princess with no female confidantes.'},
+                { title: 'Ek Ladka Ek Ladki', year: 1992, result: 'Fail', justification: 'The heroine has amnesia and only interacts with the hero and the children.'},
+                { title: 'Jaagruti', year: 1992, result: 'Fail', justification: 'Female characters are peripheral and do not interact.'},
+                { title: 'Nishchaiy', year: 1992, result: 'Fail', justification: 'The two heroines do not have a conversation with each other.'},
+                { title: 'Chandra Mukhi', year: 1993, result: 'Fail', justification: 'The heroine is a princess from another realm with no female interactions.'},
+                { title: 'Dil Tera Aashiq', year: 1993, result: 'Fail', justification: 'The heroine\'s conversations are all about the male lead.'},
+                { title: 'Andaz Apna Apna', year: 1994, result: 'Fail', justification: 'Raveena and Karishma are rivals whose interactions are about the male leads.'},
+                { title: 'Hum Aapke Hain Koun..!', year: 1994, result: 'Pass', justification: 'Sisters Nisha and Pooja have numerous conversations about family, songs, and pregnancy.'},
+                { title: 'Chaand Kaa Tukdaa', year: 1994, result: 'Fail', justification: 'The heroine\'s conversations with her mother are about the hero.'},
+                { title: 'Sangdil Sanam', year: 1994, result: 'Fail', justification: 'The heroine is a damsel in distress who needs rescuing.'},
+                { title: 'Karan Arjun', year: 1995, result: 'Fail', justification: 'The two heroines barely interact; the mother is isolated in her faith.'},
+                { title: 'Veergati', year: 1995, result: 'Fail', justification: 'The film is male-centric; female characters are marginal.'},
+                { title: 'Majhdhaar', year: 1996, result: 'Fail', justification: 'The three main characters are in a love triangle; the heroine doesn\'t talk to other women.'},
+                { title: 'Khamoshi: The Musical', year: 1996, result: 'Pass', justification: 'Annie and her deaf-mute mother, Flavy, discuss her life, music, and dreams.'},
+                { title: 'Jeet', year: 1996, result: 'Fail', justification: 'The heroine is caught between two men and has no independent conversations.'},
+                { title: 'Judwaa', year: 1997, result: 'Fail', justification: 'The two heroines are romantic interests for the twin heroes and do not converse.'},
+                { title: 'Auzaar', year: 1997, result: 'Fail', justification: 'The heroine\'s conversations with her friend are about the hero.'},
+                { title: 'Pyaar Kiya To Darna Kya', year: 1998, result: 'Fail', justification: 'The heroine\'s interactions with other women are about her love for the hero.'},
+                { title: 'Jab Pyaar Kisise Hota Hai', year: 1998, result: 'Fail', justification: 'The heroine is a singular love interest with no female friends.'},
+                { title: 'Bandhan', year: 1998, result: 'Fail', justification: 'The heroine\'s conversations with her sister-in-law are about the men in the family.'},
+                { title: 'Kuch Kuch Hota Hai', year: 1998, result: 'Fail', justification: 'The two female leads only talk about the male lead (SRK\'s character).'},
+                { title: 'Jaanam Samjha Karo', year: 1999, result: 'Fail', justification: 'The heroine is a club dancer whose interactions are with men.'},
+                { title: 'Biwi No.1', year: 1999, result: 'Fail', justification: 'The wife and the mistress only talk about the husband they share.'},
+                { title: 'Hum Dil De Chuke Sanam', year: 1999, result: 'Fail', justification: 'Nandini\'s conversations with other women are about Sameer or her husband.'},
+                { title: 'Hello Brother', year: 1999, result: 'Fail', justification: 'The heroine is a love interest with no female interactions.'},
+                { title: 'Hum Saath-Saath Hain', year: 1999, result: 'Pass', justification: 'The three daughters-in-law talk about family matters, songs, and household duties.'},
+                { title: 'Dulhan Hum Le Jayenge', year: 2000, result: 'Fail', justification: 'The heroine is surrounded by her three uncles and the hero.'},
+                { title: 'Chal Mere Bhai', year: 2000, result: 'Fail', justification: 'The heroine is the love interest for two brothers.'},
+                { title: 'Har Dil Jo Pyar Karega', year: 2000, result: 'Fail', justification: 'The two heroines are rivals for the hero\'s affection.'},
+                { title: 'Kahin Pyaar Na Ho Jaaye', year: 2000, result: 'Fail', justification: 'The heroine is a singular love interest with no female friends.'},
+                { title: 'Chori Chori Chupke Chupke', year: 2001, result: 'Pass', justification: 'Priya (the wife) and Madhubala (the surrogate) discuss the pregnancy and their feelings.'},
+                { title: 'Tumko Na Bhool Paayenge', year: 2002, result: 'Fail', justification: 'The two female leads from the hero\'s two lives do not interact.'},
+                { title: 'Hum Tumhare Hain Sanam', year: 2002, result: 'Fail', justification: 'The heroine\'s conversations with her friend are about her husband.'},
+                { title: 'Yeh Hai Jalwa', year: 2002, result: 'Fail', justification: 'The heroine\'s interactions are all about the hero.'},
+                { title: 'Tere Naam', year: 2003, result: 'Fail', justification: 'The heroine is a passive character who only interacts with the hero.'},
+                { title: 'Baghban', year: 2003, result: 'Pass', justification: 'Pooja (Hema Malini) and her daughter-in-law discuss family and respect.'},
+                { title: 'Garv: Pride & Honour', year: 2004, result: 'Fail', justification: 'The film is a male-dominated action movie with no significant female roles.'},
+                { title: 'Mujhse Shaadi Karogi', year: 2004, result: 'Fail', justification: 'The heroine is the prize in a competition between two men.'},
+                { title: 'Phir Milenge', year: 2004, result: 'Pass', justification: 'Tamanna and her lawyer discuss her wrongful termination case.'},
+                { title: 'Dil Ne Jise Apna Kahaa', year: 2004, result: 'Fail', justification: 'The heroine dies early; the second female lead only talks to men.'},
+                { title: 'Lucky: No Time for Love', year: 2005, result: 'Fail', justification: 'The heroine is a schoolgirl who is protected by the hero.'},
+                { title: 'Maine Pyaar Kyun Kiya?', year: 2005, result: 'Pass', justification: 'Sonia and Naina discuss their respective relationships, albeit with the same man.'},
+                { title: 'No Entry', year: 2005, result: 'Fail', justification: 'The wives and the call girl only talk about the male characters.'},
+                { title: 'Kyon Ki', year: 2005, result: 'Fail', justification: 'The heroine is a doctor in a mental asylum; her conversations are with male staff/patients.'},
+                { title: 'Shaadi Karke Phas Gaya Yaar', year: 2006, result: 'Fail', justification: 'The heroine\'s conversations with her mother are about her husband.'},
+                { title: 'Jaan-E-Mann', year: 2006, result: 'Fail', justification: 'The heroine is the object of affection for two men and has no female interactions.'},
+                { title: 'Baabul', year: 2006, result: 'Pass', justification: 'Millie and her mother-in-law discuss her future after her husband\'s death.'},
+                { title: 'Salaam-e-Ishq', year: 2007, result: 'Fail', justification: 'The multiple storylines isolate the female characters from each other.'},
+                { title: 'Partner', year: 2007, result: 'Fail', justification: 'The heroine\'s conversations with her friend are about her love life.'},
+                { title: 'Marigold', year: 2007, result: 'Fail', justification: 'The American actress heroine is isolated in a foreign country.'},
+                { title: 'Saawariya', year: 2007, result: 'Fail', justification: 'The two female leads, Sakina and Gulabji, only talk about the male protagonist.'},
+                { title: 'God Tussi Great Ho', year: 2008, result: 'Fail', justification: 'The heroine is a TV anchor who only interacts with the male lead.'},
+                { title: 'Heroes', year: 2008, result: 'Fail', justification: 'The female characters are widows who only talk about their deceased husbands.'},
+                { title: 'Yuvvraaj', year: 2008, result: 'Fail', justification: 'The heroine is a cellist in an orchestra dominated by men.'},
+                { title: 'Wanted', year: 2009, result: 'Fail', justification: 'Jhanvi is a damsel in distress with no independent relationships or conversations.'},
+                { title: 'Main Aurr Mrs Khanna', year: 2009, result: 'Fail', justification: 'The heroine\'s conversations with her friend are about her failing marriage.'},
+                { title: 'London Dreams', year: 2009, result: 'Fail', justification: 'The heroine is the focal point of a rivalry between two male band members.'},
+                { title: 'Veer', year: 2010, result: 'Fail', justification: 'The princess heroine\'s interactions are all with men.'},
+                { title: 'Dabangg', year: 2010, result: 'Fail', justification: 'Rajjo is a passive character defined by her interactions with the hero, Chulbul Pandey.'},
+                { title: 'Ready', year: 2011, result: 'Fail', justification: 'Sanjana is trapped by her greedy uncles and has no female allies.'},
+                { title: 'Bodyguard', year: 2011, result: 'Fail', justification: 'Divya and her friend Maya only talk about the hero, Lovely Singh.'},
+                { title: 'Ek Tha Tiger', year: 2012, result: 'Fail', justification: 'Zoya is a spy whose interactions are entirely with male colleagues or the hero.'},
+                { title: 'Dabangg 2', year: 2012, result: 'Fail', justification: 'Rajjo remains a housewife whose conversations are about her husband.'},
+                { title: 'Jai Ho', year: 2014, result: 'Fail', justification: 'The heroine is a marginal character with no significant female conversations.'},
+                { title: 'Kick', year: 2014, result: 'Fail', justification: 'The heroine is a psychiatrist whose professional and personal life revolves around men.'},
+                { title: 'Bajrangi Bhaijaan', year: 2015, result: 'Pass', justification: 'Munni\'s mother in Pakistan has conversations with other village women about her lost daughter.'},
+                { title: 'Prem Ratan Dhan Payo', year: 2015, result: 'Pass', justification: 'Princess Maithili discusses royal duties and family with her two half-sisters.'},
+                { title: 'Sultan', year: 2016, result: 'Pass', justification: 'Aarfa, a wrestler, has conversations with other women about the sport.'},
+                { title: 'Tubelight', year: 2017, result: 'Fail', justification: 'The Chinese mother and her son are isolated; she does not speak to other women.'},
+                { title: 'Tiger Zinda Hai', year: 2017, result: 'Pass', justification: 'The rescued nurses talk to each other about their ordeal and escape plan.'},
+                { title: 'Race 3', year: 2018, result: 'Fail', justification: 'The two female characters are rivals and only interact in relation to the men.'},
+                { title: 'Bharat', year: 2019, result: 'Fail', justification: 'Kumud\'s life revolves around Bharat; no independent conversations with other women.'},
+                { title: 'Dabangg 3', year: 2019, result: 'Fail', justification: 'The film focuses on the hero\'s backstory; women are love interests or victims.'},
+                { title: 'Radhe', year: 2021, result: 'Fail', justification: 'The heroine is the sister of the hero\'s senior officer and has no other interactions.'},
+                { title: 'Antim: The Final Truth', year: 2021, result: 'Fail', justification: 'The female characters are peripheral to the central conflict between the two male leads.'},
+                { title: 'Godfather', year: 2022, result: 'Fail', justification: 'The female characters only discuss the male protagonist and his political moves.'},
+                { title: 'Kisi Ka Bhai Kisi Ki Jaan', year: 2023, result: 'Fail', justification: 'The numerous female characters do not have a single qualifying conversation.'},
+                { title: 'Tiger 3', year: 2023, result: 'Pass', justification: 'Zoya talks with other female agents about their mission and strategy.'}
+            ]
+        };
+
+        function setupActor(actorId) {
+            const loadButton = document.getElementById(`load-${actorId}-full`);
+            const fullListBody = document.getElementById(`${actorId}-full-list`);
+            const abridgedListBody = document.getElementById(`${actorId}-abridged-list`);
+            const controlsDiv = document.getElementById(`${actorId}-controls`);
+
+            loadButton.addEventListener('click', () => {
+                // Clear abridged list
+                abridgedListBody.innerHTML = '';
+                
+                // Populate full list
+                filmData[actorId].forEach(film => {
+                    const row = document.createElement('tr');
+                    const resultClass = film.result === 'Pass' ? 'pass' : 'fail';
+                    row.innerHTML = `
+                        <td class="p-2 border-t">${film.title}</td>
+                        <td class="p-2 border-t">${film.year}</td>
+                        <td class="p-2 border-t ${resultClass}">${film.result}</td>
+                        <td class="p-2 border-t">${film.justification}</td>
+                    `;
+                    fullListBody.appendChild(row);
+                });
+                
+                // Hide the button after loading
+                controlsDiv.style.display = 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupActor('aamir');
+            setupActor('shahrukh');
+            setupActor('salman');
+        });
+
+    </script>
+</body>
+</html>

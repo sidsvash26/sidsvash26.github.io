@@ -283,7 +283,67 @@ Here’s the code for the last row of images above:</p>
 
     </div>
 
-    <!-- Footer -->    
+    <!-- Visitor counter for navigation pages only --><div class="container">
+      <style>
+      .visitor-counter {
+        text-align: center;
+        margin-top: 60px;
+        padding: 20px;
+        border-top: 1px solid var(--global-divider-color, #e9ecef);
+        background-color: var(--global-card-bg-color, #f8f9fa);
+        color: var(--global-text-color, #6c757d);
+        font-size: 0.9em;
+      }
+
+      .visitor-counter .date-line {
+        margin-bottom: 5px;
+        color: var(--global-text-color, #6c757d);
+      }
+
+      .visitor-counter .count-line {
+        font-size: 1.2em;
+        font-weight: 500;
+        color: var(--global-text-color, #495057);
+      }
+
+      /* Dark mode specific adjustments */
+      [data-theme="dark"] .visitor-counter {
+        background-color: var(--global-card-bg-color, #2d3748);
+        border-top-color: var(--global-divider-color, #4a5568);
+      }
+
+      [data-theme="dark"] .visitor-counter .date-line,
+      [data-theme="dark"] .visitor-counter .count-line {
+        color: var(--global-text-color, #e2e8f0);
+      }
+      </style>
+
+      <div class="visitor-counter">
+        <div class="date-line">Total website visits since June 2025</div>
+        <div class="count-line">
+          👥 <span id="visitor-count-projects-6-project">Loading...</span> visitors
+        </div>
+      </div>
+
+      <script>
+      // Simple visitor counter using localStorage
+      function updateVisitorCount() {
+        let count = localStorage.getItem('visitorCount') || 0;
+        count = parseInt(count) + 1;
+        localStorage.setItem('visitorCount', count);
+        
+        // Simple display without animation
+        const countElement = document.getElementById('visitor-count-projects-6-project');
+        if (countElement) {
+          countElement.textContent = count.toLocaleString();
+        }
+      }
+
+      // Update count when page loads
+      document.addEventListener('DOMContentLoaded', updateVisitorCount);
+      </script>
+    </div>
+<!-- Footer -->    
     <footer class="fixed-bottom">
       <div class="container mt-0">
         © Copyright 2025 Siddharth  Vashishtha. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>.
@@ -325,7 +385,14 @@ Here’s the code for the last row of images above:</p>
   <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
   <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
-    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4NRCL6L9PS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ window.dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-4NRCL6L9PS');
+  </script>
     
 
 <!-- Scrolling Progress Bar -->
