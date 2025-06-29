@@ -59,9 +59,9 @@
             <a href="mailto:%76%61%73%68%69%73%68%74%68%61.%73%69%64@%67%6D%61%69%6C.%63%6F%6D" title="email"><i class="fas fa-envelope"></i></a>
             <a href="https://scholar.google.com/citations?user=4Q4zhC0AAAAJ&amp;hl" title="Google Scholar" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar"></i></a>
             <a href="https://github.com/sidsvash26" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/siddharthvashishtha" title="LinkedIn" rel="external nofollow noopener" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.linkedin.com/in/sidvash" title="LinkedIn" rel="external nofollow noopener" target="_blank"><i class="fab fa-linkedin"></i></a>
             <a href="https://twitter.com/sidvash" title="Twitter" rel="external nofollow noopener" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://youtube.com/@_sidvash" title="YouTube" rel="external nofollow noopener" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://youtube.com/@hellosidvash" title="YouTube" rel="external nofollow noopener" target="_blank"><i class="fab fa-youtube"></i></a>
             
 
           </div>
@@ -302,14 +302,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 8px;
+    transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
     cursor: pointer;
+    position: relative;
   }
-  
-  .timeline-logo:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  .timeline-logo:hover, .timeline-logo:focus {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(0,123,255,0.18);
+    z-index: 2;
+  }
+  .timeline-logo .timeline-tooltip {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    font-size: 0.85em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .timeline-logo:hover .timeline-tooltip,
+  .timeline-logo:focus .timeline-tooltip {
+    display: block;
   }
   
   .timeline-logo img {
@@ -321,70 +342,119 @@
   .timeline-year {
     font-weight: bold;
     font-size: 1.1em;
-    color: #333;
-    margin-bottom: 8px;
+    color: var(--global-text-color, #333);
+    margin-bottom: 4px;
     text-align: center;
   }
   
   .timeline-company {
     font-weight: 600;
     font-size: 0.9em;
-    color: #666;
+    color: var(--global-text-color, #666);
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
   }
   
   .timeline-position {
     font-size: 0.8em;
-    color: #888;
+    color: var(--global-text-color, #888);
     text-align: center;
     font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
   
-  .timeline-details {
+  .timeline-details-wide {
     display: none;
-    background: white;
+    background: var(--global-card-bg-color, #fff);
     border: 1px solid #e9ecef;
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    width: 340px;
-    max-width: 90vw;
-    margin-top: 15px;
-    z-index: 10;
+    width: 95vw;
+    max-width: 500px;
+    margin: 12px auto 0 auto;
+    z-index: 20;
     text-align: left;
+    color: var(--global-text-color, #222);
+    position: relative;
+    transition: max-height 0.3s, opacity 0.3s;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 1.5px 8px rgba(0,123,255,0.08);
+    border: 2px solid transparent;
+    animation: fadeSlideIn 0.35s cubic-bezier(.4,0,.2,1);
   }
   
-  .timeline-item.active .timeline-details {
+  .timeline-item.active .timeline-details-wide {
     display: block;
-    animation: fadeIn 0.3s;
+    opacity: 1;
+    max-height: 400px;
+    transition: max-height 0.3s, opacity 0.3s;
   }
   
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .timeline-details h4 {
+  .timeline-details-wide h4 {
     margin: 0 0 8px 0;
-    color: #333;
+    color: var(--global-text-color, #333);
     font-size: 1em;
   }
   
-  .timeline-details p {
+  .timeline-details-wide p {
     margin: 0;
     font-size: 0.95em;
     line-height: 1.5;
-    color: #666;
+    color: var(--global-text-color, #666);
   }
   
-  .timeline-details a {
+  .timeline-details-wide a {
     color: #007bff;
     text-decoration: none;
   }
   
-  .timeline-details a:hover {
+  .timeline-details-wide a:hover {
     text-decoration: underline;
+  }
+  
+  .timeline-clickme {
+    font-size: 0.9em;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .timeline-clickme:hover {
+    background: #e3eaff;
+  }
+  
+  .timeline-item.active .timeline-logo {
+    box-shadow: 0 0 0 4px rgba(0,123,255,0.18), 0 8px 25px rgba(0,123,255,0.12);
+    border-color: #007bff;
+    transform: scale(1.10);
+  }
+  
+  .timeline-details-arrow {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 18px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .timeline-details-arrow svg {
+    display: block;
   }
   
   /* Responsive design */
@@ -410,136 +480,304 @@
       flex-direction: row;
       align-items: flex-start;
       margin-bottom: 40px;
+      position: relative;
+    }
+    .timeline-year {
+      flex: 0 0 44px;
+      text-align: right;
+      margin-right: 8px;
+      margin-top: 10px;
+      color: var(--global-text-color, #888);
     }
     .timeline-logo {
       margin-bottom: 0;
-      margin-right: 16px;
-      width: 60px;
-      height: 60px;
-      flex-shrink: 0;
-    }
-    .timeline-year, .timeline-company, .timeline-position {
-      text-align: left;
+      margin-right: 0;
       margin-left: 0;
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
+      z-index: 2;
+      border: 3px solid #fff;
     }
-    .timeline-details {
-      display: block !important;
-      position: static;
-      width: 100%;
-      max-width: 100%;
-      margin: 8px 0 0 0;
-      box-shadow: none;
-      border: none;
-      background: #f9f9f9;
-      font-size: 0.98em;
+    .timeline-company {
+      font-size: 0.85em;
+      margin-bottom: 0;
+      color: var(--global-text-color, #666);
     }
-    .timeline-item.active .timeline-details {
-      animation: none;
+    .timeline-center-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 0 0 70px;
+      margin-right: 8px;
+      margin-left: 8px;
     }
-    .timeline-item {
-      cursor: default;
+    .timeline-right-col {
+      flex: 1 1 0%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      min-width: 0;
     }
-    .timeline-logo {
-      cursor: default;
+    .timeline-position {
+      font-size: 0.9em;
+      color: var(--global-text-color, #007bff);
+      text-align: left;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
+    .timeline-details-wide {
+      width: 98vw;
+      max-width: 98vw;
+      margin: 10px 0 0 0;
+      left: 0;
+      right: 0;
+      border-radius: 10px;
+      background: var(--global-card-bg-color, #fff);
+      color: var(--global-text-color, #222);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border: 1px solid #e9ecef;
+      position: relative;
+      z-index: 20;
+    }
+  }
+  [data-theme="dark"] .timeline-details-wide {
+    background: #23272f;
+    color: #e2e8f0;
+    border-color: #444;
+  }
+  [data-theme="dark"] .timeline-details-wide h4 {
+    color: #e2e8f0;
+  }
+  [data-theme="dark"] .timeline-details-wide p {
+    color: #b0b8c1;
+  }
+  [data-theme="dark"] .timeline-company, [data-theme="dark"] .timeline-year, [data-theme="dark"] .timeline-position {
+    color: #b0b8c1;
+  }
+  .timeline-connector {
+    display: none;
+    position: absolute;
+    width: 0;
+    border-left: 3px solid rgba(0,123,255,0.35);
+    z-index: 15;
+    pointer-events: none;
+    transition: top 0.3s, left 0.3s, height 0.3s;
+  }
+  @media (max-width: 900px) {
+    .timeline-connector {
+      display: none !important;
+    }
+  }
+  .timeline-connector-svg {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    z-index: 15;
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 
-<div class="timeline-container">
+<div class="timeline-container" style="position:relative;">
   <div class="timeline">
     <div class="timeline-item">
-      <div class="timeline-logo">
-        <img src="/assets/img/google_deepmind_color.png" alt="Google Deepmind">
-      </div>
       <div class="timeline-year">2024</div>
-      <div class="timeline-company">Google Deepmind</div>
-      <div class="timeline-position">Software Engineer</div>
-      <div class="timeline-details">
-        <h4>Google Deepmind</h4>
-        <p>Working on developing AI agents with Gemini. Present focus: <a href="https://gemini.google/overview/deep-research/?hl=en" rel="external nofollow noopener" target="_blank">Gemini Deep Research</a>.</p>
+      <div class="timeline-center-col">
+        <div class="timeline-logo" tabindex="0">
+          <img src="/assets/img/google_deepmind_color.png" alt="Google Deepmind">
+          <span class="timeline-tooltip">Click for details</span>
+        </div>
+        <div class="timeline-company">Google Deepmind</div>
+      </div>
+      <div class="timeline-right-col">
+        <div class="timeline-position">Software Engineer</div>
       </div>
     </div>
     
     <div class="timeline-item">
-      <div class="timeline-logo">
-        <img src="/assets/img/google_logo_2.jpeg" alt="Google Gemini">
-      </div>
       <div class="timeline-year">2023</div>
-      <div class="timeline-company">Google Gemini</div>
-      <div class="timeline-position">Software Engineer</div>
-      <div class="timeline-details">
-        <h4>Google Gemini</h4>
-        <p>Developing advanced AI models for tool use in Gemini.</p>
+      <div class="timeline-center-col">
+        <div class="timeline-logo" tabindex="0">
+          <img src="/assets/img/google_logo_2.jpeg" alt="Google Gemini">
+          <span class="timeline-tooltip">Click for details</span>
+        </div>
+        <div class="timeline-company">Google Gemini</div>
+      </div>
+      <div class="timeline-right-col">
+        <div class="timeline-position">Software Engineer</div>
       </div>
     </div>
     
     <div class="timeline-item">
-      <div class="timeline-logo">
-        <img src="/assets/img/google_logo_2.jpeg" alt="Google Assistant">
-      </div>
       <div class="timeline-year">2022</div>
-      <div class="timeline-company">Google Assistant</div>
-      <div class="timeline-position">Research Intern</div>
-      <div class="timeline-details">
-        <h4>Google Assistant</h4>
-        <p>Conducted research on parsing realistic task-oriented dialogs. Published and presented a <a href="https://aclanthology.org/2023.emnlp-main.667/" rel="external nofollow noopener" target="_blank">paper</a> at EMNLP 2023.</p>
+      <div class="timeline-center-col">
+        <div class="timeline-logo" tabindex="0">
+          <img src="/assets/img/google_logo_2.jpeg" alt="Google Assistant">
+          <span class="timeline-tooltip">Click for details</span>
+        </div>
+        <div class="timeline-company">Google Assistant</div>
+      </div>
+      <div class="timeline-right-col">
+        <div class="timeline-position">Research Intern</div>
       </div>
     </div>
     
     <div class="timeline-item">
-      <div class="timeline-logo">
-        <img src="/assets/img/verneek_logo_3.png" alt="Verneek.ai">
-      </div>
       <div class="timeline-year">2021</div>
-      <div class="timeline-company">Verneek.ai</div>
-      <div class="timeline-position">NLP Research Intern</div>
-      <div class="timeline-details">
-        <h4>Verneek.ai</h4>
-        <p>Developed NLP models on semantic parsing and closed-domain natural language generation.</p>
+      <div class="timeline-center-col">
+        <div class="timeline-logo" tabindex="0">
+          <img src="/assets/img/verneek_logo_3.png" alt="Verneek.ai">
+          <span class="timeline-tooltip">Click for details</span>
+        </div>
+        <div class="timeline-company">Verneek.ai</div>
+      </div>
+      <div class="timeline-right-col">
+        <div class="timeline-position">NLP Research Intern</div>
       </div>
     </div>
     
     <div class="timeline-item">
-      <div class="timeline-logo">
-        <img src="/assets/img/amazon_alexa_logo.webp" alt="Amazon Alexa">
-      </div>
       <div class="timeline-year">2020</div>
-      <div class="timeline-company">Amazon Alexa AI</div>
-      <div class="timeline-position">Applied Scientist Intern</div>
-      <div class="timeline-details">
-        <h4>Amazon Alexa AI</h4>
-        <p>Worked with Alexa NLU team on Cross-Lingual Transfer Learning.</p>
+      <div class="timeline-center-col">
+        <div class="timeline-logo" tabindex="0">
+          <img src="/assets/img/amazon_alexa_logo.webp" alt="Amazon Alexa">
+          <span class="timeline-tooltip">Click for details</span>
+        </div>
+        <div class="timeline-company">Amazon Alexa AI</div>
+      </div>
+      <div class="timeline-right-col">
+        <div class="timeline-position">Applied Scientist Intern</div>
       </div>
     </div>
     
     <div class="timeline-item">
-      <div class="timeline-logo">
-        <img src="/assets/img/exl_logo.jpeg" alt="EXL Analytics">
-      </div>
       <div class="timeline-year">2014-2017</div>
-      <div class="timeline-company">EXL Analytics</div>
-      <div class="timeline-position">Senior Consultant</div>
-      <div class="timeline-details">
-        <h4>EXL Analytics</h4>
-        <p>Worked on multiple projects with various retail banking clients on: report automation with SAS and Excel VBA, engineering features and developing ML models on customer data for mitigating risk in credit card portfolios.</p>
+      <div class="timeline-center-col">
+        <div class="timeline-logo" tabindex="0">
+          <img src="/assets/img/exl_logo.jpeg" alt="EXL Analytics">
+          <span class="timeline-tooltip">Click for details</span>
+        </div>
+        <div class="timeline-company">EXL Analytics</div>
+      </div>
+      <div class="timeline-right-col">
+        <div class="timeline-position">Senior Consultant</div>
       </div>
     </div>
   </div>
+  <div id="timeline-popup-row"></div>
 </div>
 
 <script>
-document.querySelectorAll('.timeline-logo').forEach(logo => {
-  logo.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const item = this.closest('.timeline-item');
-    document.querySelectorAll('.timeline-item').forEach(i => {
-      if (i !== item) i.classList.remove('active');
+// Timeline click-to-expand for both desktop and mobile
+const items = document.querySelectorAll('.timeline-item');
+const popupRow = document.getElementById('timeline-popup-row');
+let activeIndex = null;
+const detailsData = [
+  {
+    h4: 'Google Deepmind',
+    html: 'Working on developing AI agents with Gemini. Present focus: <a href="https://gemini.google/overview/deep-research/?hl=en">Gemini Deep Research</a>.'
+  },
+  {
+    h4: 'Google Gemini',
+    html: 'Developing advanced AI models for tool use in Gemini.'
+  },
+  {
+    h4: 'Google Assistant',
+    html: 'Conducted research on parsing realistic task-oriented dialogs. Published and presented a <a href="https://aclanthology.org/2023.emnlp-main.667/">paper</a> at EMNLP 2023.'
+  },
+  {
+    h4: 'Verneek.ai',
+    html: 'Developed NLP models on semantic parsing and closed-domain natural language generation.'
+  },
+  {
+    h4: 'Amazon Alexa AI',
+    html: 'Worked with Alexa NLU team on Cross-Lingual Transfer Learning.'
+  },
+  {
+    h4: 'EXL Analytics',
+    html: 'Worked on multiple projects with various retail banking clients on: report automation with SAS and Excel VBA, engineering features and developing ML models on customer data for mitigating risk in credit card portfolios.'
+  }
+];
+function positionConnector(idx) { /* no-op */ }
+items.forEach((item, idx) => {
+  const logo = item.querySelector('.timeline-logo');
+  if (logo) {
+    logo.addEventListener('click', function(e) {
+      // Hide tooltip immediately on click
+      const tooltip = logo.querySelector('.timeline-tooltip');
+      if (tooltip) tooltip.style.display = 'none';
+      e.stopPropagation();
+      if (activeIndex === idx) {
+        activeIndex = null;
+        popupRow.innerHTML = '';
+        items.forEach(i => i.classList.remove('active'));
+      } else {
+        activeIndex = idx;
+        items.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        // Desktop: show popup below timeline
+        if (window.innerWidth > 900) {
+          popupRow.innerHTML = `<div class='timeline-details-wide' style='display:block;opacity:1;max-height:400px;'>
+            <div class='timeline-details-arrow'><svg width='28' height='18'><polygon points='14,0 28,18 0,18' fill='#fff' stroke='#007bff' stroke-width='2'/></svg></div>
+            <h4>${detailsData[idx].h4}</h4>
+            <p>${detailsData[idx].html}</p>
+          </div>`;
+        } else {
+          popupRow.innerHTML = '';
+        }
+      }
+      setTimeout(() => positionConnector(idx), 10);
     });
-    item.classList.toggle('active');
-  });
+    logo.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        logo.click();
+      }
+    });
+  }
 });
-document.addEventListener('click', function() {
-  document.querySelectorAll('.timeline-item').forEach(i => i.classList.remove('active'));
+document.addEventListener('click', function(e) {
+  if (!e.target.classList.contains('timeline-logo') && !e.target.classList.contains('timeline-tooltip')) {
+    activeIndex = null;
+    popupRow.innerHTML = '';
+    items.forEach(i => i.classList.remove('active'));
+  }
+});
+// On mobile, show/hide details inside the item as before
+function handleResize() {
+  if (window.innerWidth <= 900) {
+    items.forEach((item, idx) => {
+      const details = item.querySelector('.timeline-details-wide');
+      if (!details) {
+        const rightCol = item.querySelector('.timeline-right-col');
+        if (rightCol) {
+          const div = document.createElement('div');
+          div.className = 'timeline-details-wide';
+          div.innerHTML = `<h4>${detailsData[idx].h4}</h4><p>${detailsData[idx].html}</p>`;
+          rightCol.appendChild(div);
+        }
+      }
+    });
+    popupRow.innerHTML = '';
+  } else {
+    // Remove mobile details
+    items.forEach(item => {
+      const details = item.querySelector('.timeline-details-wide');
+      if (details) details.remove();
+    });
+  }
+}
+window.addEventListener('resize', function() {
+  handleResize();
+});
+document.addEventListener('DOMContentLoaded', function() {
+  handleResize();
 });
 </script>
 
@@ -768,9 +1006,9 @@ document.addEventListener('click', function() {
                 <a href="mailto:%76%61%73%68%69%73%68%74%68%61.%73%69%64@%67%6D%61%69%6C.%63%6F%6D" title="email"><i class="fas fa-envelope"></i></a>
             <a href="https://scholar.google.com/citations?user=4Q4zhC0AAAAJ&amp;hl" title="Google Scholar" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar"></i></a>
             <a href="https://github.com/sidsvash26" title="GitHub" rel="external nofollow noopener" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/siddharthvashishtha" title="LinkedIn" rel="external nofollow noopener" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.linkedin.com/in/sidvash" title="LinkedIn" rel="external nofollow noopener" target="_blank"><i class="fab fa-linkedin"></i></a>
             <a href="https://twitter.com/sidvash" title="Twitter" rel="external nofollow noopener" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://youtube.com/@_sidvash" title="YouTube" rel="external nofollow noopener" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://youtube.com/@hellosidvash" title="YouTube" rel="external nofollow noopener" target="_blank"><i class="fab fa-youtube"></i></a>
             
 
               </div>
@@ -851,7 +1089,7 @@ document.addEventListener('click', function() {
     <!-- Visitor counter for navigation pages only --><!-- Footer -->    
     <footer class="fixed-bottom">
       <div class="container mt-0">
-        © Copyright 2025 Siddharth  Vashishtha. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Photos from <a href="https://unsplash.com" target="_blank" rel="external nofollow noopener">Unsplash</a>.
+        © Copyright 2025 Siddharth  Vashishtha. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>.
 
       </div>
     </footer>
