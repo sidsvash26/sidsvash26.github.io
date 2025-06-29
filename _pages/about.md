@@ -16,14 +16,10 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hi! I am Sid, a Software Engineer at Google Deepmind.
+Hi! I am Sid, a Software Engineer at Google Deepmind. At Google, I work on building AI agentic features such as [Gemini Deep Research](https://gemini.google/overview/deep-research/?hl=en).
 
 I completed my Ph.D. in Computer Science at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
 
 My Ph.D. focussed on extracting information about events from document collections. During my Ph.D., I also worked on building models for extracting other types of semantic information related to events -- event triggers, event chronology, event duration etc.
 
 My papers are listed on the [publications](https://sidsvash26.github.io/publications) page. Full list of publications can be found at [Semantic Scholar](https://www.semanticscholar.org/author/Siddharth-Vashishtha/68972934)/[Google Scholar](https://scholar.google.com/citations?user=4Q4zhC0AAAAJ&hl=en)
-
-### Work Experience
-
-{% include work_experience.html %}
