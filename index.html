@@ -195,9 +195,11 @@
                 height: auto;
               }
               .about-profile-col .img-fluid {
-                max-width: 140px;
+                max-width: 220px;
+                width: 90vw;
                 height: auto;
-                max-height: 200px;
+                max-height: 300px;
+                margin-bottom: 16px;
               }
               .about-profile-col .address {
                 font-size: 0.88em;
@@ -392,7 +394,6 @@
       align-items: center;
       gap: 30px;
     }
-    
     .timeline::before {
       width: 3px;
       height: 100%;
@@ -401,17 +402,45 @@
       transform: translateX(-50%);
       background: linear-gradient(180deg, #007bff, #28a745, #ffc107, #dc3545, #6f42c1, #fd7e14);
     }
-    
     .timeline-item {
       flex: none;
-      min-width: 200px;
+      min-width: 0;
       width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      margin-bottom: 40px;
     }
-    
+    .timeline-logo {
+      margin-bottom: 0;
+      margin-right: 16px;
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+    }
+    .timeline-year, .timeline-company, .timeline-position {
+      text-align: left;
+      margin-left: 0;
+    }
     .timeline-details {
+      display: block !important;
+      position: static;
       width: 100%;
-      max-width: 350px;
-      margin: 0 auto;
+      max-width: 100%;
+      margin: 8px 0 0 0;
+      box-shadow: none;
+      border: none;
+      background: #f9f9f9;
+      font-size: 0.98em;
+    }
+    .timeline-item.active .timeline-details {
+      animation: none;
+    }
+    .timeline-item {
+      cursor: default;
+    }
+    .timeline-logo {
+      cursor: default;
     }
   }
 </style>
