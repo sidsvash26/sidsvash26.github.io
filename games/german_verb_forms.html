@@ -24,17 +24,32 @@
             user-select: none;
             min-width: 80px; /* Minimum width */
             text-align: center;
-            padding: 8px 12px;
-            border-radius: 0.5rem; /* Rounded corners */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Shadow */
+            padding: 8px 16px; /* Adjusted padding for pill shape */
+            border-radius: 9999px; /* Pill shape */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Softer shadow */
             background-color: #ffffff; /* White background */
-            border: 1px solid #e5e7eb; /* Light gray border */
             white-space: nowrap; /* Prevent text wrapping */
-            font-weight: 500; /* Slightly bolder text */
+            font-weight: 600; /* Bolder text */
+            animation: fadeIn 0.3s ease-out;
+            border: 2px solid transparent; /* Start with transparent border */
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* New Pill-style Colors */
+        .verb-color-1 { border-color: #fca5a5; color: #b91c1c; } /* Red */
+        .verb-color-2 { border-color: #fdba74; color: #c2410c; } /* Orange */
+        .verb-color-3 { border-color: #fcd34d; color: #a16207; } /* Amber */
+        .verb-color-4 { border-color: #86efac; color: #15803d; } /* Green */
+        .verb-color-5 { border-color: #93c5fd; color: #1d4ed8; } /* Blue */
+        .verb-color-6 { border-color: #d8b4fe; color: #7e22ce; } /* Purple */
+
         .verb-drop:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
-            background-color: #f3f4f6; /* Lighter gray on hover */
+            transform: scale(1.08);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
         /* Style for the game area - Responsive Height */
         #game-area {
@@ -163,8 +178,8 @@
 
         // --- Game Constants ---
         const INITIAL_LIVES = 5;
-        const MIN_HORIZONTAL_SEPARATION = 80; // Increased separation to reduce overlap chance
-        const MIN_VERTICAL_SEPARATION = 40; // Added minimum vertical separation for spawning
+        const MIN_HORIZONTAL_SEPARATION = 120; // Increased separation to reduce overlap chance
+        const MIN_VERTICAL_SEPARATION = 50; // Added minimum vertical separation for spawning
 
         // --- DOM Elements ---
         const gameArea = document.getElementById('game-area');
@@ -276,7 +291,7 @@
              livesDisplay.innerHTML = hearts;
         }
 
-        // Create a falling verb element with better overlap avoidance
+                // Create a falling verb element with simplified placement logic
         function createFallingVerbElement(verbForm, isCorrect) {
              const verbElement = document.createElement('div');
              verbElement.classList.add('verb-drop');
@@ -287,64 +302,48 @@
              const elementWidth = verbElement.offsetWidth;
              document.body.removeChild(verbElement);
 
-             const gameAreaWidth = gameArea.offsetWidth || 300; // Use fallback if needed
-             const maxLeft = Math.max(10, gameAreaWidth - elementWidth - 10); // Ensure at least 10px padding
+             const gameAreaWidth = gameArea.offsetWidth || 300;
+             const maxLeft = Math.max(10, gameAreaWidth - elementWidth - 10);
 
-             let potentialLeft;
-             let potentialTop;
-             let attempts = 0;
-             const MAX_ATTEMPTS = 20; // Increased attempts
-             let positionFound = false;
-
-             // Try to find a non-overlapping position
-             while (attempts < MAX_ATTEMPTS && !positionFound) {
-                 potentialLeft = getRandomInt(10, maxLeft);
-                 potentialTop = -getRandomInt(30, 100); // Start randomly above the view
-                 positionFound = true; // Assume it's good initially
-
-                 // Check against existing falling verbs
-                 for (const existingVerb of fallingVerbs) {
-                     // Skip check if element doesn't exist (might have been removed)
-                     if (!existingVerb.element) continue;
-
-                     const existingRight = existingVerb.x + existingVerb.width;
-                     const potentialRight = potentialLeft + elementWidth;
-                     // Use offsetHeight if available, otherwise estimate
-                     const existingHeight = existingVerb.element.offsetHeight || 50;
-                     const existingBottom = existingVerb.y + existingHeight;
-
-                     // Check for HORIZONTAL overlap (with increased separation)
-                     const horizontalOverlap = potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION &&
-                                              potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION;
-
-                     // Check for VERTICAL overlap (only check if starting near another word)
-                     const verticalOverlap = potentialTop < existingBottom + MIN_VERTICAL_SEPARATION &&
-                                             potentialTop + 50 > existingVerb.y - MIN_VERTICAL_SEPARATION; // 50 is approx height
-
-                     if (horizontalOverlap && verticalOverlap) {
-                         positionFound = false; // Overlap detected
-                         break;
-                     }
+             // Robust vertical separation system - no overlaps guaranteed
+             const VERB_HEIGHT = 40; // Approximate height of a verb element
+             const VERTICAL_SEPARATION = VERB_HEIGHT + 20; // Minimum vertical gap
+             
+             // Simple horizontal placement
+             const potentialLeft = getRandomInt(10, maxLeft);
+             
+             // Find the lowest safe vertical position
+             let potentialTop = -getRandomInt(30, 80); // Default starting position
+             
+             // Check all existing verbs and ensure vertical separation
+             for (const existingVerb of fallingVerbs) {
+                 if (!existingVerb.element) continue;
+                 
+                 // Get current position of existing verb
+                 const existingTop = parseFloat(existingVerb.element.style.top) || existingVerb.y;
+                 
+                 // Only check verbs that are still in the upper area (not too far down)
+                 if (existingTop > 100) continue;
+                 
+                 // Check if there would be vertical overlap
+                 const existingBottom = existingTop + VERB_HEIGHT;
+                 const potentialBottom = potentialTop + VERB_HEIGHT;
+                 
+                 // If there's vertical overlap, move the new verb higher
+                 if (potentialTop < existingBottom && potentialBottom > existingTop) {
+                     potentialTop = existingTop - VERTICAL_SEPARATION;
                  }
-                 attempts++;
-             }
-
-             // If still no position found after attempts, place it near the top-center as a fallback
-             if (!positionFound) {
-                 potentialLeft = Math.max(10, (gameAreaWidth - elementWidth) / 2 + getRandomInt(-30, 30)); // Center-ish
-                 potentialTop = -getRandomInt(30, 60); // Start reliably high
              }
 
              verbElement.style.left = `${potentialLeft}px`;
              verbElement.style.top = `${potentialTop}px`;
-             verbElement.dataset.correct = isCorrect; // Store if this form is a correct answer
-             verbElement.dataset.form = verbForm;     // Store the actual verb form text
+             verbElement.dataset.correct = isCorrect;
+             verbElement.dataset.form = verbForm;
              verbElement.addEventListener('click', handleVerbClick);
              gameArea.appendChild(verbElement);
 
-             // Return necessary info for tracking
              return { element: verbElement, isCorrect: isCorrect, form: verbForm, y: potentialTop, x: potentialLeft, width: elementWidth };
-        }
+         }
 
 
         // Handle losing a life
