@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>German Verb Drop Game</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -120,8 +121,8 @@
             <div class="w-full md:w-1/4 flex flex-col items-center md:items-stretch gap-3 order-2">
 
                  <div class="w-full flex justify-center md:justify-start order-1">
-                     <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto">
-                         Start Game
+                     <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto" disabled>
+                         Loading Verbs...
                      </button>
                  </div>
 
@@ -152,79 +153,9 @@
 
             </div> </div> </div> <script>
         // --- Game Data ---
-        const verbs = [
-             // Original Verbs
-             { infinitive: "anfangen", praeteritum: "fing an", partizip: "angefangen", english: "to begin" },
-             { infinitive: "antworten", praeteritum: "antwortete", partizip: "geantwortet", english: "to answer" },
-             { infinitive: "arbeiten", praeteritum: "arbeitete", partizip: "gearbeitet", english: "to work" },
-             { infinitive: "ärgern", praeteritum: "ärgerte", partizip: "geärgert", english: "to annoy" },
-             { infinitive: "aufräumen", praeteritum: "räumte auf", partizip: "aufgeräumt", english: "to clean up" },
-             { infinitive: "aufwachen", praeteritum: "wachte auf", partizip: "aufgewacht", english: "to wake up" },
-             { infinitive: "aussehen", praeteritum: "sah aus", partizip: "ausgesehen", english: "to look like" },
-             { infinitive: "baden", praeteritum: "badete", partizip: "gebadet", english: "to bathe" },
-             { infinitive: "bauen", praeteritum: "baute", partizip: "gebaut", english: "to build" },
-             { infinitive: "beeilen", praeteritum: "beeilte", partizip: "beeilt", english: "to hurry" },
-             { infinitive: "beginnen", praeteritum: "begann", partizip: "begonnen", english: "to begin" }, // Synonym for anfangen
-             { infinitive: "bekommen", praeteritum: "bekam", partizip: "bekommen", english: "to get, receive" },
-             { infinitive: "bestellen", praeteritum: "bestellte", partizip: "bestellt", english: "to order" },
-             { infinitive: "besuchen", praeteritum: "besuchte", partizip: "besucht", english: "to visit" },
-             { infinitive: "beten", praeteritum: "betete", partizip: "gebetet", english: "to pray" },
-             // --- New Verbs Added ---
-             { infinitive: "bewerben", praeteritum: "bewarb", partizip: "beworben", english: "to apply" },
-             { infinitive: "bezahlen", praeteritum: "bezahlte", partizip: "bezahlt", english: "to pay for" },
-             { infinitive: "biegen", praeteritum: "bog", partizip: "gebogen", english: "to turn, bend" }, // Note: Partizip II is 'gebogen'
-             { infinitive: "bieten", praeteritum: "bot", partizip: "geboten", english: "to offer" },
-             { infinitive: "bitten", praeteritum: "bat", partizip: "gebeten", english: "to ask for" },
-             // Add more verbs here if needed
-            { infinitive: "bleiben", praeteritum: "blieb", partizip: "geblieben", english: "to stay" },
-            { infinitive: "blicken", praeteritum: "blickte", partizip: "geblickt", english: "to look, glance" },
-            { infinitive: "brauchen", praeteritum: "brauchte", partizip: "gebraucht", english: "to need, use" },
-            { infinitive: "brechen", praeteritum: "brach", partizip: "gebrochen", english: "to break" },
-            { infinitive: "bringen", praeteritum: "brachte", partizip: "gebracht", english: "to bring" },
-            { infinitive: "besprechen", praeteritum: "besprach", partizip: "besprochen", english: "to discuss" },
-            { infinitive: "bürsten", praeteritum: "bürstete", partizip: "gebürstet", english: "to brush" },
-            { infinitive: "danken", praeteritum: "dankte", partizip: "gedankt", english: "to thank" },
-            { infinitive: "dauern", praeteritum: "dauerte", partizip: "gedauert", english: "to last" },
-            { infinitive: "denken", praeteritum: "dachte", partizip: "gedacht", english: "to think" },
-            { infinitive: "diskutieren", praeteritum: "diskutierte", partizip: "diskutiert", english: "to discuss" },
-            { infinitive: "drücken", praeteritum: "drückte", partizip: "gedrückt", english: "to press" },
-            { infinitive: "duschen", praeteritum: "duschte", partizip: "geduscht", english: "to shower" },
-            { infinitive: "empfehlen", praeteritum: "empfahl", partizip: "empfohlen", english: "to recommend" },
-            { infinitive: "entscheiden", praeteritum: "entschied", partizip: "entschieden", english: "to decide" },
-            { infinitive: "entschuldigen", praeteritum: "entschuldigte", partizip: "entschuldigt", english: "to excuse oneself" },
-            { infinitive: "entspannen", praeteritum: "entspannte", partizip: "entspannt", english: "to relax" },
-            { infinitive: "erinnern", praeteritum: "erinnerte", partizip: "erinnert", english: "to remember" },
-            { infinitive: "erkälten", praeteritum: "erkältete", partizip: "erkältet", english: "to catch a cold" },
-            { infinitive: "erkennen", praeteritum: "erkannte", partizip: "erkannt", english: "to recognize" },
-            { infinitive: "erklären", praeteritum: "erklärte", partizip: "erklärt", english: "to explain" },
-            { infinitive: "erlauben", praeteritum: "erlaubte", partizip: "erlaubt", english: "to allow, permit" },
-            { infinitive: "erleben", praeteritum: "erlebte", partizip: "erlebt", english: "to experience" },
-            { infinitive: "erzählen", praeteritum: "erzählte", partizip: "erzählt", english: "to tell about" },
-            { infinitive: "essen", praeteritum: "aß", partizip: "gegessen", english: "to eat" },
-            { infinitive: "fahren", praeteritum: "fuhr", partizip: "gefahren", english: "to drive, go" },
-            { infinitive: "fallen", praeteritum: "fiel", partizip: "gefallen", english: "to fall" },
-            { infinitive: "fangen", praeteritum: "fing", partizip: "gefangen", english: "to catch" },
-            { infinitive: "faulenzen", praeteritum: "faulenzte", partizip: "gefaulenzt", english: "to be lazy" },
-            { infinitive: "fehlen", praeteritum: "fehlte", partizip: "gefehlt", english: "to be missing / to be absent" },
-            { infinitive: "feiern", praeteritum: "feierte", partizip: "gefeiert", english: "to celebrate" },
-            { infinitive: "finden", praeteritum: "fand", partizip: "gefunden", english: "to find" },
-            { infinitive: "fliegen", praeteritum: "flog", partizip: "geflogen", english: "to fly" },
-            { infinitive: "folgen", praeteritum: "folgte", partizip: "gefolgt", english: "to follow" },
-            { infinitive: "fönen", praeteritum: "fönte", partizip: "gefönt", english: "to blow dry" },
-            { infinitive: "fotografieren", praeteritum: "fotografierte", partizip: "fotografiert", english: "to photograph" },
-            { infinitive: "fragen", praeteritum: "fragte", partizip: "gefragt", english: "to ask" },
-            { infinitive: "freuen", praeteritum: "freute", partizip: "gefreut", english: "to be happy" },
-            { infinitive: "fühlen", praeteritum: "fühlte", partizip: "gefühlt", english: "to feel" },
-            { infinitive: "geben", praeteritum: "gab", partizip: "gegeben", english: "to give" },
-            { infinitive: "gefallen", praeteritum: "gefiel", partizip: "gefallen", english: "to be pleasing, like" },
-            { infinitive: "gehen", praeteritum: "ging", partizip: "gegangen", english: "to go" },
-            { infinitive: "gehören", praeteritum: "gehörte", partizip: "gehört", english: "to belong to" },
-            { infinitive: "gewinnen", praeteritum: "gewann", partizip: "gewonnen", english: "to winn" }, // Note: "winn" kept as in raw data
-            { infinitive: "glauben", praeteritum: "glaubte", partizip: "geglaubt", english: "to believe, think" },
-            { infinitive: "gratulieren", praeteritum: "gratulierte", partizip: "gratuliert", english: "to congratulate" }
-                // Add more verbs here if needed
-        ];
-        const TOTAL_VERBS_AVAILABLE = verbs.length;
+        let verbs = [];
+        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1K4zF7PB1htE8CUT1qRMGGP2kMmUetL_G-1kbtTiEPfg/gviz/tq?tqx=out:csv&sheet=Sheet1';
+        let TOTAL_VERBS_AVAILABLE = 0;
 
         // --- Game Constants ---
         const INITIAL_LIVES = 5;
@@ -860,17 +791,52 @@
         });
 
         // --- Initial Setup ---
-        // Run once when the page loads
-        populateVerbCountDropdown(); // Add options to the verb count selector
-        updateLivesDisplay(); // Show initial lives (full)
-        updateFallSpeed(speedSlider.value); // Set initial speed based on slider's default value
-        messageArea.textContent = 'Select options and click "Start Game"!';
-        messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
-        givenVerbInfoDisplay.textContent = '-'; // Initial placeholder
-        givenVerbEnglishDisplay.textContent = ''; // Initial placeholder
-        // Ensure controls are enabled initially
-        speedSlider.disabled = false;
-        verbCountSelect.disabled = false;
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('start-button');
+            const messageArea = document.getElementById('message-area');
+            const speedSlider = document.getElementById('speed-slider');
+            const verbCountSelect = document.getElementById('verb-count-select');
+            const givenVerbInfoDisplay = document.getElementById('given-verb-info');
+            const givenVerbEnglishDisplay = document.getElementById('given-verb-english');
+
+            // Initial UI state while loading
+            updateLivesDisplay();
+            updateFallSpeed(speedSlider.value);
+            messageArea.textContent = 'Loading verb data...';
+            messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
+            givenVerbInfoDisplay.textContent = '-';
+            givenVerbEnglishDisplay.textContent = '';
+            speedSlider.disabled = true;
+            verbCountSelect.disabled = true;
+
+            Papa.parse(GOOGLE_SHEET_URL, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    verbs = results.data.map(row => ({
+                        infinitive: row['INFINITIV'],
+                        praeteritum: row['PRÄTERITUM'],
+                        partizip: row['PARTIZIP PERFEKT'],
+                        english: row['ENGLISCH']
+                    })).filter(v => v.infinitive && v.infinitive.trim() !== '' && v.praeteritum && v.partizip);
+
+                    TOTAL_VERBS_AVAILABLE = verbs.length;
+                    populateVerbCountDropdown();
+                    
+                    startButton.disabled = false;
+                    startButton.textContent = 'Start Game';
+                    speedSlider.disabled = false;
+                    verbCountSelect.disabled = false;
+                    messageArea.textContent = 'Select options and click "Start Game"!';
+                },
+                error: function(error) {
+                    console.error("Error loading or parsing verb data:", error);
+                    messageArea.textContent = 'Failed to load verbs. Please refresh.';
+                    messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full order-2';
+                    startButton.textContent = 'Error';
+                }
+            });
+        });
 
     </script>
 
