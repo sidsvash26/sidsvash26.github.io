@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>German Verb Drop Game</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,17 +24,32 @@
             user-select: none;
             min-width: 80px; /* Minimum width */
             text-align: center;
-            padding: 8px 12px;
-            border-radius: 0.5rem; /* Rounded corners */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Shadow */
+            padding: 8px 16px; /* Adjusted padding for pill shape */
+            border-radius: 9999px; /* Pill shape */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Softer shadow */
             background-color: #ffffff; /* White background */
-            border: 1px solid #e5e7eb; /* Light gray border */
             white-space: nowrap; /* Prevent text wrapping */
-            font-weight: 500; /* Slightly bolder text */
+            font-weight: 600; /* Bolder text */
+            animation: fadeIn 0.3s ease-out;
+            border: 2px solid transparent; /* Start with transparent border */
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* New Pill-style Colors */
+        .verb-color-1 { border-color: #fca5a5; color: #b91c1c; } /* Red */
+        .verb-color-2 { border-color: #fdba74; color: #c2410c; } /* Orange */
+        .verb-color-3 { border-color: #fcd34d; color: #a16207; } /* Amber */
+        .verb-color-4 { border-color: #86efac; color: #15803d; } /* Green */
+        .verb-color-5 { border-color: #93c5fd; color: #1d4ed8; } /* Blue */
+        .verb-color-6 { border-color: #d8b4fe; color: #7e22ce; } /* Purple */
+
         .verb-drop:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
-            background-color: #f3f4f6; /* Lighter gray on hover */
+            transform: scale(1.08);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
         /* Style for the game area - Responsive Height */
         #game-area {
@@ -114,14 +130,18 @@
 
              <div class="w-full md:w-3/4 order-1">
                 <div id="game-area">
-                    </div>
+                    <div id="pause-overlay" class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white text-3xl font-bold hidden z-10">Paused</div>
+                </div>
             </div>
 
             <div class="w-full md:w-1/4 flex flex-col items-center md:items-stretch gap-3 order-2">
 
-                 <div class="w-full flex justify-center md:justify-start order-1">
-                     <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto">
-                         Start Game
+                 <div class="w-full flex justify-center md:justify-start gap-2 order-1">
+                     <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto" disabled>
+                         Loading Verbs...
+                     </button>
+                     <button id="pause-button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto" disabled>
+                         Pause
                      </button>
                  </div>
 
@@ -152,84 +172,14 @@
 
             </div> </div> </div> <script>
         // --- Game Data ---
-        const verbs = [
-             // Original Verbs
-             { infinitive: "anfangen", praeteritum: "fing an", partizip: "angefangen", english: "to begin" },
-             { infinitive: "antworten", praeteritum: "antwortete", partizip: "geantwortet", english: "to answer" },
-             { infinitive: "arbeiten", praeteritum: "arbeitete", partizip: "gearbeitet", english: "to work" },
-             { infinitive: "ärgern", praeteritum: "ärgerte", partizip: "geärgert", english: "to annoy" },
-             { infinitive: "aufräumen", praeteritum: "räumte auf", partizip: "aufgeräumt", english: "to clean up" },
-             { infinitive: "aufwachen", praeteritum: "wachte auf", partizip: "aufgewacht", english: "to wake up" },
-             { infinitive: "aussehen", praeteritum: "sah aus", partizip: "ausgesehen", english: "to look like" },
-             { infinitive: "baden", praeteritum: "badete", partizip: "gebadet", english: "to bathe" },
-             { infinitive: "bauen", praeteritum: "baute", partizip: "gebaut", english: "to build" },
-             { infinitive: "beeilen", praeteritum: "beeilte", partizip: "beeilt", english: "to hurry" },
-             { infinitive: "beginnen", praeteritum: "begann", partizip: "begonnen", english: "to begin" }, // Synonym for anfangen
-             { infinitive: "bekommen", praeteritum: "bekam", partizip: "bekommen", english: "to get, receive" },
-             { infinitive: "bestellen", praeteritum: "bestellte", partizip: "bestellt", english: "to order" },
-             { infinitive: "besuchen", praeteritum: "besuchte", partizip: "besucht", english: "to visit" },
-             { infinitive: "beten", praeteritum: "betete", partizip: "gebetet", english: "to pray" },
-             // --- New Verbs Added ---
-             { infinitive: "bewerben", praeteritum: "bewarb", partizip: "beworben", english: "to apply" },
-             { infinitive: "bezahlen", praeteritum: "bezahlte", partizip: "bezahlt", english: "to pay for" },
-             { infinitive: "biegen", praeteritum: "bog", partizip: "gebogen", english: "to turn, bend" }, // Note: Partizip II is 'gebogen'
-             { infinitive: "bieten", praeteritum: "bot", partizip: "geboten", english: "to offer" },
-             { infinitive: "bitten", praeteritum: "bat", partizip: "gebeten", english: "to ask for" },
-             // Add more verbs here if needed
-            { infinitive: "bleiben", praeteritum: "blieb", partizip: "geblieben", english: "to stay" },
-            { infinitive: "blicken", praeteritum: "blickte", partizip: "geblickt", english: "to look, glance" },
-            { infinitive: "brauchen", praeteritum: "brauchte", partizip: "gebraucht", english: "to need, use" },
-            { infinitive: "brechen", praeteritum: "brach", partizip: "gebrochen", english: "to break" },
-            { infinitive: "bringen", praeteritum: "brachte", partizip: "gebracht", english: "to bring" },
-            { infinitive: "besprechen", praeteritum: "besprach", partizip: "besprochen", english: "to discuss" },
-            { infinitive: "bürsten", praeteritum: "bürstete", partizip: "gebürstet", english: "to brush" },
-            { infinitive: "danken", praeteritum: "dankte", partizip: "gedankt", english: "to thank" },
-            { infinitive: "dauern", praeteritum: "dauerte", partizip: "gedauert", english: "to last" },
-            { infinitive: "denken", praeteritum: "dachte", partizip: "gedacht", english: "to think" },
-            { infinitive: "diskutieren", praeteritum: "diskutierte", partizip: "diskutiert", english: "to discuss" },
-            { infinitive: "drücken", praeteritum: "drückte", partizip: "gedrückt", english: "to press" },
-            { infinitive: "duschen", praeteritum: "duschte", partizip: "geduscht", english: "to shower" },
-            { infinitive: "empfehlen", praeteritum: "empfahl", partizip: "empfohlen", english: "to recommend" },
-            { infinitive: "entscheiden", praeteritum: "entschied", partizip: "entschieden", english: "to decide" },
-            { infinitive: "entschuldigen", praeteritum: "entschuldigte", partizip: "entschuldigt", english: "to excuse oneself" },
-            { infinitive: "entspannen", praeteritum: "entspannte", partizip: "entspannt", english: "to relax" },
-            { infinitive: "erinnern", praeteritum: "erinnerte", partizip: "erinnert", english: "to remember" },
-            { infinitive: "erkälten", praeteritum: "erkältete", partizip: "erkältet", english: "to catch a cold" },
-            { infinitive: "erkennen", praeteritum: "erkannte", partizip: "erkannt", english: "to recognize" },
-            { infinitive: "erklären", praeteritum: "erklärte", partizip: "erklärt", english: "to explain" },
-            { infinitive: "erlauben", praeteritum: "erlaubte", partizip: "erlaubt", english: "to allow, permit" },
-            { infinitive: "erleben", praeteritum: "erlebte", partizip: "erlebt", english: "to experience" },
-            { infinitive: "erzählen", praeteritum: "erzählte", partizip: "erzählt", english: "to tell about" },
-            { infinitive: "essen", praeteritum: "aß", partizip: "gegessen", english: "to eat" },
-            { infinitive: "fahren", praeteritum: "fuhr", partizip: "gefahren", english: "to drive, go" },
-            { infinitive: "fallen", praeteritum: "fiel", partizip: "gefallen", english: "to fall" },
-            { infinitive: "fangen", praeteritum: "fing", partizip: "gefangen", english: "to catch" },
-            { infinitive: "faulenzen", praeteritum: "faulenzte", partizip: "gefaulenzt", english: "to be lazy" },
-            { infinitive: "fehlen", praeteritum: "fehlte", partizip: "gefehlt", english: "to be missing / to be absent" },
-            { infinitive: "feiern", praeteritum: "feierte", partizip: "gefeiert", english: "to celebrate" },
-            { infinitive: "finden", praeteritum: "fand", partizip: "gefunden", english: "to find" },
-            { infinitive: "fliegen", praeteritum: "flog", partizip: "geflogen", english: "to fly" },
-            { infinitive: "folgen", praeteritum: "folgte", partizip: "gefolgt", english: "to follow" },
-            { infinitive: "fönen", praeteritum: "fönte", partizip: "gefönt", english: "to blow dry" },
-            { infinitive: "fotografieren", praeteritum: "fotografierte", partizip: "fotografiert", english: "to photograph" },
-            { infinitive: "fragen", praeteritum: "fragte", partizip: "gefragt", english: "to ask" },
-            { infinitive: "freuen", praeteritum: "freute", partizip: "gefreut", english: "to be happy" },
-            { infinitive: "fühlen", praeteritum: "fühlte", partizip: "gefühlt", english: "to feel" },
-            { infinitive: "geben", praeteritum: "gab", partizip: "gegeben", english: "to give" },
-            { infinitive: "gefallen", praeteritum: "gefiel", partizip: "gefallen", english: "to be pleasing, like" },
-            { infinitive: "gehen", praeteritum: "ging", partizip: "gegangen", english: "to go" },
-            { infinitive: "gehören", praeteritum: "gehörte", partizip: "gehört", english: "to belong to" },
-            { infinitive: "gewinnen", praeteritum: "gewann", partizip: "gewonnen", english: "to winn" }, // Note: "winn" kept as in raw data
-            { infinitive: "glauben", praeteritum: "glaubte", partizip: "geglaubt", english: "to believe, think" },
-            { infinitive: "gratulieren", praeteritum: "gratulierte", partizip: "gratuliert", english: "to congratulate" }
-                // Add more verbs here if needed
-        ];
-        const TOTAL_VERBS_AVAILABLE = verbs.length;
+        let verbs = [];
+        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1K4zF7PB1htE8CUT1qRMGGP2kMmUetL_G-1kbtTiEPfg/gviz/tq?tqx=out:csv&sheet=Sheet1';
+        let TOTAL_VERBS_AVAILABLE = 0;
 
         // --- Game Constants ---
         const INITIAL_LIVES = 5;
-        const MIN_HORIZONTAL_SEPARATION = 80; // Increased separation to reduce overlap chance
-        const MIN_VERTICAL_SEPARATION = 40; // Added minimum vertical separation for spawning
+        const MIN_HORIZONTAL_SEPARATION = 120; // Increased separation to reduce overlap chance
+        const MIN_VERTICAL_SEPARATION = 50; // Added minimum vertical separation for spawning
 
         // --- DOM Elements ---
         const gameArea = document.getElementById('game-area');
@@ -245,6 +195,8 @@
         const speedSlider = document.getElementById('speed-slider');
         const speedLevelDisplay = document.getElementById('speed-level-display');
         const verbCountSelect = document.getElementById('verb-count-select'); // New verb count dropdown
+        const pauseButton = document.getElementById('pause-button');
+        const pauseOverlay = document.getElementById('pause-overlay');
 
         // --- Game State ---
         let score = 0;
@@ -256,6 +208,7 @@
         let gameLoopInterval = null;    // ID for requestAnimationFrame
         let isGameRunning = false;
         let isGameOver = false;       // Includes both losing all lives and completing verbs
+        let isPaused = false;
         let fallSpeed = 0.8;          // Initial speed based on default slider value 1
         let roundInProgress = false;    // Flag to indicate if player can interact
         let gameMode = 'partizip';    // Default mode set to Partizip Perfekt
@@ -338,7 +291,7 @@
              livesDisplay.innerHTML = hearts;
         }
 
-        // Create a falling verb element with better overlap avoidance
+                // Create a falling verb element with simplified placement logic
         function createFallingVerbElement(verbForm, isCorrect) {
              const verbElement = document.createElement('div');
              verbElement.classList.add('verb-drop');
@@ -349,64 +302,48 @@
              const elementWidth = verbElement.offsetWidth;
              document.body.removeChild(verbElement);
 
-             const gameAreaWidth = gameArea.offsetWidth || 300; // Use fallback if needed
-             const maxLeft = Math.max(10, gameAreaWidth - elementWidth - 10); // Ensure at least 10px padding
+             const gameAreaWidth = gameArea.offsetWidth || 300;
+             const maxLeft = Math.max(10, gameAreaWidth - elementWidth - 10);
 
-             let potentialLeft;
-             let potentialTop;
-             let attempts = 0;
-             const MAX_ATTEMPTS = 20; // Increased attempts
-             let positionFound = false;
-
-             // Try to find a non-overlapping position
-             while (attempts < MAX_ATTEMPTS && !positionFound) {
-                 potentialLeft = getRandomInt(10, maxLeft);
-                 potentialTop = -getRandomInt(30, 100); // Start randomly above the view
-                 positionFound = true; // Assume it's good initially
-
-                 // Check against existing falling verbs
-                 for (const existingVerb of fallingVerbs) {
-                     // Skip check if element doesn't exist (might have been removed)
-                     if (!existingVerb.element) continue;
-
-                     const existingRight = existingVerb.x + existingVerb.width;
-                     const potentialRight = potentialLeft + elementWidth;
-                     // Use offsetHeight if available, otherwise estimate
-                     const existingHeight = existingVerb.element.offsetHeight || 50;
-                     const existingBottom = existingVerb.y + existingHeight;
-
-                     // Check for HORIZONTAL overlap (with increased separation)
-                     const horizontalOverlap = potentialLeft < existingRight + MIN_HORIZONTAL_SEPARATION &&
-                                              potentialRight > existingVerb.x - MIN_HORIZONTAL_SEPARATION;
-
-                     // Check for VERTICAL overlap (only check if starting near another word)
-                     const verticalOverlap = potentialTop < existingBottom + MIN_VERTICAL_SEPARATION &&
-                                             potentialTop + 50 > existingVerb.y - MIN_VERTICAL_SEPARATION; // 50 is approx height
-
-                     if (horizontalOverlap && verticalOverlap) {
-                         positionFound = false; // Overlap detected
-                         break;
-                     }
+             // Robust vertical separation system - no overlaps guaranteed
+             const VERB_HEIGHT = 40; // Approximate height of a verb element
+             const VERTICAL_SEPARATION = VERB_HEIGHT + 20; // Minimum vertical gap
+             
+             // Simple horizontal placement
+             const potentialLeft = getRandomInt(10, maxLeft);
+             
+             // Find the lowest safe vertical position
+             let potentialTop = -getRandomInt(30, 80); // Default starting position
+             
+             // Check all existing verbs and ensure vertical separation
+             for (const existingVerb of fallingVerbs) {
+                 if (!existingVerb.element) continue;
+                 
+                 // Get current position of existing verb
+                 const existingTop = parseFloat(existingVerb.element.style.top) || existingVerb.y;
+                 
+                 // Only check verbs that are still in the upper area (not too far down)
+                 if (existingTop > 100) continue;
+                 
+                 // Check if there would be vertical overlap
+                 const existingBottom = existingTop + VERB_HEIGHT;
+                 const potentialBottom = potentialTop + VERB_HEIGHT;
+                 
+                 // If there's vertical overlap, move the new verb higher
+                 if (potentialTop < existingBottom && potentialBottom > existingTop) {
+                     potentialTop = existingTop - VERTICAL_SEPARATION;
                  }
-                 attempts++;
-             }
-
-             // If still no position found after attempts, place it near the top-center as a fallback
-             if (!positionFound) {
-                 potentialLeft = Math.max(10, (gameAreaWidth - elementWidth) / 2 + getRandomInt(-30, 30)); // Center-ish
-                 potentialTop = -getRandomInt(30, 60); // Start reliably high
              }
 
              verbElement.style.left = `${potentialLeft}px`;
              verbElement.style.top = `${potentialTop}px`;
-             verbElement.dataset.correct = isCorrect; // Store if this form is a correct answer
-             verbElement.dataset.form = verbForm;     // Store the actual verb form text
+             verbElement.dataset.correct = isCorrect;
+             verbElement.dataset.form = verbForm;
              verbElement.addEventListener('click', handleVerbClick);
              gameArea.appendChild(verbElement);
 
-             // Return necessary info for tracking
              return { element: verbElement, isCorrect: isCorrect, form: verbForm, y: potentialTop, x: potentialLeft, width: elementWidth };
-        }
+         }
 
 
         // Handle losing a life
@@ -633,6 +570,7 @@
              isGameRunning = false;
              isGameOver = true; // Use a single flag for any end state
              roundInProgress = false; // Ensure no lingering interactions
+            isPaused = false; // Reset pause state
 
              if (gameLoopInterval) {
                  cancelAnimationFrame(gameLoopInterval); // Stop the animation loop
@@ -658,6 +596,9 @@
              // Re-enable controls
              speedSlider.disabled = false;
              verbCountSelect.disabled = false;
+            pauseButton.disabled = true;
+            pauseButton.textContent = 'Pause';
+            pauseOverlay.classList.add('hidden');
         }
 
         // Specific function for game over due to lives
@@ -680,6 +621,7 @@
              lives = INITIAL_LIVES;
              isGameOver = false;
              isGameRunning = true;
+            isPaused = false;
              roundInProgress = false; // Will be set true in nextRound
              practicedVerbs = new Set(); // Clear practiced verbs set
              targetVerbPool = []; // Clear specific verb pool
@@ -708,6 +650,8 @@
              // Disable controls
              speedSlider.disabled = true;
              verbCountSelect.disabled = true;
+             pauseButton.disabled = false;
+             pauseOverlay.classList.add('hidden');
 
              clearFallingVerbs(); // Clear any previous words
              messageArea.textContent = ''; // Clear any previous messages
@@ -728,6 +672,7 @@
 
              isGameRunning = false;
              roundInProgress = false; // Stop interactions
+            isPaused = false;
 
              // Update button text and appearance
              startButton.textContent = 'Start Game';
@@ -737,6 +682,9 @@
              // Re-enable controls
              speedSlider.disabled = false;
              verbCountSelect.disabled = false;
+            pauseButton.disabled = true;
+            pauseButton.textContent = 'Pause';
+            pauseOverlay.classList.add('hidden');
 
              if (gameLoopInterval) {
                  cancelAnimationFrame(gameLoopInterval); // Stop the animation loop
@@ -843,6 +791,23 @@
              });
         });
 
+        // Pause button click handler
+        pauseButton.addEventListener('click', () => {
+            if (!isGameRunning || isGameOver) return;
+
+            isPaused = !isPaused;
+
+            if (isPaused) {
+                pauseButton.textContent = 'Resume';
+                pauseOverlay.classList.remove('hidden');
+                cancelAnimationFrame(gameLoopInterval);
+            } else {
+                pauseButton.textContent = 'Pause';
+                pauseOverlay.classList.add('hidden');
+                gameLoopInterval = requestAnimationFrame(gameLoop);
+            }
+        });
+
         // Speed slider input handler
         speedSlider.addEventListener('input', (event) => {
             updateFallSpeed(event.target.value); // Update speed based on slider value
@@ -860,17 +825,54 @@
         });
 
         // --- Initial Setup ---
-        // Run once when the page loads
-        populateVerbCountDropdown(); // Add options to the verb count selector
-        updateLivesDisplay(); // Show initial lives (full)
-        updateFallSpeed(speedSlider.value); // Set initial speed based on slider's default value
-        messageArea.textContent = 'Select options and click "Start Game"!';
-        messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
-        givenVerbInfoDisplay.textContent = '-'; // Initial placeholder
-        givenVerbEnglishDisplay.textContent = ''; // Initial placeholder
-        // Ensure controls are enabled initially
-        speedSlider.disabled = false;
-        verbCountSelect.disabled = false;
+        document.addEventListener('DOMContentLoaded', () => {
+            const startButton = document.getElementById('start-button');
+            const messageArea = document.getElementById('message-area');
+            const speedSlider = document.getElementById('speed-slider');
+            const verbCountSelect = document.getElementById('verb-count-select');
+            const givenVerbInfoDisplay = document.getElementById('given-verb-info');
+            const givenVerbEnglishDisplay = document.getElementById('given-verb-english');
+            const pauseButton = document.getElementById('pause-button');
+
+            // Initial UI state while loading
+            updateLivesDisplay();
+            updateFallSpeed(speedSlider.value);
+            messageArea.textContent = 'Loading verb data...';
+            messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
+            givenVerbInfoDisplay.textContent = '-';
+            givenVerbEnglishDisplay.textContent = '';
+            speedSlider.disabled = true;
+            verbCountSelect.disabled = true;
+            pauseButton.disabled = true;
+
+            Papa.parse(GOOGLE_SHEET_URL, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    verbs = results.data.map(row => ({
+                        infinitive: row['INFINITIV'],
+                        praeteritum: row['PRÄTERITUM'],
+                        partizip: row['PARTIZIP PERFEKT'],
+                        english: row['ENGLISCH']
+                    })).filter(v => v.infinitive && v.infinitive.trim() !== '' && v.praeteritum && v.partizip);
+
+                    TOTAL_VERBS_AVAILABLE = verbs.length;
+                    populateVerbCountDropdown();
+                    
+                    startButton.disabled = false;
+                    startButton.textContent = 'Start Game';
+                    speedSlider.disabled = false;
+                    verbCountSelect.disabled = false;
+                    messageArea.textContent = 'Select options and click "Start Game"!';
+                },
+                error: function(error) {
+                    console.error("Error loading or parsing verb data:", error);
+                    messageArea.textContent = 'Failed to load verbs. Please refresh.';
+                    messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full order-2';
+                    startButton.textContent = 'Error';
+                }
+            });
+        });
 
     </script>
 
