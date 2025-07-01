@@ -115,14 +115,18 @@
 
              <div class="w-full md:w-3/4 order-1">
                 <div id="game-area">
-                    </div>
+                    <div id="pause-overlay" class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white text-3xl font-bold hidden z-10">Paused</div>
+                </div>
             </div>
 
             <div class="w-full md:w-1/4 flex flex-col items-center md:items-stretch gap-3 order-2">
 
-                 <div class="w-full flex justify-center md:justify-start order-1">
+                 <div class="w-full flex justify-center md:justify-start gap-2 order-1">
                      <button id="start-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto" disabled>
                          Loading Verbs...
+                     </button>
+                     <button id="pause-button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto" disabled>
+                         Pause
                      </button>
                  </div>
 
@@ -176,6 +180,8 @@
         const speedSlider = document.getElementById('speed-slider');
         const speedLevelDisplay = document.getElementById('speed-level-display');
         const verbCountSelect = document.getElementById('verb-count-select'); // New verb count dropdown
+        const pauseButton = document.getElementById('pause-button');
+        const pauseOverlay = document.getElementById('pause-overlay');
 
         // --- Game State ---
         let score = 0;
@@ -187,6 +193,7 @@
         let gameLoopInterval = null;    // ID for requestAnimationFrame
         let isGameRunning = false;
         let isGameOver = false;       // Includes both losing all lives and completing verbs
+        let isPaused = false;
         let fallSpeed = 0.8;          // Initial speed based on default slider value 1
         let roundInProgress = false;    // Flag to indicate if player can interact
         let gameMode = 'partizip';    // Default mode set to Partizip Perfekt
@@ -564,6 +571,7 @@
              isGameRunning = false;
              isGameOver = true; // Use a single flag for any end state
              roundInProgress = false; // Ensure no lingering interactions
+            isPaused = false; // Reset pause state
 
              if (gameLoopInterval) {
                  cancelAnimationFrame(gameLoopInterval); // Stop the animation loop
@@ -589,6 +597,9 @@
              // Re-enable controls
              speedSlider.disabled = false;
              verbCountSelect.disabled = false;
+            pauseButton.disabled = true;
+            pauseButton.textContent = 'Pause';
+            pauseOverlay.classList.add('hidden');
         }
 
         // Specific function for game over due to lives
@@ -611,6 +622,7 @@
              lives = INITIAL_LIVES;
              isGameOver = false;
              isGameRunning = true;
+            isPaused = false;
              roundInProgress = false; // Will be set true in nextRound
              practicedVerbs = new Set(); // Clear practiced verbs set
              targetVerbPool = []; // Clear specific verb pool
@@ -639,6 +651,8 @@
              // Disable controls
              speedSlider.disabled = true;
              verbCountSelect.disabled = true;
+             pauseButton.disabled = false;
+             pauseOverlay.classList.add('hidden');
 
              clearFallingVerbs(); // Clear any previous words
              messageArea.textContent = ''; // Clear any previous messages
@@ -659,6 +673,7 @@
 
              isGameRunning = false;
              roundInProgress = false; // Stop interactions
+            isPaused = false;
 
              // Update button text and appearance
              startButton.textContent = 'Start Game';
@@ -668,6 +683,9 @@
              // Re-enable controls
              speedSlider.disabled = false;
              verbCountSelect.disabled = false;
+            pauseButton.disabled = true;
+            pauseButton.textContent = 'Pause';
+            pauseOverlay.classList.add('hidden');
 
              if (gameLoopInterval) {
                  cancelAnimationFrame(gameLoopInterval); // Stop the animation loop
@@ -774,6 +792,23 @@
              });
         });
 
+        // Pause button click handler
+        pauseButton.addEventListener('click', () => {
+            if (!isGameRunning || isGameOver) return;
+
+            isPaused = !isPaused;
+
+            if (isPaused) {
+                pauseButton.textContent = 'Resume';
+                pauseOverlay.classList.remove('hidden');
+                cancelAnimationFrame(gameLoopInterval);
+            } else {
+                pauseButton.textContent = 'Pause';
+                pauseOverlay.classList.add('hidden');
+                gameLoopInterval = requestAnimationFrame(gameLoop);
+            }
+        });
+
         // Speed slider input handler
         speedSlider.addEventListener('input', (event) => {
             updateFallSpeed(event.target.value); // Update speed based on slider value
@@ -798,6 +833,7 @@
             const verbCountSelect = document.getElementById('verb-count-select');
             const givenVerbInfoDisplay = document.getElementById('given-verb-info');
             const givenVerbEnglishDisplay = document.getElementById('given-verb-english');
+            const pauseButton = document.getElementById('pause-button');
 
             // Initial UI state while loading
             updateLivesDisplay();
@@ -808,6 +844,7 @@
             givenVerbEnglishDisplay.textContent = '';
             speedSlider.disabled = true;
             verbCountSelect.disabled = true;
+            pauseButton.disabled = true;
 
             Papa.parse(GOOGLE_SHEET_URL, {
                 download: true,
