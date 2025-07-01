@@ -216,7 +216,7 @@
           </style>
           <div class="about-flex-container">
             <div class="about-profile-col"><div class="profile" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;height:100%;width:100%;">
-                    <figure>
+              <figure>
 
   <picture>
     
@@ -232,14 +232,14 @@
 
 </figure>
 
-                  <div class="address">
-                    <p>Software Engineer</p> <p>Pronouns: he/him</p>
+            <div class="address">
+              <p>Software Engineer</p> <p>Pronouns: he/him</p>
 
-                  </div>
-                </div></div>
+            </div>
+          </div></div>
             <div class="about-text-col">
-              <div class="clearfix">
-                <p>Hi! I am Sid, a Software Engineer at Google Deepmind. At Google, I work on building AI agentic features such as <a href="https://gemini.google/overview/deep-research/?hl=en" rel="external nofollow noopener" target="_blank">Gemini Deep Research</a>.</p>
+          <div class="clearfix">
+            <p>Hi! I am Sid, a Software Engineer at Google Deepmind. At Google, I work on building AI agentic features such as <a href="https://gemini.google/overview/deep-research/?hl=en" rel="external nofollow noopener" target="_blank">Gemini Deep Research</a>.</p>
 
 <p>I completed my Ph.D. in Computer Science at the <a href="https://www.cs.rochester.edu/" rel="external nofollow noopener" target="_blank">University of Rochester</a> advised by <a href="http://aaronstevenwhite.io/" rel="external nofollow noopener" target="_blank">Aaron White</a>.</p>
 
@@ -610,15 +610,15 @@
     <div class="timeline-item">
       <div class="timeline-year-col">
         <div class="timeline-year">2023-Present</div>
-      </div>
+    </div>
       <div class="timeline-logo-col">
         <div class="timeline-logo" tabindex="0">
           <img src="/assets/img/google_deepmind_color.png" alt="Google Deepmind">
           <span class="timeline-tooltip">Click for details</span>
-        </div>
+    </div>
         <div class="timeline-company">Google Deepmind</div>
         <div class="timeline-position">Software Engineer</div>
-      </div>
+  </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-year-col">
@@ -628,10 +628,10 @@
         <div class="timeline-logo" tabindex="0">
           <img src="/assets/img/google_logo_2.jpeg" alt="Google Assistant">
           <span class="timeline-tooltip">Click for details</span>
-        </div>
+    </div>
         <div class="timeline-company">Google Assistant</div>
         <div class="timeline-position">Research Intern</div>
-      </div>
+  </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-year-col">
@@ -641,10 +641,10 @@
         <div class="timeline-logo" tabindex="0">
           <img src="/assets/img/verneek_logo_3.png" alt="Verneek.ai">
           <span class="timeline-tooltip">Click for details</span>
-        </div>
+    </div>
         <div class="timeline-company">Verneek.ai</div>
         <div class="timeline-position">NLP Research Intern</div>
-      </div>
+  </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-year-col">
@@ -654,23 +654,23 @@
         <div class="timeline-logo" tabindex="0">
           <img src="/assets/img/amazon_alexa_logo.webp" alt="Amazon Alexa">
           <span class="timeline-tooltip">Click for details</span>
-        </div>
+    </div>
         <div class="timeline-company">Amazon Alexa</div>
         <div class="timeline-position">Applied Scientist Intern</div>
-      </div>
+  </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-year-col">
         <div class="timeline-year">2014-2017</div>
-      </div>
+    </div>
       <div class="timeline-logo-col">
         <div class="timeline-logo" tabindex="0">
           <img src="/assets/img/exl_logo.jpeg" alt="EXL Analytics">
           <span class="timeline-tooltip">Click for details</span>
-        </div>
+  </div>
         <div class="timeline-company">EXL Analytics</div>
         <div class="timeline-position">Senior Consultant</div>
-      </div>
+    </div>
     </div>
   </div>
   <div id="timeline-popup-row"></div>
@@ -1064,74 +1064,24 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
               
             </div>
-
-          <!-- Visitor counter at the very end -->
-          <style>
-          .visitor-counter {
-            text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            border-top: 1px solid var(--global-divider-color, #e9ecef);
-            background-color: var(--global-card-bg-color, #f8f9fa);
-            color: var(--global-text-color, #6c757d);
-            font-size: 0.9em;
-          }
-
-          .visitor-counter .date-line {
-            margin-bottom: 5px;
-            color: var(--global-text-color, #6c757d);
-          }
-
-          .visitor-counter .count-line {
-            font-size: 1.2em;
-            font-weight: 500;
-            color: var(--global-text-color, #495057);
-          }
-
-          /* Dark mode specific adjustments */
-          [data-theme="dark"] .visitor-counter {
-            background-color: var(--global-card-bg-color, #2d3748);
-            border-top-color: var(--global-divider-color, #4a5568);
-          }
-
-          [data-theme="dark"] .visitor-counter .date-line,
-          [data-theme="dark"] .visitor-counter .count-line {
-            color: var(--global-text-color, #e2e8f0);
-          }
-          </style>
-
-          <div class="visitor-counter">
-            <div class="date-line">Total website visits since June 2025</div>
-            <div class="count-line">
-              👥 <span id="visitor-count-">Loading...</span> visitors
-            </div>
-          </div>
-
-          <script>
-          // Simple visitor counter using localStorage
-          function updateVisitorCount() {
-            let count = localStorage.getItem('visitorCount') || 0;
-            count = parseInt(count) + 1;
-            localStorage.setItem('visitorCount', count);
-            
-            // Simple display without animation
-            const countElement = document.getElementById('visitor-count-');
-            if (countElement) {
-              countElement.textContent = count.toLocaleString();
-            }
-          }
-
-          // Update count when page loads
-          document.addEventListener('DOMContentLoaded', updateVisitorCount);
-          </script>
         </article>
 
+</div>
+
+<!-- Visitor counter at the very end -->
+<div class="visitor-counter" style="text-align:center;margin-top:60px;padding:20px;border-top:1px solid var(--global-divider-color,#e9ecef);background-color:var(--global-card-bg-color,#f8f9fa);color:var(--global-text-color,#6c757d);font-size:0.9em;">
+  <div class="date-line" style="margin-bottom:5px;color:var(--global-text-color,#6c757d);">Total global website visits:</div>
+  <div class="count-line" style="font-size:1.2em;font-weight:500;color:var(--global-text-color,#495057);">
+    <a href="https://www.hitwebcounter.com" target="_blank" rel="external nofollow noopener">
+      <img src="https://hitwebcounter.com/counter/counter.php?page=12345678&amp;style=0006&amp;nbdigits=5&amp;type=page&amp;initCount=0" title="Web Counter" alt="web counter" border="0">
+    </a>
+  </div>
 </div>
 
 
     </div>
 
-    <!-- Visitor counter for navigation pages only --><!-- Footer -->    
+    <!-- Footer -->    
     <footer class="fixed-bottom">
       <div class="container mt-0">
         © Copyright 2025 Siddharth  Vashishtha. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>.

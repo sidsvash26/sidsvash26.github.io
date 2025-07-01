@@ -129,69 +129,19 @@
 
         </div>
 
+<!-- Visitor counter at the very end -->
+<div class="visitor-counter" style="text-align:center;margin-top:60px;padding:20px;border-top:1px solid var(--global-divider-color,#e9ecef);background-color:var(--global-card-bg-color,#f8f9fa);color:var(--global-text-color,#6c757d);font-size:0.9em;">
+  <div class="date-line" style="margin-bottom:5px;color:var(--global-text-color,#6c757d);">Total global website visits:</div>
+  <div class="count-line" style="font-size:1.2em;font-weight:500;color:var(--global-text-color,#495057);">
+    <a href="https://www.hitwebcounter.com" target="_blank" rel="external nofollow noopener">
+      <img src="https://hitwebcounter.com/counter/counter.php?page=12345678&amp;style=0006&amp;nbdigits=5&amp;type=page&amp;initCount=0" title="Web Counter" alt="web counter" border="0">
+    </a>
+  </div>
+</div>
+
     </div>
 
-    <!-- Visitor counter for navigation pages only --><div class="container">
-      <style>
-      .visitor-counter {
-        text-align: center;
-        margin-top: 60px;
-        padding: 20px;
-        border-top: 1px solid var(--global-divider-color, #e9ecef);
-        background-color: var(--global-card-bg-color, #f8f9fa);
-        color: var(--global-text-color, #6c757d);
-        font-size: 0.9em;
-      }
-
-      .visitor-counter .date-line {
-        margin-bottom: 5px;
-        color: var(--global-text-color, #6c757d);
-      }
-
-      .visitor-counter .count-line {
-        font-size: 1.2em;
-        font-weight: 500;
-        color: var(--global-text-color, #495057);
-      }
-
-      /* Dark mode specific adjustments */
-      [data-theme="dark"] .visitor-counter {
-        background-color: var(--global-card-bg-color, #2d3748);
-        border-top-color: var(--global-divider-color, #4a5568);
-      }
-
-      [data-theme="dark"] .visitor-counter .date-line,
-      [data-theme="dark"] .visitor-counter .count-line {
-        color: var(--global-text-color, #e2e8f0);
-      }
-      </style>
-
-      <div class="visitor-counter">
-        <div class="date-line">Total website visits since June 2025</div>
-        <div class="count-line">
-          👥 <span id="visitor-count-news">Loading...</span> visitors
-        </div>
-      </div>
-
-      <script>
-      // Simple visitor counter using localStorage
-      function updateVisitorCount() {
-        let count = localStorage.getItem('visitorCount') || 0;
-        count = parseInt(count) + 1;
-        localStorage.setItem('visitorCount', count);
-        
-        // Simple display without animation
-        const countElement = document.getElementById('visitor-count-news');
-        if (countElement) {
-          countElement.textContent = count.toLocaleString();
-        }
-      }
-
-      // Update count when page loads
-      document.addEventListener('DOMContentLoaded', updateVisitorCount);
-      </script>
-    </div>
-<!-- Footer -->    
+    <!-- Footer -->    
     <footer class="fixed-bottom">
       <div class="container mt-0">
         © Copyright 2025 Siddharth  Vashishtha. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>.
