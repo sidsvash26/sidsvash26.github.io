@@ -100,29 +100,29 @@ layout: default
             <div class="about-profile-col">
               {%- if page.profile -%}
                 <div class="profile" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;height:100%;width:100%;">
-                  {%- if page.profile.image %}
-                    {%- assign profile_image_path = page.profile.image | prepend: 'assets/img/' -%}
-                    {% if page.profile.image_circular %}
-                      {%- assign profile_image_class = "img-fluid z-depth-1 rounded-circle" -%}
-                    {% else %}
-                      {%- assign profile_image_class = "img-fluid z-depth-1 rounded" -%}
-                    {% endif %}
-                    {% include figure.html
-                    path=profile_image_path
-                    class=profile_image_class
-                    alt=page.profile.image -%}
-                  {% endif -%}
-                  {%- if page.profile.address %}
-                  <div class="address">
-                    {{ page.profile.address }}
-                  </div>
-                  {%- endif %}
-                </div>
+            {%- if page.profile.image %}
+              {%- assign profile_image_path = page.profile.image | prepend: 'assets/img/' -%}
+              {% if page.profile.image_circular %}
+                {%- assign profile_image_class = "img-fluid z-depth-1 rounded-circle" -%}
+              {% else %}
+                {%- assign profile_image_class = "img-fluid z-depth-1 rounded" -%}
+              {% endif %}
+              {% include figure.html 
+              path=profile_image_path 
+              class=profile_image_class
+              alt=page.profile.image -%}
+            {% endif -%}
+            {%- if page.profile.address %}
+            <div class="address">
+              {{ page.profile.address }}
+            </div>
+            {%- endif %}
+          </div>
               {%- endif -%}
             </div>
             <div class="about-text-col">
-              <div class="clearfix">
-                {{ content }}
+          <div class="clearfix">
+            {{ content }}
               </div>
             </div>
           </div>
@@ -155,67 +155,17 @@ layout: default
               
             </div>
           {%- endif %}
-
-          <!-- Visitor counter at the very end -->
-          <style>
-          .visitor-counter {
-            text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            border-top: 1px solid var(--global-divider-color, #e9ecef);
-            background-color: var(--global-card-bg-color, #f8f9fa);
-            color: var(--global-text-color, #6c757d);
-            font-size: 0.9em;
-          }
-
-          .visitor-counter .date-line {
-            margin-bottom: 5px;
-            color: var(--global-text-color, #6c757d);
-          }
-
-          .visitor-counter .count-line {
-            font-size: 1.2em;
-            font-weight: 500;
-            color: var(--global-text-color, #495057);
-          }
-
-          /* Dark mode specific adjustments */
-          [data-theme="dark"] .visitor-counter {
-            background-color: var(--global-card-bg-color, #2d3748);
-            border-top-color: var(--global-divider-color, #4a5568);
-          }
-
-          [data-theme="dark"] .visitor-counter .date-line,
-          [data-theme="dark"] .visitor-counter .count-line {
-            color: var(--global-text-color, #e2e8f0);
-          }
-          </style>
-
-          <div class="visitor-counter">
-            <div class="date-line">Total website visits since June 2025</div>
-            <div class="count-line">
-              👥 <span id="visitor-count-{{ page.url | slugify }}">Loading...</span> visitors
-            </div>
-          </div>
-
-          <script>
-          // Simple visitor counter using localStorage
-          function updateVisitorCount() {
-            let count = localStorage.getItem('visitorCount') || 0;
-            count = parseInt(count) + 1;
-            localStorage.setItem('visitorCount', count);
-            
-            // Simple display without animation
-            const countElement = document.getElementById('visitor-count-{{ page.url | slugify }}');
-            if (countElement) {
-              countElement.textContent = count.toLocaleString();
-            }
-          }
-
-          // Update count when page loads
-          document.addEventListener('DOMContentLoaded', updateVisitorCount);
-          </script>
         </article>
 
+</div>
+
+<!-- Visitor counter at the very end -->
+<div class="visitor-counter" style="text-align:center;margin-top:60px;padding:20px;border-top:1px solid var(--global-divider-color,#e9ecef);background-color:var(--global-card-bg-color,#f8f9fa);color:var(--global-text-color,#6c757d);font-size:0.9em;">
+  <div class="date-line" style="margin-bottom:5px;color:var(--global-text-color,#6c757d);">Total global website visits:</div>
+  <div class="count-line" style="font-size:1.2em;font-weight:500;color:var(--global-text-color,#495057);">
+    <a href="https://www.hitwebcounter.com" target="_blank">
+      <img src="https://hitwebcounter.com/counter/counter.php?page=12345678&style=0006&nbdigits=5&type=page&initCount=0" title="Web Counter" alt="web counter" border="0" />
+    </a>
+  </div>
 </div>
 
