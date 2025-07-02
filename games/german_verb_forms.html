@@ -457,6 +457,9 @@
                      <button id="pause-button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto" disabled>
                          Pause
                      </button>
+                     <button id="sound-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-150 ease-in-out w-full md:w-auto" title="Toggle pronunciation">
+                         🔊
+                     </button>
                  </div>
 
                  <div id="message-area" class="text-center text-base md:text-lg font-medium w-full order-2"></div>
@@ -511,6 +514,7 @@
         const verbCountSelect = document.getElementById('verb-count-select'); // New verb count dropdown
         const pauseButton = document.getElementById('pause-button');
         const pauseOverlay = document.getElementById('pause-overlay');
+        const soundButton = document.getElementById('sound-button');
 
         // --- Game State ---
         let score = 0;
@@ -529,6 +533,7 @@
         let verbsToPracticeCount = TOTAL_VERBS_AVAILABLE; // How many unique verbs to practice this game
         let practicedVerbs = new Set(); // Set to store infinitives of correctly practiced verbs
         let targetVerbPool = [];      // Subset of verbs for the current game if not practicing all
+        let soundEnabled = true;      // Sound/pronunciation toggle state
 
         // --- Game Logic ---
 
@@ -734,6 +739,9 @@
                  // Create celebration effects at the click position
                  createCelebrationEffects(clickedElement);
                  
+                 // Pronounce the correct German word
+                 speakGermanWord(clickedForm);
+                 
                  // Remove the element from tracking immediately to prevent further interaction
                  const clickedIndex = fallingVerbs.findIndex(item => item.element === clickedElement);
                  if (clickedIndex !== -1) {
@@ -865,6 +873,57 @@
                     flash.remove();
                 }
             }, 300);
+        }
+
+        // Speak German word using text-to-speech
+        function speakGermanWord(word) {
+            // Check if sound is enabled and speech synthesis is supported
+            if (!soundEnabled || !('speechSynthesis' in window)) {
+                return;
+            }
+                // Cancel any ongoing speech
+                speechSynthesis.cancel();
+                
+                // Function to speak the word
+                const speakWord = () => {
+                    // Create a new speech utterance
+                    const utterance = new SpeechSynthesisUtterance(word);
+                    
+                    // Set German language
+                    utterance.lang = 'de-DE';
+                    
+                    // Set speech parameters for clear pronunciation
+                    utterance.rate = 0.8; // Slightly slower for learning
+                    utterance.pitch = 1.0; // Normal pitch
+                    utterance.volume = 0.8; // Slightly quieter than max
+                    
+                    // Try to use a German voice if available
+                    const voices = speechSynthesis.getVoices();
+                    const germanVoice = voices.find(voice => 
+                        voice.lang.startsWith('de') || 
+                        voice.name.toLowerCase().includes('german') ||
+                        voice.name.toLowerCase().includes('deutsch')
+                    );
+                    
+                    if (germanVoice) {
+                        utterance.voice = germanVoice;
+                    }
+                    
+                    speechSynthesis.speak(utterance);
+                };
+                
+                // Add a small delay to let celebration effects start
+                setTimeout(() => {
+                    // Check if voices are loaded
+                    if (speechSynthesis.getVoices().length > 0) {
+                        speakWord();
+                    } else {
+                        // Wait for voices to load
+                        speechSynthesis.addEventListener('voiceschanged', () => {
+                            speakWord();
+                        }, { once: true });
+                    }
+                }, 200);
         }
 
         // Create sad effects when user gets wrong answer
@@ -1324,6 +1383,23 @@
                 pauseButton.textContent = 'Pause';
                 pauseOverlay.classList.add('hidden');
                 gameLoopInterval = requestAnimationFrame(gameLoop);
+            }
+        });
+
+        // Sound toggle button click handler
+        soundButton.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            
+            if (soundEnabled) {
+                soundButton.textContent = '🔊';
+                soundButton.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+                soundButton.classList.add('bg-green-500', 'hover:bg-green-600');
+                soundButton.title = 'Turn off pronunciation';
+            } else {
+                soundButton.textContent = '🔇';
+                soundButton.classList.remove('bg-green-500', 'hover:bg-green-600');
+                soundButton.classList.add('bg-gray-500', 'hover:bg-gray-600');
+                soundButton.title = 'Turn on pronunciation';
             }
         });
 
