@@ -20,7 +20,7 @@
         .verb-drop {
             position: absolute;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
             user-select: none;
             min-width: 70px;
             text-align: center;
@@ -33,6 +33,8 @@
             border: 2px solid #e5e7eb;
             background-color: #ffffff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes fadeIn {
@@ -72,17 +74,28 @@
             color: #7e22ce;
         }
 
-        /* Subtle hover effects */
-        .verb-drop:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            border-color: #9ca3af;
+        /* Hover effects only on non-touch devices */
+        @media (hover: hover) and (pointer: fine) {
+            .verb-drop:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                border-color: #9ca3af;
+            }
         }
 
-        /* Click animation */
+        /* Immediate click/touch feedback */
         .verb-drop:active {
-            transform: scale(0.98);
-            transition: transform 0.1s ease;
+            transform: scale(0.95);
+            transition: transform 0.05s ease;
+        }
+
+        /* Enhanced touch responsiveness */
+        .verb-drop {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         /* Success click effect */
@@ -640,7 +653,9 @@
              verbElement.style.top = `${potentialTop}px`;
              verbElement.dataset.correct = isCorrect;
              verbElement.dataset.form = verbForm;
+             // Add both click and touch event listeners for better mobile responsiveness
              verbElement.addEventListener('click', handleVerbClick);
+             verbElement.addEventListener('touchstart', handleVerbClick, { passive: false });
              gameArea.appendChild(verbElement);
 
              return { element: verbElement, isCorrect: isCorrect, form: verbForm, y: potentialTop, x: potentialLeft, width: elementWidth };
@@ -678,9 +693,26 @@
         }
 
         // *** MODIFIED: Checks for game completion ***
-        // Handle clicking on a falling verb
+        // Handle clicking/touching on a falling verb
         function handleVerbClick(event) {
              if (!isGameRunning || !roundInProgress || isGameOver) return;
+             
+             // Prevent default touch behavior and stop event propagation
+             event.preventDefault();
+             event.stopPropagation();
+             
+             // Prevent double-firing on devices that support both touch and mouse
+             if (event.type === 'touchstart') {
+                 event.target.dataset.touchHandled = 'true';
+                 // Clear the flag after a short delay
+                 setTimeout(() => {
+                     if (event.target.dataset) {
+                         event.target.dataset.touchHandled = 'false';
+                     }
+                 }, 100);
+             } else if (event.type === 'click' && event.target.dataset.touchHandled === 'true') {
+                 return; // Skip click if touch was already handled
+             }
 
              const clickedElement = event.target;
              const clickedForm = clickedElement.dataset.form;
