@@ -16,52 +16,353 @@
             /* Allow scrolling on small screens if content overflows */
              overflow-y: auto;
         }
-        /* Style for falling verb elements */
+        /* Clean, modern style for falling verb elements */
         .verb-drop {
             position: absolute;
             cursor: pointer;
-            transition: background-color 0.2s ease-in-out, transform 0.2s ease;
+            transition: all 0.2s ease;
             user-select: none;
-            min-width: 80px; /* Minimum width */
+            min-width: 70px;
             text-align: center;
-            padding: 8px 16px; /* Adjusted padding for pill shape */
-            border-radius: 9999px; /* Pill shape */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Softer shadow */
-            background-color: #ffffff; /* White background */
-            white-space: nowrap; /* Prevent text wrapping */
-            font-weight: 600; /* Bolder text */
+            padding: 6px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.875rem;
             animation: fadeIn 0.3s ease-out;
-            border: 2px solid transparent; /* Start with transparent border */
+            border: 2px solid #e5e7eb;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* New Pill-style Colors */
-        .verb-color-1 { border-color: #fca5a5; color: #b91c1c; } /* Red */
-        .verb-color-2 { border-color: #fdba74; color: #c2410c; } /* Orange */
-        .verb-color-3 { border-color: #fcd34d; color: #a16207; } /* Amber */
-        .verb-color-4 { border-color: #86efac; color: #15803d; } /* Green */
-        .verb-color-5 { border-color: #93c5fd; color: #1d4ed8; } /* Blue */
-        .verb-color-6 { border-color: #d8b4fe; color: #7e22ce; } /* Purple */
+        /* Subtle color variations */
+        .verb-color-1 { 
+            background-color: #fef2f2;
+            border-color: #fca5a5;
+            color: #b91c1c;
+        }
+        .verb-color-2 { 
+            background-color: #fff7ed;
+            border-color: #fdba74;
+            color: #c2410c;
+        }
+        .verb-color-3 { 
+            background-color: #fefce8;
+            border-color: #fcd34d;
+            color: #a16207;
+        }
+        .verb-color-4 { 
+            background-color: #f0fdf4;
+            border-color: #86efac;
+            color: #15803d;
+        }
+        .verb-color-5 { 
+            background-color: #eff6ff;
+            border-color: #93c5fd;
+            color: #1d4ed8;
+        }
+        .verb-color-6 { 
+            background-color: #faf5ff;
+            border-color: #d8b4fe;
+            color: #7e22ce;
+        }
 
+        /* Subtle hover effects */
         .verb-drop:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            border-color: #9ca3af;
         }
-        /* Style for the game area - Responsive Height */
+
+        /* Click animation */
+        .verb-drop:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+
+        /* Success click effect */
+        @keyframes successPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .verb-drop.success {
+            animation: successPop 0.4s ease-out forwards;
+        }
+
+        /* Floating +1 score animation */
+        .score-popup {
+            position: absolute;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #10b981;
+            pointer-events: none;
+            z-index: 100;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: floatUp 1.5s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0) scale(0.8); 
+            }
+            20% { 
+                opacity: 1; 
+                transform: translateY(-20px) scale(1.2); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-80px) scale(1); 
+            }
+        }
+
+        /* Party balloons animation */
+        .balloon {
+            position: absolute;
+            pointer-events: none;
+            z-index: 50;
+            animation: balloonFloat 3s ease-out forwards;
+        }
+
+        .balloon:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 26px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .balloon:after {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 15px;
+            background: #666;
+            left: 50%;
+            top: 26px;
+            transform: translateX(-50%);
+        }
+
+        .balloon-red:before { 
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        .balloon-blue:before { 
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .balloon-green:before { 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .balloon-yellow:before { 
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        .balloon-purple:before { 
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+        .balloon-pink:before { 
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        }
+
+        @keyframes balloonFloat {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0) scale(0.5) rotate(-5deg); 
+            }
+            20% { 
+                opacity: 1; 
+                transform: translateY(-20px) scale(1) rotate(2deg); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-200px) scale(0.8) rotate(-3deg); 
+            }
+        }
+
+        /* Celebration burst effect */
+        .celebration-burst {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 40;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+            animation: celebrationBurst 0.6s ease-out forwards;
+        }
+
+        @keyframes celebrationBurst {
+            0% { 
+                opacity: 1; 
+                transform: scale(0); 
+            }
+            50% { 
+                opacity: 0.8; 
+                transform: scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: scale(2); 
+            }
+        }
+
+        /* Screen flash effect */
+        .screen-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 30;
+            animation: screenFlash 0.3s ease-out forwards;
+        }
+
+        @keyframes screenFlash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* SAD EFFECTS FOR WRONG ANSWERS */
+        
+        /* Floating -1 score animation (falls down) */
+        .sad-popup {
+            position: absolute;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #ef4444;
+            pointer-events: none;
+            z-index: 100;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: sadFloat 2s ease-out forwards;
+        }
+
+        @keyframes sadFloat {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0) scale(0.8); 
+            }
+            20% { 
+                opacity: 1; 
+                transform: translateY(10px) scale(1.2); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(80px) scale(1); 
+            }
+        }
+
+        /* Sad rain drops */
+        .sad-tear {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            pointer-events: none;
+            z-index: 50;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            background: #3b82f6;
+            animation: tearFall 1.5s ease-out forwards;
+        }
+
+        @keyframes tearFall {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(150px) scale(0.8); 
+            }
+        }
+
+        /* Sad shake effect */
+        .sad-shake {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            pointer-events: none;
+            z-index: 40;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%);
+            animation: sadShake 0.8s ease-out forwards;
+        }
+
+        @keyframes sadShake {
+            0% { 
+                opacity: 1; 
+                transform: translateX(0) scale(0.5); 
+            }
+            10% { 
+                transform: translateX(-5px) scale(0.7); 
+            }
+            20% { 
+                transform: translateX(5px) scale(0.9); 
+            }
+            30% { 
+                transform: translateX(-5px) scale(1.1); 
+            }
+            40% { 
+                transform: translateX(5px) scale(1); 
+            }
+            50% { 
+                transform: translateX(-3px) scale(1); 
+            }
+            60% { 
+                transform: translateX(3px) scale(1); 
+            }
+            70% { 
+                transform: translateX(-2px) scale(1); 
+            }
+            80% { 
+                transform: translateX(2px) scale(1); 
+            }
+            90% { 
+                transform: translateX(-1px) scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateX(0) scale(1.2); 
+            }
+        }
+
+        /* Sad screen flash effect */
+        .sad-screen-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 30;
+            animation: sadScreenFlash 0.4s ease-out forwards;
+        }
+
+        @keyframes sadScreenFlash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        /* Clean, modern game area */
         #game-area {
             position: relative;
             height: 50vh; /* Use viewport height */
              min-height: 300px; /* Increased minimum height */
              @media (min-width: 768px) { height: 450px; } /* Taller height for desktop */
-            border: 2px solid #d1d5db; /* Gray border */
-            border-radius: 0.5rem; /* Rounded corners */
-            background-color: #f9fafb; /* Very light gray background */
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
             overflow: hidden; /* Hide words falling outside */
             width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
         /* Feedback animations */
         @keyframes feedback-correct { 0% { background-color: #d1fae5; } 100% { background-color: #ebf5ff; } }
@@ -390,21 +691,28 @@
              if (isCorrectClick) {
                  score++;
                  scoreDisplay.textContent = score;
-                 messageArea.textContent = 'Correct! Gut gemacht!';
+                 messageArea.textContent = 'Correct! Gut gemacht! 🎉';
                  messageArea.className = 'text-center text-base md:text-lg font-medium text-green-600 w-full order-2';
                  verbDisplayArea.classList.add('feedback-correct');
                  setTimeout(() => verbDisplayArea.classList.remove('feedback-correct'), 500);
 
-                 // Visually confirm the correct choice
-                 clickedElement.style.backgroundColor = '#a7f3d0'; // Light green
-                 clickedElement.style.borderColor = '#059669'; // Darker green
-                 clickedElement.style.fontWeight = 'bold';
+                 // Add magical success animation to the clicked element
+                 clickedElement.classList.add('success');
+                 
+                 // Create celebration effects at the click position
+                 createCelebrationEffects(clickedElement);
+                 
+                 // Remove the element from tracking immediately to prevent further interaction
+                 const clickedIndex = fallingVerbs.findIndex(item => item.element === clickedElement);
+                 if (clickedIndex !== -1) {
+                     fallingVerbs.splice(clickedIndex, 1);
+                 }
 
                  // *** Add current verb to practiced set ***
                  practicedVerbs.add(currentVerb.infinitive);
 
                  roundInProgress = false; // Stop interaction for this round
-                 setTimeout(clearFallingVerbs, 300); // Clear words after a short delay
+                 setTimeout(clearFallingVerbs, 600); // Clear words after animation completes
 
                  // *** Check if the required number of verbs have been practiced ***
                  if (practicedVerbs.size >= verbsToPracticeCount) {
@@ -422,6 +730,9 @@
                  clickedElement.style.backgroundColor = '#fee2e2'; // Light red
                  clickedElement.style.borderColor = '#dc2626'; // Darker red
 
+                 // Create sad effects at the click position
+                 createSadEffects(clickedElement);
+
                  loseLife(); // Lose a life
 
                  if (!isGameOver) {
@@ -433,6 +744,182 @@
                      clearFallingVerbs();
                  }
              }
+        }
+
+        // Create celebration effects when user gets correct answer
+        function createCelebrationEffects(clickedElement) {
+            const rect = clickedElement.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Create floating +1 score popup
+            createScorePopup(centerX, centerY);
+            
+            // Create confetti burst
+            createConfettiBurst(centerX, centerY);
+            
+            // Create celebration burst effect
+            createCelebrationBurst(centerX, centerY);
+            
+            // Create subtle screen flash
+            createScreenFlash();
+        }
+
+        // Create floating +1 score animation
+        function createScorePopup(x, y) {
+            const popup = document.createElement('div');
+            popup.className = 'score-popup';
+            popup.textContent = '+1';
+            popup.style.left = `${x - 15}px`;
+            popup.style.top = `${y - 10}px`;
+            document.body.appendChild(popup);
+            
+            setTimeout(() => {
+                if (popup.parentNode) {
+                    popup.remove();
+                }
+            }, 1500);
+        }
+
+        // Create floating balloons
+        function createConfettiBurst(x, y) {
+            const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'pink'];
+            const balloonCount = 8;
+            
+            for (let i = 0; i < balloonCount; i++) {
+                const balloon = document.createElement('div');
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                balloon.className = `balloon balloon-${color}`;
+                
+                // Random position around the click point
+                const offsetX = (Math.random() - 0.5) * 80;
+                const offsetY = (Math.random() - 0.5) * 40;
+                balloon.style.left = `${x + offsetX}px`;
+                balloon.style.top = `${y + offsetY}px`;
+                
+                document.body.appendChild(balloon);
+                
+                setTimeout(() => {
+                    if (balloon.parentNode) {
+                        balloon.remove();
+                    }
+                }, 3000);
+            }
+        }
+
+        // Create celebration burst effect
+        function createCelebrationBurst(x, y) {
+            const burst = document.createElement('div');
+            burst.className = 'celebration-burst';
+            burst.style.left = `${x - 50}px`;
+            burst.style.top = `${y - 50}px`;
+            document.body.appendChild(burst);
+            
+            setTimeout(() => {
+                if (burst.parentNode) {
+                    burst.remove();
+                }
+            }, 600);
+        }
+
+        // Create subtle screen flash effect
+        function createScreenFlash() {
+            const flash = document.createElement('div');
+            flash.className = 'screen-flash';
+            document.body.appendChild(flash);
+            
+            setTimeout(() => {
+                if (flash.parentNode) {
+                    flash.remove();
+                }
+            }, 300);
+        }
+
+        // Create sad effects when user gets wrong answer
+        function createSadEffects(clickedElement) {
+            const rect = clickedElement.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Create floating -1 score popup (falls down)
+            createSadPopup(centerX, centerY);
+            
+            // Create falling tears
+            createSadTears(centerX, centerY);
+            
+            // Create sad shake effect
+            createSadShake(centerX, centerY);
+            
+            // Create subtle sad screen flash
+            createSadScreenFlash();
+        }
+
+        // Create floating -1 score animation (falls down)
+        function createSadPopup(x, y) {
+            const popup = document.createElement('div');
+            popup.className = 'sad-popup';
+            popup.textContent = '-1';
+            popup.style.left = `${x - 15}px`;
+            popup.style.top = `${y - 10}px`;
+            document.body.appendChild(popup);
+            
+            setTimeout(() => {
+                if (popup.parentNode) {
+                    popup.remove();
+                }
+            }, 2000);
+        }
+
+        // Create falling tears
+        function createSadTears(x, y) {
+            const tearCount = 6;
+            
+            for (let i = 0; i < tearCount; i++) {
+                const tear = document.createElement('div');
+                tear.className = 'sad-tear';
+                
+                // Random position around the click point
+                const offsetX = (Math.random() - 0.5) * 40;
+                const offsetY = (Math.random() - 0.5) * 20;
+                tear.style.left = `${x + offsetX}px`;
+                tear.style.top = `${y + offsetY}px`;
+                
+                document.body.appendChild(tear);
+                
+                setTimeout(() => {
+                    if (tear.parentNode) {
+                        tear.remove();
+                    }
+                }, 1500);
+            }
+        }
+
+        // Create sad shake effect
+        function createSadShake(x, y) {
+            const shake = document.createElement('div');
+            shake.className = 'sad-shake';
+            shake.style.left = `${x - 40}px`;
+            shake.style.top = `${y - 40}px`;
+            document.body.appendChild(shake);
+            
+            setTimeout(() => {
+                if (shake.parentNode) {
+                    shake.remove();
+                }
+            }, 800);
+        }
+
+        // Create sad screen flash effect
+        function createSadScreenFlash() {
+            const flash = document.createElement('div');
+            flash.className = 'sad-screen-flash';
+            document.body.appendChild(flash);
+            
+            setTimeout(() => {
+                if (flash.parentNode) {
+                    flash.remove();
+                }
+            }, 400);
         }
 
         // Clear all falling verb elements from the DOM and the tracking array
