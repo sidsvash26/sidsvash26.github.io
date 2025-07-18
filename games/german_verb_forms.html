@@ -400,19 +400,16 @@
             min-height: 2.5rem; /* Give space for 2 lines */
             line-height: 1.25rem;
         }
-         /* Verb count selector styles */
-        .verb-count-control { display: flex; flex-direction: column; align-items: center; margin-top: 5px; }
-        #verb-count-select {
-            padding: 4px 8px;
-            border-radius: 0.375rem;
+
+        /* Verb range control styles */
+        .verb-range-control { display: flex; flex-direction: column; align-items: center; margin-top: 5px; }
+        #start-verb-index, #end-verb-index {
             border: 1px solid #d1d5db;
             background-color: white;
             cursor: pointer;
             font-size: 0.875rem;
-            min-width: 80px; /* Ensure decent width */
-            text-align: center;
         }
-        #verb-count-select:disabled {
+        #start-verb-index:disabled, #end-verb-index:disabled {
             cursor: not-allowed;
             opacity: 0.6;
             background-color: #f9fafb;
@@ -471,10 +468,17 @@
                     <button data-mode="mixed" class="mode-button px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-100 transition duration-150">Mixed</button>
                 </div>
 
-                <div class="verb-count-control w-full order-4">
-                    <label for="verb-count-select" class="text-sm font-medium text-gray-700 mb-1">Verbs to Practice:</label>
-                    <select id="verb-count-select" name="verb-count">
-                        </select>
+                <div class="verb-range-control w-full order-4">
+                    <label class="text-sm font-medium text-gray-700 mb-1">Verb Range:</label>
+                    <div class="flex gap-2 items-center">
+                        <input type="number" id="start-verb-index" min="1" max="1" value="1" class="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center">
+                        <span class="text-sm text-gray-600">to</span>
+                        <input type="number" id="end-verb-index" min="1" max="1" value="1" class="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center">
+                    </div>
+                    <div class="mt-2 text-xs text-gray-600">
+                        <div id="start-verb-preview" class="mb-1">Start: -</div>
+                        <div id="end-verb-preview">End: -</div>
+                    </div>
                 </div>
 
                  <div class="speed-control w-full order-5">
@@ -511,10 +515,13 @@
         const modeButtons = document.querySelectorAll('.mode-button');
         const speedSlider = document.getElementById('speed-slider');
         const speedLevelDisplay = document.getElementById('speed-level-display');
-        const verbCountSelect = document.getElementById('verb-count-select'); // New verb count dropdown
         const pauseButton = document.getElementById('pause-button');
         const pauseOverlay = document.getElementById('pause-overlay');
         const soundButton = document.getElementById('sound-button');
+        const startVerbIndexInput = document.getElementById('start-verb-index');
+        const endVerbIndexInput = document.getElementById('end-verb-index');
+        const startVerbPreview = document.getElementById('start-verb-preview');
+        const endVerbPreview = document.getElementById('end-verb-preview');
 
         // --- Game State ---
         let score = 0;
@@ -1173,7 +1180,8 @@
 
              // Re-enable controls
              speedSlider.disabled = false;
-             verbCountSelect.disabled = false;
+             startVerbIndexInput.disabled = false;
+             endVerbIndexInput.disabled = false;
             pauseButton.disabled = true;
             pauseButton.textContent = 'Pause';
             pauseOverlay.classList.add('hidden');
@@ -1194,6 +1202,25 @@
         // *** MODIFIED: Initializes verb pool and count ***
         // Start the game (or restart)
         function startGame() {
+             // --- Validate range first ---
+             const startIndex = parseInt(startVerbIndexInput.value);
+             const endIndex = parseInt(endVerbIndexInput.value);
+             
+             // Validate range
+             if (startIndex < 1 || endIndex < 1 || startIndex > endIndex || 
+                 startIndex > TOTAL_VERBS_AVAILABLE || endIndex > TOTAL_VERBS_AVAILABLE) {
+                 messageArea.textContent = 'Invalid range! Please enter valid start and end positions.';
+                 messageArea.className = 'text-center text-base md:text-lg font-medium text-red-600 w-full order-2';
+                 // Clear error message after 3 seconds
+                 setTimeout(() => {
+                     if (!isGameRunning) {
+                         messageArea.textContent = 'Select your verb range and click "Start Game"!';
+                         messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
+                     }
+                 }, 3000);
+                 return; // Don't start the game
+             }
+             
              // Reset game state variables
              score = 0;
              lives = INITIAL_LIVES;
@@ -1204,16 +1231,11 @@
              practicedVerbs = new Set(); // Clear practiced verbs set
              targetVerbPool = []; // Clear specific verb pool
 
-             // --- Determine number of verbs and pool ---
-             const selectedValue = verbCountSelect.value;
-             if (selectedValue === 'all') {
-                 verbsToPracticeCount = TOTAL_VERBS_AVAILABLE;
-                 targetVerbPool = []; // Use all verbs
-             } else {
-                 verbsToPracticeCount = parseInt(selectedValue, 10);
-                 // Create a shuffled subset of verbs for this game
-                 targetVerbPool = [...verbs].sort(() => 0.5 - Math.random()).slice(0, verbsToPracticeCount);
-             }
+             // --- Determine verb range ---
+             // Always use range selection
+             verbsToPracticeCount = endIndex - startIndex + 1;
+             // Create verb pool from specific range (1-indexed to 0-indexed)
+             targetVerbPool = verbs.slice(startIndex - 1, endIndex);
              // ---
 
              updateFallSpeed(speedSlider.value); // Ensure speed is set correctly based on slider
@@ -1227,12 +1249,16 @@
 
              // Disable controls
              speedSlider.disabled = true;
-             verbCountSelect.disabled = true;
+             startVerbIndexInput.disabled = true;
+             endVerbIndexInput.disabled = true;
              pauseButton.disabled = false;
              pauseOverlay.classList.add('hidden');
 
              clearFallingVerbs(); // Clear any previous words
-             messageArea.textContent = ''; // Clear any previous messages
+             
+             // Show message about selected range
+             messageArea.textContent = `Playing with verbs ${startIndex}-${endIndex} (${verbsToPracticeCount} verbs)`;
+             messageArea.className = 'text-center text-base md:text-lg font-medium text-blue-600 w-full order-2';
 
              if (gameLoopInterval) {
                  cancelAnimationFrame(gameLoopInterval); // Clear any residual loop
@@ -1259,7 +1285,8 @@
 
              // Re-enable controls
              speedSlider.disabled = false;
-             verbCountSelect.disabled = false;
+             startVerbIndexInput.disabled = false;
+             endVerbIndexInput.disabled = false;
             pauseButton.disabled = true;
             pauseButton.textContent = 'Pause';
             pauseOverlay.classList.add('hidden');
@@ -1278,50 +1305,46 @@
              messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
         }
 
-        // --- NEW: Populate Verb Count Dropdown ---
-        function populateVerbCountDropdown() {
-            verbCountSelect.innerHTML = ''; // Clear existing options
 
-            const distinctOptions = new Set();
-            const step = 5;
 
-            // Add multiples of 5 that are less than or equal to TOTAL_VERBS_AVAILABLE
-            for (let i = step; i <= TOTAL_VERBS_AVAILABLE; i += step) {
-                distinctOptions.add(i);
+        // --- NEW: Initialize Range Selection Controls ---
+        function initializeRangeControls() {
+            // Set max values for range inputs
+            startVerbIndexInput.max = TOTAL_VERBS_AVAILABLE;
+            endVerbIndexInput.max = TOTAL_VERBS_AVAILABLE;
+            
+            // Set default values to full range
+            startVerbIndexInput.value = 1;
+            endVerbIndexInput.value = TOTAL_VERBS_AVAILABLE;
+            
+            updateVerbPreviews();
+        }
+
+        // --- NEW: Update Verb Previews ---
+        function updateVerbPreviews() {
+            const startIndex = parseInt(startVerbIndexInput.value);
+            const endIndex = parseInt(endVerbIndexInput.value);
+            
+            // Show which verbs are at the start and end positions
+            if (startIndex >= 1 && startIndex <= TOTAL_VERBS_AVAILABLE && verbs.length > 0) {
+                const startVerb = verbs[startIndex - 1]; // Convert to 0-based index
+                startVerbPreview.textContent = `Start: ${startIndex}. ${startVerb.infinitive}`;
+            } else {
+                startVerbPreview.textContent = 'Start: -';
             }
-
-            // Add TOTAL_VERBS_AVAILABLE itself if it's a positive number
-            // (it will be caught by the loop if it's a multiple of step,
-            // this ensures it's added if it's not, or if it's smaller than step)
-            if (TOTAL_VERBS_AVAILABLE > 0) {
-                distinctOptions.add(TOTAL_VERBS_AVAILABLE);
+            
+            if (endIndex >= 1 && endIndex <= TOTAL_VERBS_AVAILABLE && verbs.length > 0) {
+                const endVerb = verbs[endIndex - 1]; // Convert to 0-based index
+                endVerbPreview.textContent = `End: ${endIndex}. ${endVerb.infinitive}`;
+            } else {
+                endVerbPreview.textContent = 'End: -';
             }
-
-            // Convert Set to array and sort numerically
-            const sortedOptions = Array.from(distinctOptions).sort((a, b) => a - b);
-
-            // Populate the select element with the sorted distinct options
-            sortedOptions.forEach(num => {
-                // Only add if the number is > 0, to avoid a "0" option if TOTAL_VERBS_AVAILABLE is 0
-                if (num > 0) {
-                    const option = document.createElement('option');
-                    option.value = num;
-                    option.textContent = num;
-                    verbCountSelect.appendChild(option);
-                }
-            });
-
-            // Add the "All" option
-            const allOption = document.createElement('option');
-            allOption.value = 'all';
-            allOption.textContent = `All (${TOTAL_VERBS_AVAILABLE})`;
-            verbCountSelect.appendChild(allOption);
-
-            // Set default selection
-            // If there are no numeric options (e.g. TOTAL_VERBS_AVAILABLE is 0),
-            // 'all' will be the only one and thus selected.
-            // Otherwise, default to 'all'.
-            verbCountSelect.value = 'all';
+            
+            // Show range validation warning if needed
+            if (startIndex > 0 && endIndex > 0 && startIndex > endIndex) {
+                startVerbPreview.textContent += ' (Invalid range)';
+                endVerbPreview.textContent += ' (Invalid range)';
+            }
         }
 
 
@@ -1408,15 +1431,15 @@
             updateFallSpeed(event.target.value); // Update speed based on slider value
         });
 
-        // Verb count dropdown change handler
-        verbCountSelect.addEventListener('change', () => {
-            // This primarily affects the *next* game start.
-            // Optional: Update message area if desired.
-             if (!isGameRunning && !isGameOver) {
-                 const selectedText = verbCountSelect.options[verbCountSelect.selectedIndex].text;
-                 messageArea.textContent = `Practice set to ${selectedText} verbs. Click Start Game!`;
-                 messageArea.className = 'text-center text-base md:text-lg font-medium text-gray-500 w-full order-2';
-             }
+
+
+        // Range input change handlers
+        startVerbIndexInput.addEventListener('input', () => {
+            updateVerbPreviews();
+        });
+
+        endVerbIndexInput.addEventListener('input', () => {
+            updateVerbPreviews();
         });
 
         // --- Initial Setup ---
@@ -1424,7 +1447,6 @@
             const startButton = document.getElementById('start-button');
             const messageArea = document.getElementById('message-area');
             const speedSlider = document.getElementById('speed-slider');
-            const verbCountSelect = document.getElementById('verb-count-select');
             const givenVerbInfoDisplay = document.getElementById('given-verb-info');
             const givenVerbEnglishDisplay = document.getElementById('given-verb-english');
             const pauseButton = document.getElementById('pause-button');
@@ -1437,7 +1459,8 @@
             givenVerbInfoDisplay.textContent = '-';
             givenVerbEnglishDisplay.textContent = '';
             speedSlider.disabled = true;
-            verbCountSelect.disabled = true;
+            startVerbIndexInput.disabled = true;
+            endVerbIndexInput.disabled = true;
             pauseButton.disabled = true;
 
             Papa.parse(GOOGLE_SHEET_URL, {
@@ -1452,13 +1475,14 @@
                     })).filter(v => v.infinitive && v.infinitive.trim() !== '' && v.praeteritum && v.partizip);
 
                     TOTAL_VERBS_AVAILABLE = verbs.length;
-                    populateVerbCountDropdown();
+                    initializeRangeControls();
                     
                     startButton.disabled = false;
                     startButton.textContent = 'Start Game';
                     speedSlider.disabled = false;
-                    verbCountSelect.disabled = false;
-                    messageArea.textContent = 'Select options and click "Start Game"!';
+                    startVerbIndexInput.disabled = false;
+                    endVerbIndexInput.disabled = false;
+                    messageArea.textContent = 'Select your verb range and click "Start Game"!';
                 },
                 error: function(error) {
                     console.error("Error loading or parsing verb data:", error);
