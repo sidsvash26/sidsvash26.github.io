@@ -737,6 +737,28 @@
     .options li {
       margin-bottom: 14px;
     }
+
+    /* Hide footer on mobile when interacting with the game */
+    footer.sticky-bottom {
+      display: none;
+    }
+  }
+
+  /* Prevent text selection on quiz options (stops iOS "define" popup) */
+  .options label,
+  .options label * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .question h3,
+  .question .multi-hint {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   @media (min-width: 769px) {
