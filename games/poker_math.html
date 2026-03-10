@@ -1702,6 +1702,36 @@ permalink: /games/poker_math.html
   }
 
   // Generate the first quiz when the page loads
-  document.addEventListener('DOMContentLoaded', generateQuiz);
+  document.addEventListener('DOMContentLoaded', function () {
+    generateQuiz();
+
+    // Hide footer on mobile for cleaner game experience
+    if (window.innerWidth <= 768) {
+      const footer = document.querySelector('footer.sticky-bottom');
+      if (footer) footer.style.display = 'none';
+    }
+
+    // Prevent Android "define" popup / context menu on quiz options
+    document.querySelector('.poker-container').addEventListener('contextmenu', function (e) {
+      if (e.target.closest('.options') || e.target.closest('.question h3')) {
+        e.preventDefault();
+      }
+    });
+
+    // Block long-press text selection on touch devices
+    document.querySelector('.poker-container').addEventListener('touchstart', function (e) {
+      if (e.target.closest('.options label')) {
+        // Don't preventDefault here as it would block the checkbox toggle
+        // Instead just ensure no selection happens
+        window.getSelection().removeAllRanges();
+      }
+    }, { passive: true });
+
+    document.querySelector('.poker-container').addEventListener('touchend', function (e) {
+      if (e.target.closest('.options label')) {
+        window.getSelection().removeAllRanges();
+      }
+    }, { passive: true });
+  });
 
 </script>
