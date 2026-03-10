@@ -617,6 +617,209 @@ permalink: /games/poker_math.html
       display: none;
     }
   }
+
+  /* ========== DARK MODE ========== */
+  html[data-theme='dark'] {
+    --bg-color: #1a1a2e;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary-color: #e2e8f0;
+    --card-bg: #16213e;
+    --border-color: #334155;
+    --poker-black: #e2e8f0;
+  }
+
+  html[data-theme='dark'] .poker-container {
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .poker-header h1 {
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .poker-header p {
+    color: var(--text-muted);
+  }
+
+  /* Mode toggle */
+  html[data-theme='dark'] .mode-toggle {
+    background-color: #1e293b;
+    border-color: var(--border-color);
+  }
+
+  html[data-theme='dark'] .mode-btn {
+    color: var(--text-muted);
+  }
+
+  html[data-theme='dark'] .mode-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+  }
+
+  /* Concept cards */
+  html[data-theme='dark'] .concept-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .concept-card h2 {
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .concept-card p,
+  html[data-theme='dark'] .concept-card li {
+    color: var(--text-muted);
+  }
+
+  html[data-theme='dark'] .formula-box {
+    background-color: #0f172a;
+    border-color: var(--border-color);
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .example-box {
+    background-color: #0d2818;
+    border-color: #166534;
+    color: #86efac;
+  }
+
+  /* Glossary items */
+  html[data-theme='dark'] .concept-card div[style*="background: var(--bg-color)"] {
+    background-color: #0f172a !important;
+    border-color: var(--border-color) !important;
+  }
+
+  html[data-theme='dark'] .concept-card div[style*="background: var(--bg-color)"] strong {
+    color: var(--text-main) !important;
+  }
+
+  html[data-theme='dark'] .concept-card div[style*="background: var(--bg-color)"] span {
+    color: var(--text-muted) !important;
+  }
+
+  /* Quiz questions */
+  html[data-theme='dark'] .question {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+  }
+
+  html[data-theme='dark'] .question h3 {
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .multi-hint {
+    color: var(--text-muted) !important;
+  }
+
+  /* Quiz options */
+  html[data-theme='dark'] .options label {
+    background-color: #0f172a;
+    border-color: var(--border-color);
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .options label:hover {
+    background-color: #1e293b;
+    border-color: #475569;
+  }
+
+  html[data-theme='dark'] .options label.selected {
+    background-color: #064e3b;
+    border-color: var(--accent-color);
+  }
+
+  /* Quiz result states (dark mode) */
+  html[data-theme='dark'] .question.correct-answer {
+    background-color: #052e16;
+    border-color: #16a34a;
+  }
+
+  html[data-theme='dark'] .question.wrong-answer {
+    background-color: #450a0a;
+    border-color: #dc2626;
+  }
+
+  html[data-theme='dark'] .question.wrong-answer h3 {
+    color: #fca5a5;
+  }
+
+  html[data-theme='dark'] .question.partial-answer {
+    background-color: #451a03;
+    border-color: #d97706;
+  }
+
+  html[data-theme='dark'] .question.partial-answer h3 {
+    color: #fbbf24;
+  }
+
+  /* Per-option feedback in dark */
+  html[data-theme='dark'] .options label.option-wrong {
+    background-color: #450a0a !important;
+    border-color: #dc2626 !important;
+  }
+
+  html[data-theme='dark'] .options label.option-missed {
+    background-color: #451a03 !important;
+    border-color: #d97706 !important;
+  }
+
+  html[data-theme='dark'] .options label.option-correct-picked {
+    background-color: #052e16 !important;
+    border-color: #16a34a !important;
+  }
+
+  /* Submit button */
+  html[data-theme='dark'] .submit-btn:disabled {
+    opacity: 0.4;
+  }
+
+  /* Result box */
+  html[data-theme='dark'] #result-box {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-color);
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] #result-box p {
+    color: var(--text-main) !important;
+  }
+
+  html[data-theme='dark'] #result-box.success {
+    background-color: #052e16 !important;
+    border-left-color: #16a34a !important;
+  }
+
+  html[data-theme='dark'] #result-box.warning {
+    background-color: #451a03 !important;
+    border-left-color: #d97706 !important;
+  }
+
+  /* Help banner */
+  html[data-theme='dark'] .quiz-help-link {
+    background: var(--card-bg) !important;
+    border: 1px solid #475569 !important;
+    color: #94a3b8 !important;
+  }
+
+  html[data-theme='dark'] .quiz-help-link a {
+    color: var(--accent-color) !important;
+  }
+
+  /* Modal */
+  html[data-theme='dark'] .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+  }
+
+  html[data-theme='dark'] .modal-content p {
+    color: var(--text-muted);
+  }
+
+  html[data-theme='dark'] .modal-cancel {
+    background-color: #334155;
+    color: var(--text-main);
+  }
 </style>
 
 <div class="poker-container">
