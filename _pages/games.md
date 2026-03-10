@@ -17,6 +17,9 @@ Welcome to my collection of simple HTML games, often created with the help of AI
         <img src="{{ game.image | relative_url }}" alt="{{ game.title }} Screenshot">
       {% endif %}
       <a href="{{ game.url | relative_url }}" class="btn btn-primary" title="Play {{ game.title }}">Play Game</a>
+      
+      
+
     </div>
 
     <div class="game-details">
