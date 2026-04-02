@@ -114,6 +114,18 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
+  /* Standalone Game View Overrides (Hides site-wide layout elements) */
+  header.fixed-top-nav, 
+  footer.sticky-bottom-footer,
+  .visitor-counter {
+    display: none !important;
+  }
+
+  /* Reduce top margin since header is gone */
+  .poker-container {
+    margin-top: 20px !important;
+  }
+
   /* Modern Poker Math Game Base Styles */
   :root {
     --bg-color: #f8fafc;
@@ -762,21 +774,17 @@
     }
   }
 
-  /* Prevent text selection on quiz options (stops iOS "define" popup) */
+  /* Prevent text selection and Android "define" popup globally on quiz elements */
   .options label,
-  .options label * {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
+  .options label *,
   .question h3,
-  .question .multi-hint {
+  .question .multi-hint,
+  .multi-select-hint {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -webkit-touch-callout: none !important; /* Disables the long-press context menu on mobile */
   }
 
   @media (min-width: 769px) {
@@ -1646,28 +1654,40 @@
       return q;
     });
 
-    // Add robust click/tap handlers on labels for reliable mobile toggling.
-    // We use pointer-events:none on the checkbox itself so the label always
-    // receives the tap. The label click handler then programmatically toggles
-    // the checkbox. This avoids the Android Chrome double-fire / missed-tap bug.
+    // Add immediate touch handlers on labels for zero-lag mobile toggling.
+    // We bind both touchstart and click to ensure it works everywhere.
     document.querySelectorAll('.options label').forEach(label => {
-      label.addEventListener('click', function (e) {
-        // Prevent default label behaviour (we toggle manually)
-        e.preventDefault();
+      
+      const toggleOption = (e) => {
+        // Prevent default browser interaction (avoids scroll-to-select, etc.)
+        if (e.cancelable) e.preventDefault();
         e.stopPropagation();
 
-        const checkbox = this.querySelector('input[type="checkbox"]');
+        const checkbox = label.querySelector('input[type="checkbox"]');
         if (!checkbox || checkbox.disabled) return;
 
+        // Toggle state
         checkbox.checked = !checkbox.checked;
         quizInProgress = true;
         quizSubmitted = false;
 
         if (checkbox.checked) {
-          this.classList.add('selected');
+          label.classList.add('selected');
         } else {
-          this.classList.remove('selected');
+          label.classList.remove('selected');
         }
+      };
+
+      // Use touchstart for mobile (zero delay)
+      label.addEventListener('touchstart', (e) => {
+        toggleOption(e);
+      }, { passive: false });
+
+      // Fallback for desktop/mouse
+      label.addEventListener('click', (e) => {
+        // Skip if touch was already handled (this prevents double-toggles)
+        if (e.detail === 0) return; // detail is 0 for simulated clicks
+        toggleOption(e);
       });
     });
   }
@@ -1831,30 +1851,19 @@
   document.addEventListener('DOMContentLoaded', function () {
     generateQuiz();
 
-    // Hide footer on mobile for cleaner game experience
-    if (window.innerWidth <= 768) {
-      const footer = document.querySelector('footer.sticky-bottom');
-      if (footer) footer.style.display = 'none';
-    }
-
-    // Prevent Android "define" popup / context menu on quiz options
+    // Prevent Android "define" popup / context menu on the entire game container
     document.querySelector('.poker-container').addEventListener('contextmenu', function (e) {
-      if (e.target.closest('.options') || e.target.closest('.question h3')) {
-        e.preventDefault();
-      }
+      e.preventDefault();
+      return false;
     });
 
-    // Block long-press text selection on touch devices
+    // Block long-press text selection globally
     document.querySelector('.poker-container').addEventListener('touchstart', function (e) {
-      if (e.target.closest('.options label')) {
-        window.getSelection().removeAllRanges();
-      }
+      window.getSelection().removeAllRanges();
     }, { passive: true });
 
     document.querySelector('.poker-container').addEventListener('touchend', function (e) {
-      if (e.target.closest('.options label')) {
-        window.getSelection().removeAllRanges();
-      }
+      window.getSelection().removeAllRanges();
     }, { passive: true });
 
     // Prevent 300ms tap delay on older mobile browsers
