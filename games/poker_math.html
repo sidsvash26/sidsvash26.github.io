@@ -776,18 +776,26 @@
   }
 
   /* Prevent text selection and Android "define" popup globally on quiz elements */
-  .options label,
-  .options label *,
+  .poker-container,
+  .options-label,
+  .options-label *,
   .question h3,
   .question .multi-hint,
   .multi-select-hint {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
     -webkit-touch-callout: none !important; /* Disables the long-press context menu on mobile */
     cursor: pointer !important; /* Forces a "hand" cursor everywhere on the option */
-    touch-action: manipulation; /* Optimizes for taps by preventing standard zoom-on-tap delay */
+    touch-action: manipulation !important; /* Optimizes for taps by preventing standard zoom-on-tap delay */
+  }
+
+  /* Specific rule for the container to double-down on selection preventing */
+  #quiz-container {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
   }
 
   @media (min-width: 769px) {
@@ -1642,8 +1650,8 @@
       q.options.forEach((opt, optIndex) => {
         html += `
           <li>
-            <label class="options-label">
-              <input type="checkbox" name="q${index}" value="${optIndex}">
+            <label class="options-label" style="cursor: pointer !important;">
+              <input type="checkbox" name="q${index}" value="${optIndex}" style="pointer-events: none !important; cursor: pointer !important;">
               ${opt.text}
             </label>
           </li>
