@@ -760,6 +760,11 @@
       margin-bottom: 16px;
     }
 
+    /* Force the checkbox to not intercept clicks, so the label handles everything */
+    .options input[type="checkbox"] {
+      pointer-events: none;
+    }
+
     .question {
       padding: 18px 14px;
     }
@@ -781,6 +786,8 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-touch-callout: none !important; /* Disables the long-press context menu on mobile */
+    cursor: pointer !important; /* Forces a "hand" cursor everywhere on the option */
+    touch-action: manipulation; /* Optimizes for taps by preventing standard zoom-on-tap delay */
   }
 
   @media (min-width: 769px) {
