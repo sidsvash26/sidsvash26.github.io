@@ -433,7 +433,7 @@
     margin-bottom: 12px;
   }
 
-  .options label {
+  .options-label {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -452,43 +452,51 @@
     z-index: 1;
   }
 
-  .options label:hover {
+  .options-label:hover {
     background-color: #f1f5f9;
     border-color: #cbd5e1;
   }
 
-  .options label.selected {
+  .options-label.selected {
     background-color: #ecfdf5;
     border-color: var(--accent-color);
   }
 
-  .options input[type="checkbox"] {
-    margin-right: 15px;
-    cursor: pointer;
-    accent-color: var(--accent-color);
-    transform: scale(1.3);
-    flex-shrink: 0;
+  /* Custom checkbox visual (pure CSS, no native input) */
+  .custom-check-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
     min-width: 20px;
-    min-height: 20px;
-    /* Prevent checkbox from stealing touch events on mobile */
-    pointer-events: none !important;
-    /* Override MDB/Bootstrap which hides native checkboxes */
-    -webkit-appearance: checkbox !important;
-    -moz-appearance: checkbox !important;
-    appearance: checkbox !important;
-    position: static !important;
-    opacity: 1 !important;
-    width: auto !important;
-    height: auto !important;
+    border: 2px solid #94a3b8;
+    border-radius: 4px;
+    margin-right: 15px;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.15s ease;
+    background-color: white;
   }
 
-  /* Kill any MDB/Bootstrap pseudo-element overlays on our checkboxes */
-  .options-label::before,
-  .options-label::after,
-  .options input[type="checkbox"]::before,
-  .options input[type="checkbox"]::after {
-    display: none !important;
-    content: none !important;
+  .options-label.selected .custom-check-box {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+
+  .options-label.selected .custom-check-box::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+  }
+
+  .options-label.disabled {
+    cursor: default;
+    opacity: 0.8;
   }
 
   /* Quiz Result States */
@@ -523,17 +531,17 @@
   }
 
   /* Per-option feedback after submission */
-  .options label.option-wrong {
+  .options-label.option-wrong {
     border-color: var(--poker-red) !important;
     background-color: #fef2f2 !important;
   }
 
-  .options label.option-missed {
+  .options-label.option-missed {
     border-color: #f59e0b !important;
     background-color: #fffbeb !important;
   }
 
-  .options label.option-correct-picked {
+  .options-label.option-correct-picked {
     border-color: var(--accent-color) !important;
     background-color: #ecfdf5 !important;
   }
@@ -751,7 +759,7 @@
       font-size: 1.15rem;
     }
 
-    .options label {
+    .options-label {
       padding: 18px 20px;
       font-size: 1.08rem;
       min-height: 60px;
@@ -760,16 +768,16 @@
       gap: 4px;
     }
 
-    .options label:active {
+    .options-label:active {
       transform: scale(0.98);
       background-color: #d1fae5;
       border-color: var(--accent-color);
     }
 
-    .options input[type="checkbox"] {
-      transform: scale(1.6);
+    .custom-check-box {
+      width: 28px;
+      height: 28px;
       min-width: 28px;
-      min-height: 28px;
       margin-right: 18px;
     }
 
@@ -916,24 +924,29 @@
   }
 
   /* Quiz options */
-  html[data-theme='dark'] .options label {
+  html[data-theme='dark'] .options-label {
     background-color: #0f172a;
     border-color: var(--border-color);
     color: var(--text-main);
   }
 
-  html[data-theme='dark'] .options label:hover {
+  html[data-theme='dark'] .custom-check-box {
     background-color: #1e293b;
     border-color: #475569;
   }
 
-  html[data-theme='dark'] .options label.selected {
+  html[data-theme='dark'] .options-label:hover {
+    background-color: #1e293b;
+    border-color: #475569;
+  }
+
+  html[data-theme='dark'] .options-label.selected {
     background-color: #064e3b;
     border-color: var(--accent-color);
   }
 
   @media (max-width: 768px) {
-    html[data-theme='dark'] .options label:active {
+    html[data-theme='dark'] .options-label:active {
       background-color: #064e3b;
       border-color: var(--accent-color);
     }
@@ -964,17 +977,17 @@
   }
 
   /* Per-option feedback in dark */
-  html[data-theme='dark'] .options label.option-wrong {
+  html[data-theme='dark'] .options-label.option-wrong {
     background-color: #450a0a !important;
     border-color: #dc2626 !important;
   }
 
-  html[data-theme='dark'] .options label.option-missed {
+  html[data-theme='dark'] .options-label.option-missed {
     background-color: #451a03 !important;
     border-color: #d97706 !important;
   }
 
-  html[data-theme='dark'] .options label.option-correct-picked {
+  html[data-theme='dark'] .options-label.option-correct-picked {
     background-color: #052e16 !important;
     border-color: #16a34a !important;
   }
@@ -1667,10 +1680,10 @@
       q.options.forEach((opt, optIndex) => {
         html += `
           <li>
-            <label class="options-label" style="cursor: pointer !important;">
-              <input type="checkbox" name="q${index}" value="${optIndex}" style="pointer-events: none !important; cursor: pointer !important;">
+            <div class="options-label" data-question="${index}" data-option="${optIndex}" data-selected="false" role="checkbox" aria-checked="false" tabindex="0">
+              <span class="custom-check-box"></span>
               ${opt.text}
-            </label>
+            </div>
           </li>
         `;
       });
@@ -1682,41 +1695,36 @@
       return q;
     });
 
-    // EVENT DELEGATION: Instead of attaching handlers to each label (which MDB/Bootstrap
-    // can destroy when they re-render checkboxes), we attach ONE handler to the container.
-    // This is immune to DOM modifications by external libraries.
+  }
+
+  // EVENT DELEGATION: Attached ONCE outside generateQuiz, immune to regeneration.
+  // We ONLY use 'click' to avoid the double-toggle problem (touchstart + click = 2 toggles).
+  // CSS `touch-action: manipulation` eliminates the 300ms delay on mobile.
+  (function() {
     const quizContainer = document.getElementById('quiz-container');
+    if (!quizContainer) return;
 
-    function handleQuizClick(e) {
-      // Find the closest label (works even if user clicked on text inside the label)
-      const label = e.target.closest('.options-label');
-      if (!label) return;
+    quizContainer.addEventListener('click', function(e) {
+      const optionDiv = e.target.closest('.options-label');
+      if (!optionDiv || optionDiv.classList.contains('disabled')) return;
 
-      // Prevent default browser interaction
       if (e.cancelable) e.preventDefault();
       e.stopPropagation();
 
-      const checkbox = label.querySelector('input[type="checkbox"]');
-      if (!checkbox || checkbox.disabled) return;
+      const isSelected = optionDiv.getAttribute('data-selected') === 'true';
+      optionDiv.setAttribute('data-selected', isSelected ? 'false' : 'true');
+      optionDiv.setAttribute('aria-checked', isSelected ? 'false' : 'true');
 
-      // Toggle state
-      checkbox.checked = !checkbox.checked;
+      if (!isSelected) {
+        optionDiv.classList.add('selected');
+      } else {
+        optionDiv.classList.remove('selected');
+      }
+
       quizInProgress = true;
       quizSubmitted = false;
-
-      if (checkbox.checked) {
-        label.classList.add('selected');
-      } else {
-        label.classList.remove('selected');
-      }
-    }
-
-    // Use touchstart for mobile (zero delay) via delegation
-    quizContainer.addEventListener('touchstart', handleQuizClick, { passive: false });
-
-    // Fallback for desktop/mouse via delegation — no e.detail check needed
-    quizContainer.addEventListener('click', handleQuizClick);
-  }
+    });
+  })();
 
   // ═══════════════════════════════════════════════════════════════════
   // SCORE CALCULATION
@@ -1736,7 +1744,9 @@
     });
 
     currentQuizQuestions.forEach((q, index) => {
-      const checkedBoxes = Array.from(document.querySelectorAll(`input[name="q${index}"]:checked`)).map(cb => parseInt(cb.value));
+      // Get selected option indices from data attributes instead of checkboxes
+      const selectedDivs = Array.from(document.querySelectorAll(`#question-${index} .options-label[data-selected="true"]`));
+      const checkedBoxes = selectedDivs.map(div => parseInt(div.getAttribute('data-option')));
 
       if (checkedBoxes.length === 0) {
         unansweredCount++;
@@ -1781,32 +1791,30 @@
         }
 
         // Annotate individual options
-        const labels = qDiv.querySelectorAll('.options label');
-        labels.forEach((label, optIdx) => {
+        const optionDivs = qDiv.querySelectorAll('.options-label');
+        optionDivs.forEach((optDiv) => {
+          const optIdx = parseInt(optDiv.getAttribute('data-option'));
           const wasSelected = checkedBoxes.includes(optIdx);
           const isCorrect = correctIndices.includes(optIdx);
           const annotation = document.createElement('span');
           annotation.className = 'option-annotation';
 
           if (wasSelected && !isCorrect) {
-            // User picked a wrong option
-            label.classList.add('option-wrong');
+            optDiv.classList.add('option-wrong');
             annotation.classList.add('wrong');
             annotation.textContent = '✗ Incorrect — this is not right';
           } else if (!wasSelected && isCorrect) {
-            // User missed a correct option
-            label.classList.add('option-missed');
+            optDiv.classList.add('option-missed');
             annotation.classList.add('missed');
             annotation.textContent = '✗ You missed this — this was correct';
           } else if (wasSelected && isCorrect) {
-            // User correctly picked this
-            label.classList.add('option-correct-picked');
+            optDiv.classList.add('option-correct-picked');
             annotation.classList.add('correct');
             annotation.textContent = '✓ Correct!';
           }
 
           if (annotation.textContent) {
-            label.appendChild(annotation);
+            optDiv.appendChild(annotation);
           }
         });
       }
@@ -1825,10 +1833,9 @@
     quizInProgress = false;
     quizSubmitted = true;
 
-    // Disable all checkboxes
-    document.querySelectorAll('.options input[type="checkbox"]').forEach(cb => {
-      cb.disabled = true;
-      cb.closest('label').style.cursor = 'default';
+    // Disable all option divs
+    document.querySelectorAll('.options-label').forEach(div => {
+      div.classList.add('disabled');
     });
 
     // Disable submit button
