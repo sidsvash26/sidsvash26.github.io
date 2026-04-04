@@ -1,25 +1,5 @@
 # _data/games.yml
 
-- title: "Poker Math Pro"
-  description: |
-    Master the numbers behind winning decisions in Poker.
-    
-    Learn core concepts like Pot Odds, Expected Value (EV), Equity, and Implied Odds through clear explanations. Test your skills with a dynamic quiz that generates random scenarios to instantly calculate if a call or fold is profitable.
-  image: "/assets/img/games/poker_gto.png"
-  url: "/games/poker_math.html"
-  published_date: "2026-03-09"
-  last_updated_date: "2026-03-09"
-
-- title: "Pot Counting Trainer"
-  description: |
-    Practice counting the pot in real-time during simulated poker tournament hands.
-
-    Watch the action unfold — blinds, raises, calls, and folds — then calculate the total pot size. Sharpen your mental math for the live felt with randomized scenarios across multiple blind levels and streets.
-  image: "/assets/img/games/poker_gto.png"
-  url: "/games/pot_counting.html"
-  published_date: "2026-04-04"
-  last_updated_date: "2026-04-04"
-
 - title: "German Verb Forms Trainer"
   description: | # Use the pipe symbol for multi-line literal string
     Practice conjugating common German verbs in different tenses.
