@@ -13,9 +13,15 @@
     {% endfor -%}
     {% endif %}
 
-    <!-- Fallback to the original file -->
+    <!-- Fallback: use smallest WebP when available, otherwise original file -->
+    {%- if site.imagemagick.enabled -%}
+      {%- assign _smallest_w = site.imagemagick.widths | sort | first -%}
+      {%- assign _fallback_src = img_path | append: '-' | append: _smallest_w | append: '.webp' | relative_url -%}
+    {%- else -%}
+      {%- assign _fallback_src = include.path | relative_url -%}
+    {%- endif -%}
     <img 
-      src="{{ include.path | relative_url }}"
+      src="{{ _fallback_src }}"
       {% if include.class %}class="{{ include.class }}"{% endif %}  
       {% if include.width %}width="{{ include.width }}"{% else %}width="auto"{% endif %} 
       {% if include.height %}height="{{ include.height }}"{% else %}height="auto"{% endif %} 
@@ -26,6 +32,8 @@
       {% if include.alt %}alt="{{ include.alt }}"{% endif %} 
       {% if include.title %}title="{{ include.title }}"{% endif %} 
       {% if include.zoomable %}data-zoomable{% endif %}
+      loading="eager"
+      fetchpriority="high"
       onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
     />
 
