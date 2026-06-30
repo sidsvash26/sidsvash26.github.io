@@ -252,578 +252,631 @@
 
           <h3>Work Experience</h3>
           <style>
-  .timeline-container {
-    margin: 10px 0;
-    padding: 20px 0;
+  /* ─── Work Experience Section ─────────────────────────────── */
+  .we-section {
+    margin: 0 0 40px 0;
+    font-family: inherit;
   }
-  
-  .timeline {
+
+  /* ── Current Role Hero ─────────────────────────────────────── */
+  .we-current {
     position: relative;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin: 60px 0;
-    padding: 0 20px;
-    flex-wrap: nowrap;
+    align-items: center;
+    gap: 22px;
+    padding: 20px 28px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(66,133,244,0.10) 0%, rgba(52,168,83,0.10) 40%, rgba(251,188,4,0.08) 70%, rgba(234,67,53,0.08) 100%);
+    border: 1.5px solid rgba(66,133,244,0.22);
+    margin-bottom: 32px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    overflow: hidden;
   }
-  
-  .timeline::before {
+  [data-theme="dark"] .we-current {
+    background: linear-gradient(135deg, rgba(66,133,244,0.14) 0%, rgba(52,168,83,0.12) 40%, rgba(251,188,4,0.09) 70%, rgba(234,67,53,0.09) 100%);
+    border-color: rgba(66,133,244,0.30);
+  }
+  /* animated gradient shimmer */
+  .we-current::before {
     content: '';
     position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #007bff, #28a745, #ffc107, #dc3545, #6f42c1, #fd7e14);
-    z-index: 1;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+    background-size: 200% 100%;
+    animation: we-shimmer 3.5s ease-in-out infinite;
+    pointer-events: none;
+    border-radius: inherit;
   }
-  
-  .timeline-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 2;
-    flex: 1;
-    margin: 0 6px;
-    min-width: 90px;
-    margin-bottom: 30px;
-    transition: all 0.3s ease;
+  @keyframes we-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
-  
-  .timeline-logo {
-    width: 80px;
-    height: 80px;
+  .we-current-logo {
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
-    background: white;
-    border: 4px solid #fff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
-    transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
-    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(66,133,244,0.25), 0 4px 20px rgba(66,133,244,0.18);
+    animation: we-logo-pulse 2.8s ease-in-out infinite;
     position: relative;
+    z-index: 1;
   }
-  .timeline-logo:hover, .timeline-logo:focus {
-    transform: scale(1.08);
-    box-shadow: 0 8px 25px rgba(0,123,255,0.18);
-    z-index: 2;
+  [data-theme="dark"] .we-current-logo {
+    background: #fff;
   }
-  .timeline-logo .timeline-tooltip {
-    display: none;
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translateX(-50%);
-    background: #222;
-    color: #fff;
-    font-size: 0.85em;
-    padding: 4px 10px;
-    border-radius: 6px;
-    margin-top: 8px;
-    white-space: nowrap;
-    z-index: 10;
-    pointer-events: none;
+  @keyframes we-logo-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(66,133,244,0.25), 0 4px 20px rgba(66,133,244,0.18); }
+    50%       { box-shadow: 0 0 0 6px rgba(66,133,244,0.18), 0 4px 28px rgba(66,133,244,0.30); }
   }
-  .timeline-logo:hover .timeline-tooltip,
-  .timeline-logo:focus .timeline-tooltip {
-    display: block;
-  }
-  
-  .timeline-logo img {
-    max-width: 80%;
-    max-height: 80%;
+  .we-current-logo img {
+    width: 80%;
+    height: 80%;
     object-fit: contain;
   }
-  
-  .timeline-year {
-    font-weight: bold;
-    font-size: 1.1em;
-    color: var(--global-text-color, #333);
-    margin-bottom: 4px;
-    text-align: center;
-  }
-  
-  .timeline-company {
-    font-weight: 600;
-    font-size: 0.9em;
-    color: var(--global-text-color, #666);
-    text-align: center;
-    margin-bottom: 2px;
-  }
-  
-  .timeline-position {
-    font-size: 0.8em;
-    color: var(--global-text-color, #888);
-    text-align: center;
-    font-style: italic;
-    display: flex;
+  .we-current-badge {
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+    background: linear-gradient(90deg, #4285f4, #34a853, #fbbc04, #ea4335);
+    background-size: 200% 100%;
+    animation: we-badge-grad 3s ease-in-out infinite alternate;
+    color: #fff;
+    font-size: 0.70em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 6px;
   }
-  
-  .timeline-details-wide {
-    display: none;
-    background: var(--global-card-bg-color, #fff);
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    width: 95vw;
-    max-width: 500px;
-    margin: 12px auto 0 auto;
-    z-index: 20;
-    text-align: left;
-    color: var(--global-text-color, #222);
-    position: relative;
-    transition: max-height 0.3s, opacity 0.3s;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    padding-top: 24px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 1.5px 8px rgba(0,123,255,0.08);
-    border: 2px solid transparent;
-    animation: fadeSlideIn 0.35s cubic-bezier(.4,0,.2,1);
+  @keyframes we-badge-grad {
+    0%   { background-position: 0% 0; }
+    100% { background-position: 100% 0; }
   }
-  
-  .timeline-item.active .timeline-details-wide {
-    display: block;
-    opacity: 1;
-    max-height: 400px;
-    transition: max-height 0.3s, opacity 0.3s;
+  .we-current-badge::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    display: inline-block;
+    animation: we-dot-blink 1.2s ease-in-out infinite;
   }
-  
-  .timeline-details-wide h4 {
-    margin: 0 0 8px 0;
+  @keyframes we-dot-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+  .we-current-body { z-index: 1; }
+  .we-current-title {
+    font-size: 1.15em;
+    font-weight: 700;
+    color: var(--global-text-color, #1a1a2e);
+    margin: 0 0 2px 0;
+    line-height: 1.2;
+  }
+  [data-theme="dark"] .we-current-title { color: #e8eaf6; }
+  .we-current-role {
+    font-size: 0.88em;
+    color: var(--global-text-color-light, #555);
+    margin: 0 0 5px 0;
+  }
+  [data-theme="dark"] .we-current-role { color: #9e9ec0; }
+  .we-current-desc {
+    font-size: 0.88em;
     color: var(--global-text-color, #333);
-    font-size: 1em;
-  }
-  
-  .timeline-details-wide p {
+    line-height: 1.55;
     margin: 0;
-    font-size: 0.95em;
-    line-height: 1.5;
-    color: var(--global-text-color, #666);
   }
-  
-  .timeline-details-wide a {
-    color: #007bff;
+  [data-theme="dark"] .we-current-desc { color: #c5cae9; }
+  .we-current-desc a {
+    color: #4285f4;
     text-decoration: none;
+    font-weight: 500;
   }
-  
-  .timeline-details-wide a:hover {
-    text-decoration: underline;
+  .we-current-desc a:hover { text-decoration: underline; }
+
+  /* ── Past Roles Label ──────────────────────────────────────── */
+  .we-past-label {
+    font-size: 0.78em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--global-text-color-light, #999);
+    margin-bottom: 16px;
   }
-  
-  .timeline-clickme {
-    font-size: 0.9em;
-    color: #007bff;
+
+  /* ── Floating Logo Grid ────────────────────────────────────── */
+  .we-logo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+    margin-bottom: 6px;
+  }
+  .we-logo-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     background: none;
     border: none;
     cursor: pointer;
-    margin-left: 6px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: background 0.2s;
-    display: inline-flex;
+    padding: 0;
+    outline: none;
+  }
+  .we-logo-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--global-card-bg-color, #fff);
+    border: 2px solid rgba(0,0,0,0.07);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+    display: flex;
     align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
   }
-  
-  .timeline-clickme:hover {
-    background: #e3eaff;
+  [data-theme="dark"] .we-logo-circle {
+    background: #fff;
+    border-color: rgba(255,255,255,0.12);
   }
-  
-  .timeline-item.active .timeline-logo {
-    box-shadow: 0 0 0 4px rgba(0,123,255,0.18), 0 8px 25px rgba(0,123,255,0.12);
-    border-color: #007bff;
-    transform: scale(1.10);
+  .we-logo-circle img {
+    width: 72%;
+    height: 72%;
+    object-fit: contain;
   }
-  
-  .timeline-details-arrow {
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 28px;
-    height: 18px;
-    z-index: 2;
-    pointer-events: none;
+  /* Floating animations – different offset per item */
+  .we-logo-btn:nth-child(1) .we-logo-circle { animation: we-float-a 4.2s ease-in-out infinite; }
+  .we-logo-btn:nth-child(2) .we-logo-circle { animation: we-float-b 3.8s ease-in-out 0.5s infinite; }
+  .we-logo-btn:nth-child(3) .we-logo-circle { animation: we-float-c 4.6s ease-in-out 1.1s infinite; }
+  .we-logo-btn:nth-child(4) .we-logo-circle { animation: we-float-a 3.5s ease-in-out 1.7s infinite; }
+  @keyframes we-float-a { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-7px)} }
+  @keyframes we-float-b { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-5px)} }
+  @keyframes we-float-c { 0%,100%{transform:translateY(-3px)} 50%{transform:translateY(-9px)} }
+
+  /* Hover */
+  .we-logo-btn:hover .we-logo-circle,
+  .we-logo-btn:focus-visible .we-logo-circle {
+    transform: translateY(-6px) scale(1.10);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.15);
+    border-color: #4285f4;
+    animation-play-state: paused;
   }
-  
-  .timeline-details-arrow svg {
-    display: block;
+  /* Active/selected */
+  .we-logo-btn.we-active .we-logo-circle {
+    border-color: #4285f4;
+    box-shadow: 0 0 0 3px rgba(66,133,244,0.25), 0 8px 24px rgba(66,133,244,0.20);
+    animation-play-state: paused;
+    transform: translateY(-4px) scale(1.08);
   }
-  
-  /* Responsive design */
-  @media (max-width: 900px) {
-    .timeline {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 30px;
-      position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 130px;
-      top: 0;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(180deg, #007bff, #28a745, #ffc107, #dc3545, #6f42c1, #fd7e14);
-      z-index: 1;
-    }
-    .timeline-item {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      width: 100%;
-      min-width: 0;
-      margin-bottom: 40px;
-      position: relative;
-      background: none;
-      z-index: 2;
-    }
-    .timeline-year-col {
-      flex: 0 0 130px;
-      text-align: right;
-      padding-right: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: flex-start;
-      z-index: 2;
-    }
-    .timeline-year {
-      font-size: 1em;
-      color: var(--global-text-color, #888);
-      margin-top: 18px;
-      margin-bottom: 0;
-      text-align: right;
-      padding-right: 0;
-    }
-    .timeline-logo-col {
-      flex: 1 1 0%;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      min-width: 0;
-      position: relative;
-      z-index: 2;
-    }
-    .timeline-logo {
-      margin: 0 0 8px 0;
-      align-self: flex-start;
-      left: 0;
-      z-index: 2;
-    }
-    .timeline-position {
-      font-size: 0.98em;
-      color: var(--global-text-color, #007bff);
-      text-align: left;
-      margin-bottom: 0;
-      margin-left: 0;
-      margin-top: 0;
-      font-style: italic;
-      font-weight: 500;
-      padding-left: 0;
-      z-index: 2;
-    }
-    .timeline-company {
-    }
-    .timeline-details-wide {
-      width: 100vw;
-      max-width: 100vw;
-      left: 0;
-      margin: 10px 0 0 0;
-      border-radius: 10px;
-      background: var(--global-card-bg-color, #fff);
-      color: var(--global-text-color, #222);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      border: 1.5px solid #e9ecef;
-      position: relative;
-      z-index: 20;
-      padding-top: 24px;
-      padding-left: 18px;
-      padding-right: 18px;
-      animation: fadeSlideIn 0.35s cubic-bezier(.4,0,.2,1);
-    }
-    .timeline-details-arrow {
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 28px;
-      height: 18px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .timeline-details-arrow svg {
-      display: block;
-    }
+  .we-logo-name {
+    font-size: 0.74em;
+    font-weight: 500;
+    color: var(--global-text-color-light, #777);
+    text-align: center;
+    white-space: nowrap;
   }
-  [data-theme="dark"] .timeline-details-wide {
-    background: #23272f;
-    color: #e2e8f0;
-    border-color: #444;
+  [data-theme="dark"] .we-logo-name { color: #9e9ec0; }
+  .we-logo-year {
+    font-size: 0.68em;
+    color: var(--global-text-color-light, #aaa);
+    text-align: center;
   }
-  [data-theme="dark"] .timeline-details-wide h4 {
-    color: #e2e8f0;
-  }
-  [data-theme="dark"] .timeline-details-wide p {
-    color: #b0b8c1;
-  }
-  [data-theme="dark"] .timeline-company, [data-theme="dark"] .timeline-year, [data-theme="dark"] .timeline-position {
-    color: #b0b8c1;
-  }
-  .timeline-connector {
+  [data-theme="dark"] .we-logo-year { color: #6a6a8a; }
+
+  /* ── Detail Panel ──────────────────────────────────────────── */
+  .we-detail-panel {
     display: none;
+    margin-top: 20px;
+    padding: 20px 24px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(66,133,244,0.20);
+    background: var(--global-card-bg-color, #fff);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    animation: we-panel-in 0.28s cubic-bezier(.4,0,.2,1);
+    position: relative;
+  }
+  [data-theme="dark"] .we-detail-panel {
+    background: #1e1e2e;
+    border-color: rgba(66,133,244,0.28);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.30);
+  }
+  .we-detail-panel.we-panel-visible { display: block; }
+  @keyframes we-panel-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .we-detail-close {
     position: absolute;
-    width: 0;
-    border-left: 3px solid rgba(0,123,255,0.35);
-    z-index: 15;
-    pointer-events: none;
-    transition: top 0.3s, left 0.3s, height 0.3s;
+    top: 12px; right: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: var(--global-text-color-light, #aaa);
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    line-height: 1;
   }
-  @media (max-width: 900px) {
-    .timeline-connector {
-      display: none !important;
-    }
+  .we-detail-close:hover { background: rgba(0,0,0,0.06); }
+  [data-theme="dark"] .we-detail-close:hover { background: rgba(255,255,255,0.08); }
+  .we-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
   }
-  .timeline-connector-svg {
-    display: none;
-    position: absolute;
-    pointer-events: none;
-    z-index: 15;
+  .we-detail-logo {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid rgba(0,0,0,0.07);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
-  @keyframes fadeSlideIn {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+  .we-detail-logo img { width: 70%; height: 70%; object-fit: contain; }
+  .we-detail-company {
+    font-size: 1.05em;
+    font-weight: 700;
+    color: var(--global-text-color, #1a1a2e);
+    margin: 0 0 2px 0;
+  }
+  [data-theme="dark"] .we-detail-company { color: #e8eaf6; }
+  .we-detail-meta {
+    font-size: 0.82em;
+    color: #4285f4;
+    font-weight: 600;
+    margin: 0;
+  }
+  .we-detail-desc {
+    font-size: 0.90em;
+    line-height: 1.6;
+    color: var(--global-text-color, #444);
+    margin: 0;
+  }
+  [data-theme="dark"] .we-detail-desc { color: #c5cae9; }
+  .we-detail-desc a { color: #4285f4; text-decoration: none; font-weight: 500; }
+  .we-detail-desc a:hover { text-decoration: underline; }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .we-current { flex-direction: column; align-items: flex-start; gap: 14px; padding: 16px 18px; }
+    .we-logo-grid { gap: 14px; }
+    .we-logo-circle { width: 58px; height: 58px; }
   }
 </style>
 
-<div class="timeline-container" style="position:relative;">
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-year-col">
-        <div class="timeline-year">2023-Present</div>
+<div class="we-section">
+
+  <!-- ★ Current Role -->
+  <div class="we-current">
+    <div class="we-current-logo">
+      <img src="/assets/img/google_deepmind_color.png" alt="Google DeepMind">
     </div>
-      <div class="timeline-logo-col">
-        <div class="timeline-logo" tabindex="0">
-          <img src="/assets/img/google_deepmind_color.png" alt="Google Deepmind">
-          <span class="timeline-tooltip">Click for details</span>
+    <div class="we-current-body">
+      <div class="we-current-badge">● Current</div>
+      <p class="we-current-title">Building AI Agents @ Google DeepMind</p>
+      <p class="we-current-role">Software Engineer  ·  2023 – Present</p>
+      <p class="we-current-desc">Working on AI agentic features with Gemini — shipping products used by millions, including <a href="https://gemini.google/overview/deep-research/?hl=en" target="_blank" rel="noopener">Gemini Deep Research</a>.</p>
     </div>
-        <div class="timeline-company">Google Deepmind</div>
-        <div class="timeline-position">Software Engineer</div>
   </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year-col">
-        <div class="timeline-year">2022</div>
+
+  <!-- Past Roles -->
+  <div class="we-past-label">Past Experience</div>
+
+  <div class="we-logo-grid" id="we-logo-grid">
+
+    <button class="we-logo-btn" id="we-btn-0" aria-label="Google Assistant" onclick="weShowDetail(0, this)">
+      <div class="we-logo-circle">
+        <img src="/assets/img/google_logo_2.jpeg" alt="Google Assistant">
       </div>
-      <div class="timeline-logo-col">
-        <div class="timeline-logo" tabindex="0">
-          <img src="/assets/img/google_logo_2.jpeg" alt="Google Assistant">
-          <span class="timeline-tooltip">Click for details</span>
-    </div>
-        <div class="timeline-company">Google Assistant</div>
-        <div class="timeline-position">Research Intern</div>
-  </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year-col">
-        <div class="timeline-year">2021</div>
+      <span class="we-logo-name">Google Assistant</span>
+      <span class="we-logo-year">2022</span>
+    </button>
+
+    <button class="we-logo-btn" id="we-btn-1" aria-label="Amazon Alexa" onclick="weShowDetail(1, this)">
+      <div class="we-logo-circle">
+        <img src="/assets/img/amazon_alexa_logo.webp" alt="Amazon Alexa">
       </div>
-      <div class="timeline-logo-col">
-        <div class="timeline-logo" tabindex="0">
-          <img src="/assets/img/verneek_logo_3.png" alt="Verneek.ai">
-          <span class="timeline-tooltip">Click for details</span>
-    </div>
-        <div class="timeline-company">Verneek.ai</div>
-        <div class="timeline-position">NLP Research Intern</div>
-  </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-year-col">
-        <div class="timeline-year">2020</div>
+      <span class="we-logo-name">Amazon Alexa</span>
+      <span class="we-logo-year">2020</span>
+    </button>
+
+    <button class="we-logo-btn" id="we-btn-2" aria-label="Verneek.ai" onclick="weShowDetail(2, this)">
+      <div class="we-logo-circle">
+        <img src="/assets/img/verneek_logo_3.png" alt="Verneek.ai">
       </div>
-      <div class="timeline-logo-col">
-        <div class="timeline-logo" tabindex="0">
-          <img src="/assets/img/amazon_alexa_logo.webp" alt="Amazon Alexa">
-          <span class="timeline-tooltip">Click for details</span>
-    </div>
-        <div class="timeline-company">Amazon Alexa</div>
-        <div class="timeline-position">Applied Scientist Intern</div>
+      <span class="we-logo-name">Verneek.ai</span>
+      <span class="we-logo-year">2021</span>
+    </button>
+
+    <button class="we-logo-btn" id="we-btn-3" aria-label="EXL Analytics" onclick="weShowDetail(3, this)">
+      <div class="we-logo-circle">
+        <img src="/assets/img/exl_logo.jpeg" alt="EXL Analytics">
+      </div>
+      <span class="we-logo-name">EXL Analytics</span>
+      <span class="we-logo-year">2014–2017</span>
+    </button>
+
   </div>
+
+  <!-- Detail Panel -->
+  <div class="we-detail-panel" id="we-detail-panel">
+    <button class="we-detail-close" onclick="weCloseDetail()" aria-label="Close">✕</button>
+    <div class="we-detail-header">
+      <div class="we-detail-logo"><img id="we-d-logo" src="" alt=""></div>
+      <div>
+        <p class="we-detail-company" id="we-d-company"></p>
+        <p class="we-detail-meta" id="we-d-meta"></p>
+      </div>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-year-col">
-        <div class="timeline-year">2014-2017</div>
-    </div>
-      <div class="timeline-logo-col">
-        <div class="timeline-logo" tabindex="0">
-          <img src="/assets/img/exl_logo.jpeg" alt="EXL Analytics">
-          <span class="timeline-tooltip">Click for details</span>
+    <p class="we-detail-desc" id="we-d-desc"></p>
   </div>
-        <div class="timeline-company">EXL Analytics</div>
-        <div class="timeline-position">Senior Consultant</div>
-    </div>
-    </div>
-  </div>
-  <div id="timeline-popup-row"></div>
+
 </div>
 
 <script>
-// Timeline click-to-expand for both desktop and mobile
-const items = document.querySelectorAll('.timeline-item');
-const popupRow = document.getElementById('timeline-popup-row');
-let activeIndex = null;
-const detailsData = [
-  {
-    h4: 'Google Deepmind',
-    html: 'Working on developing AI agents with Gemini. Present focus: <a href="https://gemini.google/overview/deep-research/?hl=en">Gemini Deep Research</a>.'
-  },
-  {
-    h4: 'Google Assistant',
-    html: 'Conducted research on parsing realistic task-oriented dialogs. Published and presented a <a href="https://aclanthology.org/2023.emnlp-main.667/">paper</a> at EMNLP 2023.'
-  },
-  {
-    h4: 'Verneek.ai',
-    html: 'Developed NLP models on semantic parsing and closed-domain natural language generation.'
-  },
-  {
-    h4: 'Amazon Alexa AI',
-    html: 'Worked with Alexa NLU team on Cross-Lingual Transfer Learning.'
-  },
-  {
-    h4: 'EXL Analytics',
-    html: 'Worked on multiple projects with various retail banking clients on: report automation with SAS and Excel VBA, engineering features and developing ML models on customer data for mitigating risk in credit card portfolios.'
-  }
-];
-function positionConnector(idx) { /* no-op */ }
-items.forEach((item, idx) => {
-  const logo = item.querySelector('.timeline-logo');
-  if (logo) {
-    logo.addEventListener('click', function(e) {
-      // Hide tooltip immediately on click
-      const tooltip = logo.querySelector('.timeline-tooltip');
-      if (tooltip) tooltip.style.display = 'none';
-      e.stopPropagation();
-      if (activeIndex === idx) {
-        activeIndex = null;
-        popupRow.innerHTML = '';
-        items.forEach(i => i.classList.remove('active'));
-      } else {
-        activeIndex = idx;
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        // Desktop: show popup below timeline
-        if (window.innerWidth > 900) {
-          popupRow.innerHTML = `<div class='timeline-details-wide' style='display:block;opacity:1;max-height:400px;'>
-            <div class='timeline-details-arrow'><svg width='28' height='18'><polygon points='14,0 28,18 0,18' fill='#fff' stroke='#007bff' stroke-width='2'/></svg></div>
-            <h4>${detailsData[idx].h4}</h4>
-            <p>${detailsData[idx].html}</p>
-          </div>`;
-        } else {
-          popupRow.innerHTML = '';
-        }
-      }
-      setTimeout(() => positionConnector(idx), 10);
-    });
-    logo.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        logo.click();
-      }
-    });
-  }
-});
-document.addEventListener('click', function(e) {
-  if (!e.target.classList.contains('timeline-logo') && !e.target.classList.contains('timeline-tooltip')) {
-    activeIndex = null;
-    popupRow.innerHTML = '';
-    items.forEach(i => i.classList.remove('active'));
-  }
-});
-// On mobile, show the popup directly below the logo-col, full width, with arrow at top center
-function showMobilePopup(idx) {
-  const item = items[idx];
-  const logoCol = item.querySelector('.timeline-logo-col');
-  if (!logoCol) return;
-  // Remove any existing popups
-  document.querySelectorAll('.timeline-details-wide').forEach(el => el.remove());
-  // Insert popup after logoCol
-  const div = document.createElement('div');
-  div.className = 'timeline-details-wide';
-  div.innerHTML = `<div class='timeline-details-arrow'><svg width='28' height='18'><polygon points='14,0 28,18 0,18' fill='#fff' stroke='#007bff' stroke-width='2'/></svg></div><h4>${detailsData[idx].h4}</h4><p>${detailsData[idx].html}</p>`;
-  logoCol.insertAdjacentElement('afterend', div);
-}
-items.forEach((item, idx) => {
-  const logo = item.querySelector('.timeline-logo');
-  if (logo) {
-    logo.addEventListener('click', function(e) {
-      const tooltip = logo.querySelector('.timeline-tooltip');
-      if (tooltip) tooltip.style.display = 'none';
-      e.stopPropagation();
-      if (window.innerWidth > 900) {
-        // Desktop: show popup below timeline as before
-        activeIndex = idx;
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        popupRow.innerHTML = `<div class='timeline-details-wide' style='display:block;opacity:1;max-height:400px;'><div class='timeline-details-arrow'><svg width='28' height='18'><polygon points='14,0 28,18 0,18' fill='#fff' stroke='#007bff' stroke-width='2'/></svg></div><h4>${detailsData[idx].h4}</h4><p>${detailsData[idx].html}</p></div>`;
-      } else {
-        // Mobile: show popup below logo-col
-        showMobilePopup(idx);
-      }
-    });
-    logo.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        logo.click();
-      }
-    });
-  }
-});
-document.addEventListener('click', function(e) {
-  if (!e.target.classList.contains('timeline-logo') && !e.target.classList.contains('timeline-tooltip')) {
-    activeIndex = null;
-    popupRow.innerHTML = '';
-    items.forEach(i => i.classList.remove('active'));
-    // Remove mobile popups
-    document.querySelectorAll('.timeline-details-wide').forEach(el => el.remove());
-  }
-});
-// On mobile, show/hide details inside the item as before
-function handleResize() {
-  if (window.innerWidth <= 900) {
-    items.forEach((item, idx) => {
-      const details = item.querySelector('.timeline-details-wide');
-      if (!details) {
-        const rightCol = item.querySelector('.timeline-right-col');
-        if (rightCol) {
-          const div = document.createElement('div');
-          div.className = 'timeline-details-wide';
-          div.innerHTML = `<h4>${detailsData[idx].h4}</h4><p>${detailsData[idx].html}</p>`;
-          rightCol.appendChild(div);
-        }
-      }
-    });
-    popupRow.innerHTML = '';
-  } else {
-    // Remove mobile details
-    items.forEach(item => {
-      const details = item.querySelector('.timeline-details-wide');
-      if (details) details.remove();
-    });
-  }
-}
-window.addEventListener('resize', function() {
-  handleResize();
-});
-document.addEventListener('DOMContentLoaded', function() {
-  handleResize();
-});
+(function() {
+  var details = [
+    {
+      logo: '/assets/img/google_logo_2.jpeg',
+      company: 'Google Assistant',
+      meta: 'Research Intern · 2022',
+      desc: 'Conducted research on parsing realistic task-oriented dialogs. Published and presented a <a href="https://aclanthology.org/2023.emnlp-main.667/" target="_blank" rel="noopener">paper</a> at EMNLP 2023.'
+    },
+    {
+      logo: '/assets/img/amazon_alexa_logo.webp',
+      company: 'Amazon Alexa AI',
+      meta: 'Applied Scientist Intern · 2020',
+      desc: 'Worked with the Alexa NLU team on Cross-Lingual Transfer Learning.'
+    },
+    {
+      logo: '/assets/img/verneek_logo_3.png',
+      company: 'Verneek.ai',
+      meta: 'NLP Research Intern · 2021',
+      desc: 'Developed NLP models for semantic parsing and closed-domain natural language generation.'
+    },
+    {
+      logo: '/assets/img/exl_logo.jpeg',
+      company: 'EXL Analytics',
+      meta: 'Senior Consultant · 2014 – 2017',
+      desc: 'Worked on multiple projects with retail banking clients: report automation with SAS and Excel VBA, feature engineering and ML models on customer data to mitigate credit card portfolio risk.'
+    }
+  ];
+
+  var activeBtn = null;
+
+  window.weShowDetail = function(idx, btn) {
+    var d = details[idx];
+    var panel = document.getElementById('we-detail-panel');
+
+    // toggle off if same
+    if (activeBtn === btn && panel.classList.contains('we-panel-visible')) {
+      weCloseDetail();
+      return;
+    }
+
+    // reset all active states
+    document.querySelectorAll('.we-logo-btn').forEach(function(b) { b.classList.remove('we-active'); });
+    btn.classList.add('we-active');
+    activeBtn = btn;
+
+    document.getElementById('we-d-logo').src = d.logo;
+    document.getElementById('we-d-logo').alt = d.company;
+    document.getElementById('we-d-company').textContent = d.company;
+    document.getElementById('we-d-meta').textContent = d.meta;
+    document.getElementById('we-d-desc').innerHTML = d.desc;
+
+    // re-trigger animation
+    panel.classList.remove('we-panel-visible');
+    void panel.offsetWidth; // reflow
+    panel.classList.add('we-panel-visible');
+
+    // scroll into view on mobile
+    if (window.innerWidth < 700) {
+      setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+    }
+  };
+
+  window.weCloseDetail = function() {
+    document.getElementById('we-detail-panel').classList.remove('we-panel-visible');
+    document.querySelectorAll('.we-logo-btn').forEach(function(b) { b.classList.remove('we-active'); });
+    activeBtn = null;
+  };
+
+  // close on outside click
+  document.addEventListener('click', function(e) {
+    var grid = document.getElementById('we-logo-grid');
+    var panel = document.getElementById('we-detail-panel');
+    if (grid && panel && !grid.contains(e.target) && !panel.contains(e.target)) {
+      weCloseDetail();
+    }
+  });
+})();
 </script>
+
+          <style>
+  /* ── Beyond Work Section ─────────────────────────────── */
+  .hobbies-section { margin: 48px 0 24px 0; }
+  .hobbies-section h3 { margin-bottom: 20px; }
+  .hobbies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  /* ── Hobby Card ──────────────────────────────────────── */
+  .hobby-card {
+    border-radius: 16px;
+    padding: 20px 20px 16px 20px;
+    border: 1.5px solid var(--global-divider-color, #e9ecef);
+    background: var(--global-card-bg-color, #fff);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .hobby-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+  }
+  .hobby-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+  .hobby-card.piano::before  { background: linear-gradient(90deg, #667eea, #764ba2); }
+  .hobby-card.chess::before  { background: linear-gradient(90deg, #1a1a2e, #16213e, #0f3460); }
+  .hobby-card.magic::before  { background: linear-gradient(90deg, #f7971e, #ffd200); }
+
+  [data-theme="dark"] .hobby-card {
+    background: #1e1e2e;
+    border-color: rgba(255,255,255,0.10);
+  }
+
+  .hobby-icon { font-size: 1.7em; margin-bottom: 10px; display: block; }
+  .hobby-title {
+    font-size: 1.02em; font-weight: 700; margin: 0 0 7px 0;
+    color: var(--global-text-color, #1a1a2e);
+  }
+  [data-theme="dark"] .hobby-title { color: #e8eaf6; }
+  .hobby-desc {
+    font-size: 0.86em; line-height: 1.6;
+    color: var(--global-text-color-light, #666); margin: 0 0 12px 0;
+  }
+  [data-theme="dark"] .hobby-desc { color: #9e9ec0; }
+
+  /* ── YouTube thumbnail embed ─────────────────────────── */
+  .yt-thumb-wrap {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: block;
+    margin-top: 4px;
+    background: #000;
+    aspect-ratio: 16 / 9;
+  }
+  .yt-thumb-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s;
+  }
+  .yt-thumb-wrap:hover img { opacity: 0.82; }
+  .yt-play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    background: rgba(255,0,0,0.90);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .yt-thumb-wrap:hover .yt-play-btn {
+    background: #ff0000;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+  .yt-play-btn svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+  .yt-playlist-label {
+    font-size: 0.72em; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--global-text-color-light, #999);
+    margin-top: 8px; display: block;
+  }
+  [data-theme="dark"] .yt-playlist-label { color: #6a6a8a; }
+
+  /* ── Chess fame callout ──────────────────────────────── */
+  .chess-fame {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: rgba(15,52,96,0.06);
+    border-radius: 10px; padding: 10px 12px; margin-top: 10px;
+    border: 1px solid rgba(15,52,96,0.12);
+  }
+  [data-theme="dark"] .chess-fame {
+    background: rgba(100,149,237,0.08);
+    border-color: rgba(100,149,237,0.15);
+  }
+  .chess-fame-icon { font-size: 1.2em; flex-shrink: 0; }
+  .chess-fame-text {
+    font-size: 0.82em; line-height: 1.55;
+    color: var(--global-text-color, #444);
+  }
+  [data-theme="dark"] .chess-fame-text { color: #c5cae9; }
+  .chess-fame-text a {
+    color: #4285f4; font-weight: 500; text-decoration: none;
+  }
+  .chess-fame-text a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .hobbies-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="hobbies-section">
+  <h3>Beyond Work</h3>
+  <div class="hobbies-grid">
+
+    <!-- Piano -->
+    <div class="hobby-card piano">
+      <span class="hobby-icon">🎹</span>
+      <p class="hobby-title">Piano</p>
+      <p class="hobby-desc">Playing piano for 10+ years — from classical pieces to pop covers.</p>
+      <a class="yt-thumb-wrap" href="https://www.youtube.com/watch?v=3M6JIu0whkY&amp;list=PLSVgicuKedidUJaB1cQZMVaDYXzijsRue&amp;index=4" target="_blank" rel="noopener" aria-label="Watch piano covers playlist">
+        <img src="https://img.youtube.com/vi/3M6JIu0whkY/mqdefault.jpg" alt="Piano covers playlist" loading="lazy">
+        <div class="yt-play-btn">
+          <svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+        </div>
+      </a>
+      <span class="yt-playlist-label">▶ Piano covers playlist</span>
+    </div>
+
+    <!-- Chess -->
+    <div class="hobby-card chess">
+      <span class="hobby-icon">♟️</span>
+      <p class="hobby-title">Chess</p>
+      <p class="hobby-desc">Love the game, playing online and with friends as a social player.</p>
+      <div class="chess-fame">
+        <span class="chess-fame-icon">🏆</span>
+        <span class="chess-fame-text">
+          Beat <strong>Samay Raina</strong> in a live game with Sagar Shah commentating.
+          <br>
+          <a href="https://youtu.be/4CWkavsJun8" target="_blank" rel="noopener">Mini Clip</a> • 
+          <a href="https://youtu.be/cMuTglM_td0" target="_blank" rel="noopener">Full Game</a>
+        </span>
+      </div>
+    </div>
+
+    <!-- Card Magic -->
+    <div class="hobby-card magic">
+      <span class="hobby-icon">🃏</span>
+      <p class="hobby-title">Card Magic</p>
+      <p class="hobby-desc">Hobbyist card magician — I enjoy learning and performing magic for friends.</p>
+      <a class="yt-thumb-wrap" href="https://www.youtube.com/watch?v=ngiVK9QCF_E&amp;list=PLTK2_nXkIs7Q" target="_blank" rel="noopener" aria-label="Watch magic tricks playlist">
+        <img src="https://img.youtube.com/vi/ngiVK9QCF_E/mqdefault.jpg" alt="Card magic playlist" loading="lazy">
+        <div class="yt-play-btn">
+          <svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+        </div>
+      </a>
+      <span class="yt-playlist-label">▶ Card magic playlist</span>
+    </div>
+
+  </div>
+</div>
+
 
           <!-- News -->
           
