@@ -18,7 +18,7 @@ social: true # includes social icons at the bottom of the page
 
 Hi! I am Sid, a Software Engineer at Google Deepmind. At Google, I work on building AI agentic features such as [Gemini Deep Research](https://gemini.google/overview/deep-research/?hl=en).
 
-I completed my Ph.D. in Computer Science at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
+I completed my Ph.D. in Computer Science (specializing in Artificial Intelligence) at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
 
 My Ph.D. focussed on extracting information about events from document collections. During my Ph.D., I also worked on building models for extracting other types of semantic information related to events -- event triggers, event chronology, event duration etc.
 
