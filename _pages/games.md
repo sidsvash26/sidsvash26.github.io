@@ -36,15 +36,7 @@ Welcome to my collection of simple HTML games, often created with the help of AI
 {% endfor %}
 </div>
 
-<!-- Visitor counter at the very end -->
-<div class="visitor-counter" style="text-align:center;margin-top:60px;padding:20px;border-top:1px solid var(--global-divider-color,#e9ecef);background-color:var(--global-card-bg-color,#f8f9fa);color:var(--global-text-color,#6c757d);font-size:0.9em;">
-  <div class="date-line" style="margin-bottom:5px;color:var(--global-text-color,#6c757d);">Total global website visits:</div>
-  <div class="count-line" style="font-size:1.2em;font-weight:500;color:var(--global-text-color,#495057);">
-    <a href="https://www.hitwebcounter.com" target="_blank">
-      <img src="https://hitwebcounter.com/counter/counter.php?page=12345678&style=0006&nbdigits=5&type=page&initCount=0" title="Web Counter" alt="web counter" border="0" />
-    </a>
-  </div>
-</div>
+{% include visitor_counter.html %}
 
 <style>
 /* --- Base Styles (Desktop First) --- */
