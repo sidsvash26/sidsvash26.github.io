@@ -187,8 +187,8 @@
       fetch('https://api.counterapi.dev/v1/sidsvash26/global/up')
         .then(res => res.json())
         .then(data => {
-          if (data && data.value) {
-            counterEl.textContent = Number(data.value).toLocaleString();
+          if (data && data.count) {
+            counterEl.textContent = Number(data.count).toLocaleString();
           }
         })
         .catch(err => {
