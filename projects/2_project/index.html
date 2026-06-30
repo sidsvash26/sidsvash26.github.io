@@ -253,13 +253,29 @@ Here’s the code for the last row of images above:</p>
 
 <!-- Visitor counter at the very end -->
 <div class="visitor-counter" style="text-align:center;margin-top:60px;padding:20px;border-top:1px solid var(--global-divider-color,#e9ecef);background-color:var(--global-card-bg-color,#f8f9fa);color:var(--global-text-color,#6c757d);font-size:0.9em;">
-  <div class="date-line" style="margin-bottom:5px;color:var(--global-text-color,#6c757d);">Total global website visits:</div>
-  <div class="count-line" style="font-size:1.2em;font-weight:500;color:var(--global-text-color,#495057);">
-    <a href="https://www.hitwebcounter.com" target="_blank" rel="external nofollow noopener">
-      <img src="https://hitwebcounter.com/counter/counter.php?page=12345678&amp;style=0006&amp;nbdigits=5&amp;type=page&amp;initCount=0" title="Web Counter" alt="web counter" border="0">
-    </a>
-  </div>
+  <span class="date-line" style="color:var(--global-text-color,#6c757d);">Total global website visits:</span>
+  <span id="visitor-count-value" style="font-weight:600;color:var(--global-text-color,#495057);margin-left:5px;">Loading...</span>
 </div>
+
+<script>
+  $(document).ready(function() {
+    const counterEl = document.getElementById('visitor-count-value');
+    if (counterEl) {
+      fetch('https://api.counterapi.dev/v1/sidsvash26/global/up')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.value) {
+            counterEl.textContent = Number(data.value).toLocaleString();
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load visitor counter:', err);
+          counterEl.textContent = '10,000+'; // elegant fallback
+        });
+    }
+  });
+</script>
+
 
     </div>
 
