@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whereabouts — your year, by country</title>
+    <meta name="description"
+        content="Load your Google Maps Timeline and see how many days you spent in each country, your Schengen 90/180 balance, and a calendar of your travels. Runs entirely in your browser.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0A0E1C;
+            --card: rgba(255, 255, 255, .035);
+            --card2: rgba(255, 255, 255, .06);
+            --line: rgba(255, 255, 255, .09);
+            --line2: rgba(255, 255, 255, .16);
+            --text: #EAF0FA;
+            --muted: #94A0BC;
+            --faint: #5E6A88;
+            --home: #2DD4BF;
+            --focus: #A78BFA;
+            --schengen: #5B9BF8;
+            --outside: #66739C;
+            --nodata: #171F3A;
+            --alert: #FF5C5C;
+            --warn: #F5B94B;
+            --ok: #7CE38B;
+            --r: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 15px;
+            line-height: 1.55;
+            font-variant-numeric: tabular-nums;
+            background-image:
+                radial-gradient(900px 500px at 12% -8%, rgba(45, 212, 191, .14), transparent 60%),
+                radial-gradient(900px 600px at 95% 4%, rgba(167, 139, 250, .13), transparent 60%),
+                radial-gradient(700px 500px at 55% 110%, rgba(91, 155, 248, .08), transparent 60%);
+            background-attachment: fixed;
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 22px 90px;
+        }
+
+        ::selection {
+            background: rgba(45, 212, 191, .35);
+        }
+
+        /* type */
+        .display {
+            font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+        }
+
+        header {
+            padding: 64px 0 34px;
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        h1 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 800;
+            font-size: clamp(40px, 7vw, 72px);
+            line-height: 1.02;
+            letter-spacing: -.02em;
+            margin: 10px 0 16px;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: var(--home);
+        }
+
+        header p {
+            max-width: 60ch;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .pill-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+            padding: 7px 14px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            font-size: 12.5px;
+            color: var(--muted);
+            background: var(--card);
+        }
+
+        .pill-note i {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ok);
+            display: inline-block;
+            box-shadow: 0 0 10px var(--ok);
+        }
+
+        section {
+            margin: 26px 0;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--r);
+            padding: 26px;
+            backdrop-filter: blur(6px);
+        }
+
+        .sec-head {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .sec-label {
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--home);
+            font-weight: 600;
+        }
+
+        .sec-head h2 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: -.01em;
+        }
+
+        .sec-head .sub {
+            color: var(--faint);
+            font-size: 13px;
+        }
+
+        /* upload */
+        .drop {
+            border: 1.5px dashed var(--line2);
+            border-radius: 16px;
+            padding: 34px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+            font-size: 15px;
+        }
+
+        .drop:hover,
+        .drop.hover {
+            border-color: var(--home);
+            background: rgba(45, 212, 191, .05);
+        }
+
+        .drop strong {
+            font-weight: 600;
+        }
+
+        .drop .sub {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .status {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 14px;
+            min-height: 20px;
+        }
+
+        .status b {
+            color: var(--text);
+        }
+
+        .linklike {
+            background: none;
+            border: none;
+            color: var(--home);
+            cursor: pointer;
+            font: inherit;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0;
+        }
+
+        .howto {
+            margin-top: 16px;
+            font-size: 13.5px;
+            color: var(--muted);
+        }
+
+        .howto summary {
+            cursor: pointer;
+            color: var(--text);
+            font-weight: 500;
+            list-style-position: inside;
+        }
+
+        .howto p {
+            margin: 9px 0;
+            max-width: 78ch;
+        }
+
+        .howto code {
+            background: var(--card2);
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        /* controls */
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            font: inherit;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 8px 18px;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .chip:hover {
+            border-color: var(--line2);
+            color: var(--text);
+        }
+
+        .chip.on {
+            background: var(--text);
+            color: #0A0E1C;
+            border-color: var(--text);
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin-top: 18px;
+        }
+
+        .ctl label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--faint);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .ctl select,
+        .ctl input {
+            font: inherit;
+            font-size: 14px;
+            color: var(--text);
+            background: #0F1730;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 9px 12px;
+            min-width: 160px;
+            outline: none;
+        }
+
+        .ctl select:focus,
+        .ctl input:focus {
+            border-color: var(--home);
+        }
+
+        .ctl input[type=date] {
+            min-width: unset;
+        }
+
+        /* stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+        }
+
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 18px 20px;
+        }
+
+        .stat .k {
+            font-size: 11px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--faint);
+            font-weight: 600;
+        }
+
+        .stat .v {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-top: 6px;
+            letter-spacing: -.02em;
+        }
+
+        .stat .v small {
+            font-size: 17px;
+            color: var(--faint);
+            font-weight: 600;
+        }
+
+        .stat .n {
+            font-size: 12.5px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .v.ok {
+            color: var(--ok);
+        }
+
+        .v.warn {
+            color: var(--warn);
+        }
+
+        .v.bad {
+            color: var(--alert);
+        }
+
+        .v.home {
+            color: var(--home);
+        }
+
+        .v.focus {
+            color: var(--focus);
+        }
+
+        #punch {
+            width: 100%;
+            margin-top: 18px;
+        }
+
+        .sch-explain {
+            font-size: 13.5px;
+            color: var(--muted);
+            max-width: 80ch;
+            margin: -6px 0 18px;
+        }
+
+        .mode-hint {
+            font-size: 12.5px;
+            color: var(--faint);
+            margin-top: 12px;
+            max-width: 80ch;
+        }
+
+        .punch-note {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 20px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 12.5px;
+            color: var(--muted);
+            margin-top: 12px;
+        }
+
+        .legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .sw {
+            width: 11px;
+            height: 11px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        svg text {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chartbox {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            font-size: 11px;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            color: var(--faint);
+            text-align: left;
+            border-bottom: 1px solid var(--line2);
+            padding: 8px 10px;
+            font-weight: 600;
+        }
+
+        th.num,
+        td.num {
+            text-align: right;
+        }
+
+        td {
+            border-bottom: 1px solid var(--line);
+            padding: 9px 10px;
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .cdot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            margin-right: 9px;
+            vertical-align: 1px;
+        }
+
+        .bar-bg {
+            background: var(--nodata);
+            height: 7px;
+            width: 100%;
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .bar-fg {
+            height: 7px;
+            border-radius: 99px;
+        }
+
+        .footnote {
+            font-size: 12.5px;
+            color: var(--faint);
+            max-width: 82ch;
+            margin-top: 40px;
+        }
+
+        .footnote p {
+            margin-bottom: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button.act {
+            font: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid var(--line2);
+            background: transparent;
+            color: var(--text);
+            border-radius: 999px;
+            transition: .15s;
+        }
+
+        button.act:hover {
+            border-color: var(--home);
+            color: var(--home);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .5s ease, transform .5s ease;
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        @media (max-width:640px) {
+            .stat .v {
+                font-size: 32px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            h1 {
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <header>
+            <div class="eyebrow">Google Maps Timeline · Visualized</div>
+            <h1 class="display">Where in the world<br>were <em>you</em>?</h1>
+            <p>Load your Google Maps Timeline export and see your travel history, beautifully: days per country,
+                a Schengen 90/180 monitor, monthly patterns, and a full calendar of your year.</p>
+            <div class="pill-note"><i></i>100% private — your data never leaves this device</div>
+        </header>
+
+        <section id="sec-load" class="card">
+            <div class="sec-head"><span class="sec-label">Start</span>
+                <h2>Load your timeline</h2>
+            </div>
+            <div class="drop" id="drop">
+                <strong>Drop your Timeline JSON here</strong> or click to choose files
+                <div class="sub">Works with the on-device export (Timeline.json / location-history.json, Android &amp;
+                    iOS)
+                    and older Google Takeout monthly files. Select multiple files if you have them.</div>
+            </div>
+            <input type="file" id="file" accept=".json,application/json" multiple class="hidden">
+            <div class="status" id="status">Waiting for files. <button class="linklike" id="demo">Or load sample data to
+                    see how it works.</button></div>
+            <details class="howto">
+                <summary>How do I export my Timeline from Google Maps?</summary>
+                <p><b>Android:</b> Settings → Location → Location Services → Timeline → <i>Export Timeline data</i>.
+                    You'll get a single <code>Timeline.json</code>.</p>
+                <p><b>iPhone:</b> Google Maps app → your profile picture → Your Timeline → ••• → Location &amp; Privacy
+                    Settings → <i>Export Timeline data</i>.</p>
+                <p><b>Older data:</b> monthly JSON files from a past Google Takeout download (e.g.
+                    <code>2023_MARCH.json</code>) work too — you can mix both formats.</p>
+                <p>Timeline history is stored on your phone, so the export has to be made there. Then open this page
+                    anywhere — the file is read locally in your browser.</p>
+            </details>
+        </section>
+
+        <section id="sec-period" class="card hidden reveal">
+            <div class="sec-head"><span class="sec-label">Period</span>
+                <h2>Pick your window</h2><span class="sub">home base auto-detects from where you spent the most time in
+                    this period — override anytime</span>
+            </div>
+            <div class="chips" id="yearchips"></div>
+            <div class="controls">
+                <div class="ctl"><label for="from">From</label><input type="date" id="from"></div>
+                <div class="ctl"><label for="to">To</label><input type="date" id="to"></div>
+                <div class="ctl"><label for="home">Home base</label><select id="home"></select></div>
+                <div class="ctl"><label for="focus">Also highlight</label><select id="focus"></select></div>
+                <div class="ctl"><label for="mode">Count a day when</label>
+                    <select id="mode">
+                        <option value="30">present ≥ 30 min</option>
+                        <option value="0">present at all</option>
+                        <option value="dom">most of the day was there</option>
+                    </select>
+                </div>
+            </div>
+            <p class="mode-hint" id="mode-hint"></p>
+        </section>
+
+        <section id="sec-overview" class="hidden reveal">
+            <div class="sec-head"><span class="sec-label">Overview</span>
+                <h2 id="ov-title">Your period at a glance</h2>
+            </div>
+            <div class="stats" id="ov-stats"></div>
+        </section>
+
+        <section id="sec-schengen" class="card hidden reveal">
+            <div class="sec-head"><span class="sec-label">Schengen</span>
+                <h2>90 / 180 monitor</h2>
+                <span class="sub" id="sch-sub"></span>
+            </div>
+            <p class="sch-explain">The 90/180 rule is a rolling check: on any given date, look back over the 180 days
+                ending that day — at most 90 of them may be Schengen days. Pick the date to check below (it follows the
+                end of your selected period by default). If your home base changed over time, set the home base that
+                applied around the date you're checking.</p>
+            <div class="controls" style="margin:0 0 18px;">
+                <div class="ctl"><label for="asof">Check the 180 days ending</label><input type="date" id="asof"></div>
+            </div>
+            <div class="stats" id="sch-stats"></div>
+            <div class="punch-note" id="punch-note"></div>
+            <div id="punch"></div>
+            <div class="legend">
+                <span><i class="sw" style="background:var(--alert)"></i>Counted day</span>
+                <span><i class="sw" style="background:#2A3352"></i>Not counted</span>
+                <span><i class="sw" style="background:var(--nodata);outline:1px solid var(--line)"></i>No data</span>
+            </div>
+            <div class="punch-note" style="margin-top:26px;">Rolling 180-day count over time:</div>
+            <div class="chartbox">
+                <div id="rolling"></div>
+            </div>
+        </section>
+
+        <section id="sec-table" class="card hidden reveal">
+            <div class="sec-head"><span class="sec-label">Countries</span>
+                <h2>Breakdown</h2><span class="sub" id="tbl-sub"></span>
+            </div>
+            <table id="ctable">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th class="num">Days present</th>
+                        <th class="num">Main-country days</th>
+                        <th class="num">Midnights</th>
+                        <th style="width:24%">Share</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div style="margin-top:16px;"><button class="act" id="csv">Download day-by-day CSV</button></div>
+        </section>
+
+        <section id="sec-monthly" class="card hidden reveal">
+            <div class="sec-head"><span class="sec-label">Patterns</span>
+                <h2>Months at a glance</h2><span class="sub">main country per day</span>
+            </div>
+            <div class="chartbox">
+                <div id="monthly"></div>
+            </div>
+            <div class="legend" id="monthly-legend"></div>
+        </section>
+
+        <section id="sec-cal" class="card hidden reveal">
+            <div class="sec-head"><span class="sec-label">Calendar</span>
+                <h2>Every single day</h2>
+                <select id="calyear"
+                    style="font:inherit;font-size:13px;color:var(--text);background:#0F1730;border:1px solid var(--line);border-radius:10px;padding:5px 10px;"></select>
+            </div>
+            <div class="chartbox">
+                <div id="calendar"></div>
+            </div>
+            <div class="legend" id="cal-legend"></div>
+        </section>
+
+        <div class="footnote">
+            <p><b>Good to know:</b> everything is estimated from phone location data. Gaps, airplane mode, and GPS drift
+                near land borders can misclassify a day — days with no data are shown separately, never silently
+                assumed. This is a personal dashboard, not an official record or legal advice.</p>
+            <p>The Schengen monitor uses the standard visitor rule: at most 90 days of presence within any rolling
+                180-day window. If your home base is a Schengen country, only days spent in <i>other</i> Schengen
+                countries are counted.</p>
+        </div>
+
+    </div>
+
+    <script>
+        "use strict";
+        /* ---------------- constants ---------------- */
+        const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+        const SCHENGEN = new Set(["Austria", "Belgium", "Bulgaria", "Croatia", "Czechia", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Italy", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Norway", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland"]);
+        const COLORS = { home: 'var(--home)', focus: 'var(--focus)', schengen: 'var(--schengen)', outside: 'var(--outside)', nodata: 'var(--nodata)' };
+
+        /* ---------------- state ---------------- */
+        let segments = [];
+        let features = null;
+        let dayMap = null;
+        let dayKeys = [];
+        const geoCache = new Map();
+        let lastHit = null;
+        let activeYear = null; // 'YYYY' | 'all' | null (custom)
+
+        /* ---------------- helpers ---------------- */
+        const fmtDay = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' });
+        const dateKey = d => fmtDay.format(d);
+        const keyToDate = k => new Date(k + 'T12:00:00Z');
+        function addDaysKey(k, n) { const d = keyToDate(k); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+        function eachKey(k1, k2) { const out = []; let k = k1; while (k <= k2) { out.push(k); k = addDaysKey(k, 1); } return out; }
+        const el = id => document.getElementById(id);
+        const status = msg => { el('status').innerHTML = msg; };
+
+        function parseLatLngString(s) {
+            if (!s || typeof s !== 'string') return null;
+            s = s.replace(/^geo:/, '').replace(/°/g, '');
+            const p = s.split(',').map(x => parseFloat(x.trim()));
+            if (p.length === 2 && isFinite(p[0]) && isFinite(p[1])) return { lat: p[0], lng: p[1] };
+            return null;
+        }
+        function locFromNew(obj) {
+            if (!obj) return null;
+            if (typeof obj === 'string') return parseLatLngString(obj);
+            if (obj.latLng) return parseLatLngString(obj.latLng);
+            return null;
+        }
+        function tsOld(o, k) {
+            if (o[k]) return new Date(o[k]);
+            if (o[k + 'Ms']) return new Date(Number(o[k + 'Ms']));
+            return null;
+        }
+
+        /* ---------------- parsing ---------------- */
+        function parseSemanticSegment(s, out) {
+            const start = s.startTime ? new Date(s.startTime) : null;
+            const end = s.endTime ? new Date(s.endTime) : null;
+            if (!start || !end || isNaN(start) || isNaN(end) || end <= start) return;
+            if (s.visit) {
+                const loc = locFromNew(s.visit.topCandidate && s.visit.topCandidate.placeLocation);
+                if (loc) out.push({ start, end, ...loc });
+            } else if (s.timelinePath && s.timelinePath.length) {
+                const pts = s.timelinePath.map(p => ({
+                    loc: parseLatLngString(p.point),
+                    t: new Date(start.getTime() + (parseInt(p.durationMinutesOffsetFromStartTime || '0', 10)) * 60000)
+                })).filter(p => p.loc);
+                for (let i = 0; i < pts.length; i++) {
+                    const a = pts[i].t, b = (i + 1 < pts.length) ? pts[i + 1].t : end;
+                    if (b > a) out.push({ start: a, end: b, ...pts[i].loc });
+                }
+            } else if (s.activity) {
+                const a = locFromNew(s.activity.start), b = locFromNew(s.activity.end);
+                const mid = new Date((start.getTime() + end.getTime()) / 2);
+                if (a) out.push({ start, end: mid, ...a });
+                if (b) out.push({ start: mid, end, ...b });
+            }
+        }
+        function parseTimelineObject(o, out) {
+            if (o.placeVisit) {
+                const pv = o.placeVisit, L = pv.location || {};
+                const start = tsOld(pv.duration || {}, 'startTimestamp'), end = tsOld(pv.duration || {}, 'endTimestamp');
+                if (start && end && end > start && L.latitudeE7 != null)
+                    out.push({ start, end, lat: L.latitudeE7 / 1e7, lng: L.longitudeE7 / 1e7 });
+            } else if (o.activitySegment) {
+                const a = o.activitySegment;
+                const start = tsOld(a.duration || {}, 'startTimestamp'), end = tsOld(a.duration || {}, 'endTimestamp');
+                if (!start || !end || end <= start) return;
+                const mid = new Date((start.getTime() + end.getTime()) / 2);
+                if (a.startLocation && a.startLocation.latitudeE7 != null)
+                    out.push({ start, end: mid, lat: a.startLocation.latitudeE7 / 1e7, lng: a.startLocation.longitudeE7 / 1e7 });
+                if (a.endLocation && a.endLocation.latitudeE7 != null)
+                    out.push({ start: mid, end, lat: a.endLocation.latitudeE7 / 1e7, lng: a.endLocation.longitudeE7 / 1e7 });
+            }
+        }
+        function parseRoot(root, out) {
+            if (Array.isArray(root)) { root.forEach(s => parseSemanticSegment(s, out)); return; }
+            if (root.semanticSegments) { root.semanticSegments.forEach(s => parseSemanticSegment(s, out)); return; }
+            if (root.timelineObjects) { root.timelineObjects.forEach(o => parseTimelineObject(o, out)); return; }
+            for (const k of Object.keys(root)) {
+                if (Array.isArray(root[k]) && root[k].length && (root[k][0].startTime || root[k][0].placeVisit)) {
+                    root[k].forEach(s => s.placeVisit || s.activitySegment ? parseTimelineObject(s, out) : parseSemanticSegment(s, out));
+                    return;
+                }
+            }
+        }
+
+        /* ---------------- country lookup ---------------- */
+        async function loadCountries() {
+            if (features) return;
+            status('Loading country boundaries…');
+            const world = await (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')).json();
+            features = topojson.feature(world, world.objects.countries).features;
+        }
+        function countryOf(lat, lng) {
+            const key = lat.toFixed(2) + ',' + lng.toFixed(2);
+            if (geoCache.has(key)) return geoCache.get(key);
+            const pt = [lng, lat];
+            let name = null;
+            if (lastHit && d3.geoContains(lastHit, pt)) name = lastHit.properties.name;
+            if (!name) for (const f of features) { if (d3.geoContains(f, pt)) { name = f.properties.name; lastHit = f; break; } }
+            if (!name) {
+                outer: for (const d of [0.01, 0.03]) {
+                    for (const [dx, dy] of [[d, 0], [-d, 0], [0, d], [0, -d], [d, d], [-d, -d], [d, -d], [-d, d]]) {
+                        const p2 = [lng + dx, lat + dy];
+                        for (const f of features) { if (d3.geoContains(f, p2)) { name = f.properties.name; lastHit = f; break outer; } }
+                    }
+                }
+            }
+            name = name || 'Unknown';
+            geoCache.set(key, name);
+            return name;
+        }
+
+        /* ---------------- day table ---------------- */
+        function buildDayMap() {
+            dayMap = new Map();
+            const get = k => { let v = dayMap.get(k); if (!v) { v = { ms: new Map(), lastEnd: 0, midnight: null }; dayMap.set(k, v); } return v; };
+            for (const s of segments) {
+                const c = countryOf(s.lat, s.lng);
+                let cur = s.start.getTime(); const endT = s.end.getTime();
+                let guard = 0;
+                while (cur < endT && guard++ < 20000) {
+                    const k = dateKey(new Date(cur));
+                    let probe = cur, boundary = endT;
+                    while (probe < endT) {
+                        const nxt = Math.min(probe + 30 * 60 * 1000, endT);
+                        if (dateKey(new Date(nxt)) !== k) {
+                            let lo = probe, hi = nxt;
+                            while (hi - lo > 60 * 1000) { const mid = (lo + hi) / 2; (dateKey(new Date(mid)) === k) ? lo = mid : hi = mid; }
+                            boundary = hi; break;
+                        }
+                        probe = nxt;
+                        if (probe >= endT) { boundary = endT; }
+                    }
+                    const d = get(k);
+                    d.ms.set(c, (d.ms.get(c) || 0) + (boundary - cur));
+                    if (boundary >= d.lastEnd) { d.lastEnd = boundary; d.midnight = c; }
+                    cur = boundary;
+                }
+            }
+            dayKeys = [...dayMap.keys()].sort();
+        }
+        function dominant(k) {
+            const d = dayMap.get(k); if (!d) return null;
+            let best = null, bms = -1;
+            for (const [c, ms] of d.ms) { if (c !== 'Unknown' && ms > bms) { bms = ms; best = c; } }
+            if (!best) for (const [c, ms] of d.ms) { if (ms > bms) { bms = ms; best = c; } }
+            return best;
+        }
+        function dayCountries(k, mode) {
+            const d = dayMap.get(k); if (!d) return new Set();
+            if (mode === 'dom') { const dom = dominant(k); return dom ? new Set([dom]) : new Set(); }
+            const min = mode === '0' ? 1 : 30 * 60 * 1000;
+            const s = new Set();
+            for (const [c, ms] of d.ms) if (ms >= min && c !== 'Unknown') s.add(c);
+            if (!s.size) { const dom = dominant(k); if (dom) s.add(dom); }
+            return s;
+        }
+
+        /* ---------------- metrics + render ---------------- */
+        function bucketOf(inf, home, focus) {
+            if (!inf || !inf.tracked || !inf.dom) return 'nodata';
+            if (inf.dom === home) return 'home';
+            if (inf.dom === focus) return 'focus';
+            if (SCHENGEN.has(inf.dom)) return 'schengen';
+            return 'outside';
+        }
+        function colorFor(c, home, focus) {
+            if (c === home) return 'var(--home)';
+            if (c === focus) return 'var(--focus)';
+            if (SCHENGEN.has(c)) return 'var(--schengen)';
+            return 'var(--outside)';
+        }
+
+        function recompute() {
+            if (!dayKeys.length) return;
+            const home = el('home').value, focus = el('focus').value, mode = el('mode').value;
+            const first = dayKeys[0], last = dayKeys[dayKeys.length - 1];
+            const allKeys = eachKey(first, last);
+
+            const info = new Map();
+            for (const k of allKeys) {
+                const tracked = dayMap.has(k);
+                const set = tracked ? dayCountries(k, mode) : new Set();
+                const away = tracked && [...set].some(c => SCHENGEN.has(c) && c !== home);
+                info.set(k, { tracked, set, away, dom: tracked ? dominant(k) : null, midnight: tracked ? dayMap.get(k).midnight : null });
+            }
+
+            /* range from controls, clamped */
+            let from = el('from').value || first, to = el('to').value || last;
+            if (from > to) [from, to] = [to, from];
+            if (from < first) from = first; if (to > last) to = last;
+            const rangeKeys = eachKey(from, to);
+
+            /* overview */
+            let homeDays = 0, focusDays = 0, tracked = 0;
+            const seen = new Set(); let awayStreak = 0, bestStreak = 0;
+            for (const k of rangeKeys) {
+                const i = info.get(k); if (!i.tracked) { awayStreak = 0; continue; }
+                tracked++;
+                if (i.set.has(home)) homeDays++;
+                if (i.set.has(focus)) focusDays++;
+                for (const c of i.set) seen.add(c);
+                if (!i.set.has(home)) { awayStreak++; bestStreak = Math.max(bestStreak, awayStreak); } else awayStreak = 0;
+            }
+            el('ov-title').textContent = `${from} → ${to}`;
+            el('ov-stats').innerHTML = `
+    <div class="stat"><div class="k">${home}</div><div class="v home">${homeDays}<small> days</small></div><div class="n">home base</div></div>
+    ${focus && focus !== home ? `<div class="stat"><div class="k">${focus}</div><div class="v focus">${focusDays}<small> days</small></div><div class="n">highlighted</div></div>` : ''}
+    <div class="stat"><div class="k">Countries</div><div class="v">${seen.size}</div><div class="n">visited in this period</div></div>
+    <div class="stat"><div class="k">Longest stretch away</div><div class="v">${bestStreak}<small> days</small></div><div class="n">without touching ${home}</div></div>
+    <div class="stat"><div class="k">Coverage</div><div class="v">${tracked}<small> / ${rangeKeys.length}</small></div><div class="n">days with data</div></div>`;
+
+            /* schengen — rolling window, checked at a chosen date */
+            const flags = allKeys.map(k => info.get(k).away ? 1 : 0);
+            const prefix = [0]; for (const f of flags) prefix.push(prefix[prefix.length - 1] + f);
+            const rolling = allKeys.map((k, i) => { const lo = Math.max(0, i - 179); return { k, v: prefix[i + 1] - prefix[lo] }; });
+            const rollAt = new Map(rolling.map(r => [r.k, r.v]));
+
+            let asOf = el('asof').value || to;
+            if (asOf < first) asOf = first; if (asOf > last) asOf = last;
+            el('asof').value = asOf; el('asof').min = first; el('asof').max = last;
+            const winStart = addDaysKey(asOf, -179);
+            const used = rollAt.get(asOf) ?? 0;
+
+            const periodRolling = rolling.filter(d => d.k >= from && d.k <= to);
+            const shown = periodRolling.length > 30 ? periodRolling : rolling;
+            const peak = d3.max(shown, d => d.v);
+            const cls = used > 90 ? 'bad' : (used > 75 ? 'warn' : 'ok');
+            el('sch-sub').textContent = SCHENGEN.has(home)
+                ? `counting days in Schengen countries other than ${home}`
+                : `counting days anywhere in the Schengen area`;
+            el('sch-stats').innerHTML = `
+    <div class="stat"><div class="k">Used · ${winStart} → ${asOf}</div><div class="v ${cls}">${used}<small> / 90</small></div>
+      <div class="n">${used > 90 ? 'over the limit on this date' : (90 - used) + ' days remaining on this date'}</div></div>
+    <div class="stat"><div class="k">Peak · ${shown[0].k} → ${shown[shown.length - 1].k}</div><div class="v ${peak > 90 ? 'bad' : ''}">${peak}</div>
+      <div class="n">highest rolling count in this period</div></div>`;
+
+            el('punch-note').textContent = `The 180 days ending ${asOf}, one tick each — colored ticks count toward the 90-day allowance:`;
+            renderPunch(eachKey(winStart, asOf), info);
+            renderRolling(shown, asOf, used);
+            renderMonthly(rangeKeys, info, home, focus);
+            renderTable(rangeKeys, info, home, focus, from, to);
+            renderCalendarControls(rangeKeys, allKeys, info, home, focus);
+
+            ['sec-period', 'sec-overview', 'sec-schengen', 'sec-table', 'sec-monthly', 'sec-cal'].forEach(id => {
+                const s = el(id); s.classList.remove('hidden'); requestAnimationFrame(() => s.classList.add('in'));
+            });
+            window._export = { allKeys, info };
+        }
+
+        function renderPunch(keys, info) {
+            const w = 1040, cw = w / 180, h = 44;
+            let s = `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:44px;">`;
+            keys.forEach((k, i) => {
+                const inf = info.get(k);
+                const fill = !inf || !inf.tracked ? 'var(--nodata)' : (inf.away ? 'var(--alert)' : '#2A3352');
+                s += `<rect x="${(i * cw).toFixed(2)}" y="5" width="${(cw * 0.7).toFixed(2)}" height="34" rx="1.5" fill="${fill}"><title>${k}${inf && inf.tracked ? (' · ' + [...(inf.set || [])].join(', ')) : ' · no data'}</title></rect>`;
+            });
+            el('punch').innerHTML = s + '</svg>';
+        }
+
+        function renderRolling(rolling, asOf, used) {
+            const W = 1040, H = 250, m = { t: 14, r: 14, b: 26, l: 36 };
+            const x = d3.scaleTime().domain([keyToDate(rolling[0].k), keyToDate(rolling[rolling.length - 1].k)]).range([m.l, W - m.r]);
+            const y = d3.scaleLinear().domain([0, Math.max(100, d3.max(rolling, d => d.v) + 5)]).range([H - m.b, m.t]);
+            const line = d3.line().x(d => x(keyToDate(d.k))).y(d => y(d.v));
+            const area = d3.area().x(d => x(keyToDate(d.k))).y0(y(0)).y1(d => y(d.v));
+            const svg = d3.create('svg').attr('viewBox', `0 0 ${W} ${H}`).style('width', '100%');
+            svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(8).tickSizeOuter(0)).selectAll('text').attr('font-size', 11).attr('fill', 'var(--muted)');
+            svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSizeOuter(0)).selectAll('text').attr('font-size', 11).attr('fill', 'var(--muted)');
+            svg.selectAll('.domain,line[y2],g.tick line').attr('stroke', 'rgba(255,255,255,.14)');
+            svg.append('path').datum(rolling).attr('d', area).attr('fill', 'rgba(91,155,248,.12)');
+            svg.append('path').datum(rolling).attr('d', line).attr('fill', 'none').attr('stroke', 'var(--schengen)').attr('stroke-width', 2.2);
+            svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(90)).attr('y2', y(90)).attr('stroke', 'var(--alert)').attr('stroke-width', 1.5).attr('stroke-dasharray', '5 4');
+            svg.append('text').attr('x', W - m.r).attr('y', y(90) - 7).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', 'var(--alert)').text('90-day limit');
+            if (asOf) {
+                const ax = x(keyToDate(asOf));
+                if (ax >= m.l && ax <= W - m.r) {
+                    svg.append('line').attr('x1', ax).attr('x2', ax).attr('y1', m.t).attr('y2', H - m.b)
+                        .attr('stroke', 'rgba(255,255,255,.28)').attr('stroke-dasharray', '2 4');
+                    svg.append('circle').attr('cx', ax).attr('cy', y(used)).attr('r', 4.5)
+                        .attr('fill', 'var(--text)').attr('stroke', '#0A0E1C').attr('stroke-width', 1.5)
+                        .append('title').text(`${asOf} · ${used}/90`);
+                    svg.append('text').attr('x', ax).attr('y', m.t + 2).attr('text-anchor', 'middle').attr('font-size', 10).attr('fill', 'var(--muted)').text('checking');
+                }
+            }
+            el('rolling').replaceChildren(svg.node());
+        }
+
+        function renderMonthly(keys, info, home, focus) {
+            const byM = new Map();
+            for (const k of keys) {
+                const mkey = k.slice(0, 7);
+                let m = byM.get(mkey); if (!m) { m = { home: 0, focus: 0, schengen: 0, outside: 0, nodata: 0 }; byM.set(mkey, m); }
+                m[bucketOf(info.get(k), home, focus)]++;
+            }
+            const months = [...byM.keys()].sort();
+            const cats = ['home', 'focus', 'schengen', 'outside', 'nodata'];
+            const W = Math.max(700, months.length * 38 + 60), H = 240, m2 = { t: 12, r: 10, b: 38, l: 34 };
+            const x = d3.scaleBand().domain(months).range([m2.l, W - m2.r]).padding(0.3);
+            const y = d3.scaleLinear().domain([0, 31]).range([H - m2.b, m2.t]);
+            const svg = d3.create('svg').attr('viewBox', `0 0 ${W} ${H}`).style('width', W > 1040 ? W + 'px' : '100%');
+            for (const mo of months) {
+                let y0 = 0; const d = byM.get(mo);
+                for (const c of cats) {
+                    const v = d[c]; if (!v) continue;
+                    svg.append('rect').attr('x', x(mo)).attr('width', x.bandwidth()).attr('rx', 2)
+                        .attr('y', y(y0 + v)).attr('height', Math.max(0, y(y0) - y(y0 + v))).attr('fill', COLORS[c])
+                        .append('title').text(`${mo} · ${c === 'home' ? home : c === 'focus' ? focus : c}: ${v} days`);
+                    y0 += v;
+                }
+            }
+            const tickEvery = months.length > 18 ? 3 : 1;
+            svg.append('g').attr('transform', `translate(0,${H - m2.b})`)
+                .call(d3.axisBottom(x).tickValues(months.filter((_, i) => i % tickEvery === 0)).tickSizeOuter(0))
+                .selectAll('text').attr('font-size', 10).attr('fill', 'var(--muted)').attr('transform', 'rotate(-35)').attr('text-anchor', 'end');
+            svg.append('g').attr('transform', `translate(${m2.l},0)`).call(d3.axisLeft(y).ticks(4)).selectAll('text').attr('font-size', 11).attr('fill', 'var(--muted)');
+            svg.selectAll('.domain,g.tick line').attr('stroke', 'rgba(255,255,255,.14)');
+            el('monthly').replaceChildren(svg.node());
+            const leg =
+                `<span><i class="sw" style="background:var(--home)"></i>${home}</span>
+     ${focus && focus !== home ? `<span><i class="sw" style="background:var(--focus)"></i>${focus}</span>` : ''}
+     <span><i class="sw" style="background:var(--schengen)"></i>Other Schengen</span>
+     <span><i class="sw" style="background:var(--outside)"></i>Elsewhere</span>
+     <span><i class="sw" style="background:var(--nodata);outline:1px solid var(--line)"></i>No data</span>`;
+            el('monthly-legend').innerHTML = leg;
+            el('cal-legend').innerHTML = leg;
+        }
+
+        function renderTable(rangeKeys, info, home, focus, from, to) {
+            el('tbl-sub').textContent = `${from} → ${to}`;
+            const rows = new Map(); let tracked = 0;
+            for (const k of rangeKeys) {
+                const inf = info.get(k); if (!inf.tracked) continue;
+                tracked++;
+                for (const c of inf.set) { const r = rows.get(c) || { present: 0, dom: 0, mid: 0 }; r.present++; rows.set(c, r); }
+                if (inf.dom) { const r = rows.get(inf.dom) || { present: 0, dom: 0, mid: 0 }; r.dom++; rows.set(inf.dom, r); }
+                if (inf.midnight && inf.midnight !== 'Unknown') { const r = rows.get(inf.midnight) || { present: 0, dom: 0, mid: 0 }; r.mid++; rows.set(inf.midnight, r); }
+            }
+            const tb = el('ctable').querySelector('tbody');
+            const sorted = [...rows.entries()].sort((a, b) => b[1].present - a[1].present);
+            tb.innerHTML = sorted.map(([c, r]) => {
+                const pct = tracked ? (100 * r.present / tracked) : 0;
+                const col = colorFor(c, home, focus);
+                return `<tr><td><i class="cdot" style="background:${col}"></i>${c}</td>
+      <td class="num">${r.present}</td><td class="num">${r.dom}</td><td class="num">${r.mid}</td>
+      <td><div class="bar-bg"><div class="bar-fg" style="width:${pct.toFixed(1)}%;background:${col}"></div></div></td></tr>`;
+            }).join('') || `<tr><td colspan="5" style="color:var(--muted)">No tracked days in this range.</td></tr>`;
+        }
+
+        function renderCalendarControls(rangeKeys, allKeys, info, home, focus) {
+            const years = [...new Set(allKeys.map(k => k.slice(0, 4)))];
+            const sel = el('calyear');
+            const keep = sel.value;
+            sel.innerHTML = years.map(y => `<option>${y}</option>`).join('');
+            const rangeYear = rangeKeys[rangeKeys.length - 1].slice(0, 4);
+            sel.value = years.includes(keep) && activeYear === null ? keep : (years.includes(rangeYear) ? rangeYear : years[years.length - 1]);
+            renderCalendar(sel.value, info, home, focus);
+        }
+        function renderCalendar(year, info, home, focus) {
+            const W = 1040, cell = W / 32, H = cell * 12.6;
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const svg = d3.create('svg').attr('viewBox', `0 0 ${W} ${H}`).style('width', '100%');
+            for (let m = 0; m < 12; m++) {
+                svg.append('text').attr('x', 0).attr('y', m * cell + cell * 0.7).attr('font-size', 11).attr('fill', 'var(--muted)').text(monthNames[m]);
+                const dim = new Date(Date.UTC(+year, m + 1, 0)).getUTCDate();
+                for (let d = 1; d <= dim; d++) {
+                    const k = `${year}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                    const inf = info.get(k);
+                    const b = bucketOf(inf, home, focus);
+                    svg.append('rect').attr('x', d * cell + 2).attr('y', m * cell + 2).attr('width', cell - 4).attr('height', cell - 4).attr('rx', 3)
+                        .attr('fill', COLORS[b]).attr('stroke', b === 'nodata' ? 'rgba(255,255,255,.07)' : 'none')
+                        .append('title').text(`${k} · ${inf && inf.tracked ? (inf.dom || '?') : 'no data'}`);
+                }
+            }
+            el('calendar').replaceChildren(svg.node());
+        }
+
+        /* ---------------- period chips ---------------- */
+        let homeManual = false, focusManual = false;
+        function rankedInRange(from, to) {
+            const totals = new Map();
+            for (const k of dayKeys) {
+                if (k < from || k > to) continue;
+                for (const [c, ms] of dayMap.get(k).ms) if (c !== 'Unknown') totals.set(c, (totals.get(c) || 0) + ms);
+            }
+            return [...totals.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
+        }
+        function applyAutoBase() {
+            const from = el('from').value || dayKeys[0], to = el('to').value || dayKeys[dayKeys.length - 1];
+            const ranked = rankedInRange(from, to);
+            if (!ranked.length) return;
+            if (!homeManual) el('home').value = ranked[0];
+            if (!focusManual) el('focus').value = ranked[1] || ranked[0];
+        }
+
+        function renderYearChips() {
+            const years = [...new Set(dayKeys.map(k => k.slice(0, 4)))];
+            const box = el('yearchips');
+            box.innerHTML = years.map(y => `<button class="chip" data-y="${y}">${y}</button>`).join('')
+                + `<button class="chip" data-y="all">All time</button>`;
+            box.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => selectYear(b.dataset.y)));
+        }
+        function selectYear(y) {
+            activeYear = y;
+            const first = dayKeys[0], last = dayKeys[dayKeys.length - 1];
+            if (y === 'all') { el('from').value = first; el('to').value = last; }
+            else {
+                const f = `${y}-01-01`, t = `${y}-12-31`;
+                el('from').value = f < first ? first : f;
+                el('to').value = t > last ? last : t;
+            }
+            el('asof').value = el('to').value; // check-date follows the period end by default
+            applyAutoBase();
+            paintChips(); recompute();
+        }
+        function paintChips() {
+            document.querySelectorAll('#yearchips .chip').forEach(b => b.classList.toggle('on', b.dataset.y === activeYear));
+        }
+
+        /* ---------------- file handling ---------------- */
+        async function handleFiles(files) {
+            try {
+                await loadCountries();
+                status('Parsing files…');
+                const out = [];
+                for (const f of files) {
+                    try { parseRoot(JSON.parse(await f.text()), out); }
+                    catch (e) { console.warn('Skipped', f.name, e); }
+                }
+                if (!out.length) { status('<b style="color:var(--alert)">No usable timeline entries found.</b> Check that these are Timeline JSON exports.'); return; }
+                segments = out.sort((a, b) => a.start - b.start);
+                status(`Resolving countries for <b>${segments.length.toLocaleString()}</b> segments…`);
+                await new Promise(r => setTimeout(r, 20));
+                buildDayMap();
+                initSelectors();
+                renderYearChips();
+                selectYear(dayKeys[dayKeys.length - 1].slice(0, 4)); // default: latest year, Jan 1 → last data day
+                status(`Loaded <b>${segments.length.toLocaleString()}</b> segments · <b>${dayKeys.length.toLocaleString()}</b> tracked days · ${dayKeys[0]} → ${dayKeys[dayKeys.length - 1]}. All processing stayed on this device.`);
+            } catch (e) {
+                console.error(e);
+                status('<b style="color:var(--alert)">Something went wrong:</b> ' + e.message);
+            }
+        }
+        function initSelectors() {
+            /* auto-detect home = most-present country, highlight = runner-up */
+            const totals = new Map();
+            for (const k of dayKeys) {
+                for (const [c, ms] of dayMap.get(k).ms) { if (c !== 'Unknown') totals.set(c, (totals.get(c) || 0) + ms); }
+            }
+            const ranked = [...totals.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
+            const list = [...ranked].sort();
+            el('home').innerHTML = list.map(c => `<option>${c}</option>`).join('');
+            el('focus').innerHTML = list.map(c => `<option>${c}</option>`).join('');
+            el('home').value = ranked[0] || list[0];
+            el('focus').value = ranked[1] || ranked[0] || list[0];
+        }
+
+        /* CSV */
+        function downloadCSV() {
+            if (!window._export) return;
+            const { allKeys, info } = window._export;
+            const lines = ['date,tracked,countries_present,main_country,midnight,schengen_day'];
+            for (const k of allKeys) {
+                const i = info.get(k);
+                lines.push([k, i.tracked ? 1 : 0, '"' + [...(i.set || [])].join('; ') + '"', i.dom || '', i.midnight || '', i.away ? 1 : 0].join(','));
+            }
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
+            a.download = 'whereabouts-days.csv'; a.click();
+        }
+
+        /* demo data */
+        function demoData() {
+            const out = []; const now = Date.now();
+            const spots = { A: [47.3769, 8.5417], B: [48.1351, 11.582], C: [48.8566, 2.3522], D: [45.4642, 9.19], E: [40.71, -74.0], F: [19.076, 72.877], G: [35.676, 139.65] };
+            const keys = Object.keys(spots);
+            let t = now - 560 * 86400000;
+            while (t < now) {
+                const r = Math.random();
+                const pick = r < 0.6 ? 'A' : r < 0.74 ? 'B' : r < 0.82 ? 'C' : r < 0.88 ? 'D' : r < 0.93 ? 'E' : r < 0.97 ? 'F' : 'G';
+                const stay = (1 + Math.floor(Math.random() * (pick === 'A' ? 6 : 4))) * 86400000;
+                const [lat, lng] = spots[pick];
+                out.push({ start: new Date(t), end: new Date(Math.min(t + stay, now)), lat: lat + (Math.random() - 0.5) * 0.02, lng: lng + (Math.random() - 0.5) * 0.02 });
+                t += stay;
+                if (Math.random() < 0.05) t += 2 * 86400000;
+            }
+            return out;
+        }
+
+        /* wiring */
+        const drop = el('drop'), fileInput = el('file');
+        drop.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', e => handleFiles([...e.target.files]));
+        ['dragover', 'dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('hover'); }));
+        ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('hover'); }));
+        drop.addEventListener('drop', e => handleFiles([...e.dataTransfer.files].filter(f => f.name.endsWith('.json') || f.type.includes('json'))));
+        el('demo').addEventListener('click', async () => {
+            await loadCountries();
+            segments = demoData(); buildDayMap(); initSelectors(); renderYearChips();
+            selectYear(dayKeys[dayKeys.length - 1].slice(0, 4));
+            status('<b>Sample data loaded</b> — randomly generated, just to show the layout.');
+        });
+        const MODE_HINTS = {
+            '30': 'A day counts for every country you were in for at least 30 minutes — one day can count for several countries. Recommended: matches how rules like Schengen count days, while filtering out brief GPS blips near borders.',
+            '0': 'A day counts for every country you touched, even for a minute. Strictest possible count — but GPS drift near land borders can create false days.',
+            'dom': 'Each day is assigned to exactly one country: the one where you spent the most tracked time that day. Day totals add up neatly to your calendar, but short cross-border trips within a day are not counted.'
+        };
+        function paintModeHint() { el('mode-hint').textContent = MODE_HINTS[el('mode').value]; }
+        el('home').addEventListener('change', () => { homeManual = true; recompute(); });
+        el('focus').addEventListener('change', () => { focusManual = true; recompute(); });
+        el('mode').addEventListener('change', () => { paintModeHint(); recompute(); });
+        paintModeHint();
+        ['from', 'to'].forEach(id => el(id).addEventListener('change', () => { activeYear = null; paintChips(); el('asof').value = el('to').value; applyAutoBase(); recompute(); }));
+        el('asof').addEventListener('change', recompute);
+        el('calyear').addEventListener('change', () => { if (window._export) { renderCalendar(el('calyear').value, window._export.info, el('home').value, el('focus').value); } });
+        el('csv').addEventListener('click', downloadCSV);
+    </script>
+</body>
+
+</html>
