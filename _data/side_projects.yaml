@@ -1,0 +1,45 @@
+# _data/games.yaml
+# Categories: tools (data viz / utility projects), games (interactive learning games)
+
+- title: "Whereabouts"
+  category: "tools"
+  tagline: "Your year in countries, visualized"
+  description: |
+    Upload your Google Maps Timeline export and instantly see your travel history, beautifully rendered — days per country, a Schengen 90/180 rolling monitor, monthly heatmaps, and a full day-by-day calendar.
+
+    Everything runs 100% in your browser. Your location data never leaves your device.
+  image: "/assets/img/side-projects/whereabouts.png"
+  url: "/side-projects/whereabouts.html"
+  icon: "🌍"
+  published_date: "2026-07-11"
+  last_updated_date: "2026-07-11"
+
+- title: "German Verb Forms Trainer"
+  category: "games"
+  tagline: "Conjugation drills for common German verbs"
+  description: |
+    Practice conjugating common German verbs in different tenses.
+
+    This interactive game helps reinforce your memory of key verb forms required for basic German communication. It focuses primarily on present, perfect, and simple past tenses.
+
+    Challenge yourself and see how quickly you can conjugate verbs like 'haben', 'sein', 'gehen', and 'sprechen'!
+  image: "/assets/img/side-projects/german_verb_forms.png"
+  url: "/side-projects/german_verb_forms.html"
+  icon: "🇩🇪"
+  published_date: "2026-02-12"
+  last_updated_date: "2026-02-12"
+
+- title: "German Vocabulary Flashcards"
+  category: "games"
+  tagline: "Master A1 vocabulary with smart flashcards"
+  description: |
+    Master German vocabulary with this interactive flashcard game.
+
+    Practice German A1 words, complete with example sentences. Choose between English-to-German or German-to-English translation, and focus your learning by selecting specific chapters.
+
+    Test yourself by marking cards as correct or wrong, track your score, and navigate easily through the deck. A great tool for reinforcing vocabulary for any learning level!
+  image: "/assets/img/side-projects/german_vocab_flashcards.png"
+  url: "/side-projects/german_vocab_flashcards.html"
+  icon: "📚"
+  published_date: "2025-11-21"
+  last_updated_date: "2026-02-12"
