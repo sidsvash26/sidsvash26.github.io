@@ -276,15 +276,15 @@
 
   .we-timeline {
     position: relative;
-    padding-left: 52px;
+    padding-left: 80px;
   }
   /* Continuous timeline connector */
   .we-timeline::before {
     content: '';
     position: absolute;
-    top: 20px;
-    bottom: 24px;
-    left: 22px;
+    top: 28px;
+    bottom: 28px;
+    left: 35px;
     width: 2px;
     background: var(--global-divider-color, #e2e8f0);
   }
@@ -295,7 +295,7 @@
 
   .we-item {
     position: relative;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .we-item:last-child {
     margin-bottom: 0;
@@ -304,15 +304,15 @@
   /* Timeline Node (Logo) */
   .we-node {
     position: absolute;
-    left: -30px;
-    top: 12px;
+    left: -44px;
+    top: 10px;
     transform: translateX(-50%);
-    width: 36px;
-    height: 36px;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
     background: #fff;
-    border: 2px solid var(--global-divider-color, #e2e8f0);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 2.5px solid var(--global-divider-color, #e2e8f0);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -323,11 +323,11 @@
   [data-theme="dark"] .we-node,
   html[data-theme="dark"] .we-node {
     background: #fff;
-    border-color: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.18);
   }
   .we-node img {
-    width: 72%;
-    height: 72%;
+    width: 78%;
+    height: 78%;
     object-fit: contain;
     display: block;
   }
@@ -335,8 +335,8 @@
   .we-item:hover .we-node,
   .we-item.expanded .we-node {
     border-color: var(--global-theme-color, #4285f4);
-    transform: translateX(-50%) scale(1.08);
-    box-shadow: 0 3px 12px rgba(66,133,244,0.25);
+    transform: translateX(-50%) scale(1.06);
+    box-shadow: 0 4px 16px rgba(66,133,244,0.28);
   }
 
   /* Card */
@@ -347,7 +347,7 @@
     background: var(--global-card-bg-color, #fff);
     border: 1px solid var(--global-divider-color, #e9ecef);
     border-radius: 12px;
-    padding: 11px 16px;
+    padding: 12px 18px;
     cursor: pointer;
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
     outline: none;
@@ -503,11 +503,15 @@
   .we-details a:hover { text-decoration: underline; }
 
   @media (max-width: 600px) {
-    .we-timeline { padding-left: 46px; }
-    .we-timeline::before { left: 18px; }
-    .we-node { left: -28px; width: 32px; height: 32px; top: 11px; }
+    .we-timeline { padding-left: 64px; }
+    .we-timeline::before { left: 27px; top: 20px; bottom: 20px; }
+    .we-node { left: -36px; width: 48px; height: 48px; top: 8px; border-width: 2px; }
     .we-card { padding: 9px 12px; }
     .we-card-top { flex-direction: column; align-items: flex-start; gap: 3px; }
+    .we-company { font-size: 0.92em; }
+    .we-role { font-size: 0.82em; }
+    .we-date { font-size: 0.76em; }
+    .we-summary { font-size: 0.82em; line-height: 1.4; }
     .we-meta-right { width: 100%; justify-content: space-between; }
   }
 </style>
