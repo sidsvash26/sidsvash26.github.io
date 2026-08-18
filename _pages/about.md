@@ -8,7 +8,8 @@ profile:
   align: center
   image: sidvash_swiss.jpg
   address: >
-    <p>Software Engineer</p>
+    <p>Software Engineer, Google DeepMind</p>
+    <p>Zurich, Switzerland</p>
     <p>Pronouns: he/him</p>
 
 news: false # includes a list of news items
@@ -16,7 +17,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hi! I am Sid, a Software Engineer at Google Deepmind. At Google, I work on building AI agentic features such as [Gemini Deep Research](https://gemini.google/overview/deep-research/?hl=en).
+Hi! I am Sid, a Software Engineer at Google DeepMind, working out of Zurich. At Google, I work on building AI agentic features such as [Gemini Deep Research](https://gemini.google/overview/deep-research/?hl=en).
 
 I completed my Ph.D. in Computer Science (specializing in Artificial Intelligence) at the [University of Rochester](https://www.cs.rochester.edu/) advised by [Aaron White](http://aaronstevenwhite.io/).
 

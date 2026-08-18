@@ -1,451 +1,436 @@
 <style>
-  /* ─── Work Experience Section ─────────────────────────────── */
-  .we-section {
-    margin: 0 0 40px 0;
-    font-family: inherit;
+  /* ─── Minimal Work Experience Timeline ────────────────────── */
+  .we-timeline-wrap {
+    margin: 8px 0 36px 0;
   }
-
-  /* ── Current Role Hero ─────────────────────────────────────── */
-  .we-current {
-    position: relative;
+  .we-hint-bar {
     display: flex;
     align-items: center;
-    gap: 22px;
-    padding: 20px 28px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, rgba(66,133,244,0.10) 0%, rgba(52,168,83,0.10) 40%, rgba(251,188,4,0.08) 70%, rgba(234,67,53,0.08) 100%);
-    border: 1.5px solid rgba(66,133,244,0.22);
-    margin-bottom: 32px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    overflow: hidden;
+    justify-content: flex-end;
+    margin-bottom: 12px;
   }
-  [data-theme="dark"] .we-current {
-    background: linear-gradient(135deg, rgba(66,133,244,0.14) 0%, rgba(52,168,83,0.12) 40%, rgba(251,188,4,0.09) 70%, rgba(234,67,53,0.09) 100%);
-    border-color: rgba(66,133,244,0.30);
-  }
-  /* animated gradient shimmer */
-  .we-current::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
-    background-size: 200% 100%;
-    animation: we-shimmer 3.5s ease-in-out infinite;
-    pointer-events: none;
-    border-radius: inherit;
-  }
-  @keyframes we-shimmer {
-    0%   { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-  .we-current-logo {
-    width: 68px;
-    height: 68px;
-    border-radius: 50%;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 0 0 3px rgba(66,133,244,0.25), 0 4px 20px rgba(66,133,244,0.18);
-    animation: we-logo-pulse 2.8s ease-in-out infinite;
-    position: relative;
-    z-index: 1;
-  }
-  [data-theme="dark"] .we-current-logo {
-    background: #fff;
-  }
-  @keyframes we-logo-pulse {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(66,133,244,0.25), 0 4px 20px rgba(66,133,244,0.18); }
-    50%       { box-shadow: 0 0 0 6px rgba(66,133,244,0.18), 0 4px 28px rgba(66,133,244,0.30); }
-  }
-  .we-current-logo img {
-    width: 80%;
-    height: 80%;
-    object-fit: contain;
-  }
-  .we-current-badge {
+  .we-hint {
+    font-size: 0.75em;
+    color: var(--global-text-color-light, #888);
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: linear-gradient(90deg, #4285f4, #34a853, #fbbc04, #ea4335);
-    background-size: 200% 100%;
-    animation: we-badge-grad 3s ease-in-out infinite alternate;
-    color: #fff;
-    font-size: 0.70em;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    background: rgba(0,0,0,0.04);
     padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 6px;
+    border-radius: 12px;
   }
-  @keyframes we-badge-grad {
-    0%   { background-position: 0% 0; }
-    100% { background-position: 100% 0; }
+  [data-theme="dark"] .we-hint,
+  html[data-theme="dark"] .we-hint {
+    background: rgba(255,255,255,0.06);
+    color: #9e9ec0;
   }
-  .we-current-badge::before {
+
+  .we-timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  /* Continuous timeline connector */
+  .we-timeline::before {
     content: '';
-    width: 7px;
-    height: 7px;
+    position: absolute;
+    top: 20px;
+    bottom: 24px;
+    left: 23px;
+    width: 2px;
+    background: var(--global-divider-color, #e2e8f0);
+  }
+  [data-theme="dark"] .we-timeline::before,
+  html[data-theme="dark"] .we-timeline::before {
+    background: rgba(255,255,255,0.12);
+  }
+
+  .we-item {
+    position: relative;
+    margin-bottom: 12px;
+  }
+  .we-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Timeline Node (Logo) */
+  .we-node {
+    position: absolute;
+    left: -32px;
+    top: 12px;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: #fff;
-    display: inline-block;
-    animation: we-dot-blink 1.2s ease-in-out infinite;
-  }
-  @keyframes we-dot-blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.3; }
-  }
-  .we-current-body { z-index: 1; }
-  .we-current-title {
-    font-size: 1.15em;
-    font-weight: 700;
-    color: var(--global-text-color, #1a1a2e);
-    margin: 0 0 2px 0;
-    line-height: 1.2;
-  }
-  [data-theme="dark"] .we-current-title { color: #e8eaf6; }
-  .we-current-role {
-    font-size: 0.88em;
-    color: var(--global-text-color-light, #555);
-    margin: 0 0 5px 0;
-  }
-  [data-theme="dark"] .we-current-role { color: #9e9ec0; }
-  .we-current-desc {
-    font-size: 0.88em;
-    color: var(--global-text-color, #333);
-    line-height: 1.55;
-    margin: 0;
-  }
-  [data-theme="dark"] .we-current-desc { color: #c5cae9; }
-  .we-current-desc a {
-    color: #4285f4;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .we-current-desc a:hover { text-decoration: underline; }
-
-  /* ── Past Roles Label ──────────────────────────────────────── */
-  .we-past-label {
-    font-size: 0.78em;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--global-text-color-light, #999);
-    margin-bottom: 16px;
-  }
-
-  /* ── Floating Logo Grid ────────────────────────────────────── */
-  .we-logo-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: flex-end;
-    margin-bottom: 6px;
-  }
-  .we-logo-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    outline: none;
-  }
-  .we-logo-circle {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: var(--global-card-bg-color, #fff);
-    border: 2px solid rgba(0,0,0,0.07);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+    border: 2px solid var(--global-divider-color, #e2e8f0);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  [data-theme="dark"] .we-logo-circle {
+  [data-theme="dark"] .we-node,
+  html[data-theme="dark"] .we-node {
     background: #fff;
-    border-color: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.15);
   }
-  .we-logo-circle img {
+  .we-node img {
     width: 72%;
     height: 72%;
     object-fit: contain;
+    display: block;
   }
-  /* Floating animations – different offset per item */
-  .we-logo-btn:nth-child(1) .we-logo-circle { animation: we-float-a 4.2s ease-in-out infinite; }
-  .we-logo-btn:nth-child(2) .we-logo-circle { animation: we-float-b 3.8s ease-in-out 0.5s infinite; }
-  .we-logo-btn:nth-child(3) .we-logo-circle { animation: we-float-c 4.6s ease-in-out 1.1s infinite; }
-  .we-logo-btn:nth-child(4) .we-logo-circle { animation: we-float-a 3.5s ease-in-out 1.7s infinite; }
-  @keyframes we-float-a { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-7px)} }
-  @keyframes we-float-b { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-5px)} }
-  @keyframes we-float-c { 0%,100%{transform:translateY(-3px)} 50%{transform:translateY(-9px)} }
+  .we-card:hover + .we-node,
+  .we-item:hover .we-node,
+  .we-item.expanded .we-node {
+    border-color: var(--global-theme-color, #4285f4);
+    transform: translateX(-50%) scale(1.08);
+    box-shadow: 0 3px 12px rgba(66,133,244,0.25);
+  }
 
-  /* Hover */
-  .we-logo-btn:hover .we-logo-circle,
-  .we-logo-btn:focus-visible .we-logo-circle {
-    transform: translateY(-6px) scale(1.10);
-    box-shadow: 0 10px 32px rgba(0,0,0,0.15);
-    border-color: #4285f4;
-    animation-play-state: paused;
-  }
-  /* Active/selected */
-  .we-logo-btn.we-active .we-logo-circle {
-    border-color: #4285f4;
-    box-shadow: 0 0 0 3px rgba(66,133,244,0.25), 0 8px 24px rgba(66,133,244,0.20);
-    animation-play-state: paused;
-    transform: translateY(-4px) scale(1.08);
-  }
-  .we-logo-name {
-    font-size: 0.74em;
-    font-weight: 500;
-    color: var(--global-text-color-light, #777);
-    text-align: center;
-    white-space: nowrap;
-  }
-  [data-theme="dark"] .we-logo-name { color: #9e9ec0; }
-  .we-logo-year {
-    font-size: 0.68em;
-    color: var(--global-text-color-light, #aaa);
-    text-align: center;
-  }
-  [data-theme="dark"] .we-logo-year { color: #6a6a8a; }
-
-  /* ── Detail Panel ──────────────────────────────────────────── */
-  .we-detail-panel {
-    display: none;
-    margin-top: 20px;
-    padding: 20px 24px;
-    border-radius: 14px;
-    border: 1.5px solid rgba(66,133,244,0.20);
+  /* Card */
+  .we-card {
+    display: block;
+    width: 100%;
+    text-align: left;
     background: var(--global-card-bg-color, #fff);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    animation: we-panel-in 0.28s cubic-bezier(.4,0,.2,1);
-    position: relative;
-  }
-  [data-theme="dark"] .we-detail-panel {
-    background: #1e1e2e;
-    border-color: rgba(66,133,244,0.28);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.30);
-  }
-  .we-detail-panel.we-panel-visible { display: block; }
-  @keyframes we-panel-in {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .we-detail-close {
-    position: absolute;
-    top: 12px; right: 14px;
-    background: none;
-    border: none;
+    border: 1px solid var(--global-divider-color, #e9ecef);
+    border-radius: 12px;
+    padding: 11px 16px;
     cursor: pointer;
-    font-size: 1.1em;
-    color: var(--global-text-color-light, #aaa);
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: background 0.2s;
-    line-height: 1;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    outline: none;
+    font-family: inherit;
   }
-  .we-detail-close:hover { background: rgba(0,0,0,0.06); }
-  [data-theme="dark"] .we-detail-close:hover { background: rgba(255,255,255,0.08); }
-  .we-detail-header {
+  .we-card:hover {
+    border-color: var(--global-theme-color, #4285f4);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transform: translateX(2px);
+  }
+  .we-card.is-expanded {
+    border-color: var(--global-theme-color, #4285f4);
+    box-shadow: 0 4px 18px rgba(66,133,244,0.12);
+  }
+  [data-theme="dark"] .we-card,
+  html[data-theme="dark"] .we-card {
+    background: #1e1e2e;
+    border-color: rgba(255,255,255,0.10);
+  }
+  [data-theme="dark"] .we-card:hover,
+  html[data-theme="dark"] .we-card:hover {
+    border-color: rgba(100,149,237,0.50);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.30);
+  }
+  [data-theme="dark"] .we-card.is-expanded,
+  html[data-theme="dark"] .we-card.is-expanded {
+    border-color: rgba(100,149,237,0.50);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  }
+
+  /* Header Top Row */
+  .we-card-top {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 12px;
+    justify-content: space-between;
+    gap: 10px;
   }
-  .we-detail-logo {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1.5px solid rgba(0,0,0,0.07);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+  .we-role-group {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 8px;
   }
-  .we-detail-logo img { width: 70%; height: 70%; object-fit: contain; }
-  .we-detail-company {
-    font-size: 1.05em;
+  .we-company {
+    font-size: 0.96em;
     font-weight: 700;
     color: var(--global-text-color, #1a1a2e);
-    margin: 0 0 2px 0;
   }
-  [data-theme="dark"] .we-detail-company { color: #e8eaf6; }
-  .we-detail-meta {
-    font-size: 0.82em;
-    color: #4285f4;
-    font-weight: 600;
-    margin: 0;
-  }
-  .we-detail-desc {
-    font-size: 0.90em;
-    line-height: 1.6;
-    color: var(--global-text-color, #444);
-    margin: 0;
-  }
-  [data-theme="dark"] .we-detail-desc { color: #c5cae9; }
-  .we-detail-desc a { color: #4285f4; text-decoration: none; font-weight: 500; }
-  .we-detail-desc a:hover { text-decoration: underline; }
+  [data-theme="dark"] .we-company,
+  html[data-theme="dark"] .we-company { color: #e8eaf6; }
 
-  /* ── Responsive ─────────────────────────────────────────────── */
+  .we-role {
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--global-text-color-light, #666);
+  }
+  [data-theme="dark"] .we-role,
+  html[data-theme="dark"] .we-role { color: #a0a0c0; }
+
+  .we-current-badge {
+    font-size: 0.68em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: rgba(52,168,83,0.12);
+    color: #2e7d32;
+    padding: 1px 7px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .we-current-badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #34a853;
+  }
+  [data-theme="dark"] .we-current-badge,
+  html[data-theme="dark"] .we-current-badge {
+    background: rgba(52,168,83,0.22);
+    color: #81c784;
+  }
+
+  .we-meta-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .we-date {
+    font-size: 0.80em;
+    font-weight: 600;
+    color: var(--global-text-color-light, #888);
+  }
+  [data-theme="dark"] .we-date,
+  html[data-theme="dark"] .we-date { color: #8a8aa8; }
+
+  .we-chevron {
+    font-size: 0.72em;
+    color: var(--global-text-color-light, #aaa);
+    transition: transform 0.25s ease, color 0.2s ease;
+  }
+  .we-card:hover .we-chevron {
+    color: var(--global-theme-color, #4285f4);
+  }
+  .we-card.is-expanded .we-chevron {
+    transform: rotate(180deg);
+    color: var(--global-theme-color, #4285f4);
+  }
+
+  /* One-liner summary */
+  .we-summary {
+    font-size: 0.85em;
+    line-height: 1.45;
+    color: var(--global-text-color-light, #555);
+    margin: 4px 0 0 0;
+  }
+  [data-theme="dark"] .we-summary,
+  html[data-theme="dark"] .we-summary { color: #9e9ec0; }
+
+  /* Expandable detail drawer */
+  .we-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.22s ease, margin-top 0.22s ease;
+    opacity: 0;
+    font-size: 0.85em;
+    line-height: 1.55;
+    color: var(--global-text-color, #333);
+  }
+  .we-card.is-expanded .we-details {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--global-divider-color, #e9ecef);
+  }
+  [data-theme="dark"] .we-details,
+  html[data-theme="dark"] .we-details {
+    color: #c5cae9;
+  }
+  [data-theme="dark"] .we-card.is-expanded .we-details,
+  html[data-theme="dark"] .we-card.is-expanded .we-details {
+    border-color: rgba(255,255,255,0.12);
+  }
+  .we-details a {
+    color: var(--global-theme-color, #4285f4);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .we-details a:hover { text-decoration: underline; }
+
   @media (max-width: 600px) {
-    .we-current { flex-direction: column; align-items: flex-start; gap: 14px; padding: 16px 18px; }
-    .we-logo-grid { gap: 14px; }
-    .we-logo-circle { width: 58px; height: 58px; }
+    .we-timeline { padding-left: 24px; }
+    .we-timeline::before { left: 16px; }
+    .we-node { left: -24px; width: 30px; height: 30px; top: 11px; }
+    .we-card { padding: 9px 12px; }
+    .we-card-top { flex-direction: column; align-items: flex-start; gap: 3px; }
+    .we-meta-right { width: 100%; justify-content: space-between; }
   }
 </style>
 
-<div class="we-section">
+<div class="we-timeline-wrap">
 
-  <!-- ★ Current Role -->
-  <div class="we-current">
-    <div class="we-current-logo">
-      <img src="/assets/img/google_deepmind_color.png" alt="Google DeepMind">
-    </div>
-    <div class="we-current-body">
-      <div class="we-current-badge">● Current</div>
-      <p class="we-current-title">Building AI Agents @ Google DeepMind</p>
-      <p class="we-current-role">Software Engineer &nbsp;·&nbsp; 2023 – Present</p>
-      <p class="we-current-desc">Working on AI agentic features with Gemini — shipping products used by millions, including <a href="https://gemini.google/overview/deep-research/?hl=en" target="_blank" rel="noopener">Gemini Deep Research</a>.</p>
-    </div>
+  <div class="we-hint-bar">
+    <span class="we-hint"><i class="fas fa-info-circle"></i> Click any role for details</span>
   </div>
 
-  <!-- Past Roles -->
-  <div class="we-past-label">Past Experience</div>
+  <div class="we-timeline">
 
-  <div class="we-logo-grid" id="we-logo-grid">
+    <!-- Google DeepMind -->
+    <div class="we-item">
+      <div class="we-card" onclick="weToggleItem(this)" role="button" tabindex="0" aria-expanded="false">
+        <div class="we-card-top">
+          <div class="we-role-group">
+            <span class="we-company">Google DeepMind</span>
+            <span class="we-role">· Software Engineer</span>
+            <span class="we-current-badge">Current</span>
+          </div>
+          <div class="we-meta-right">
+            <span class="we-date">2023 – Present</span>
+            <span class="we-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <p class="we-summary">Building AI agentic features with Gemini — including Gemini Deep Research.</p>
+        <div class="we-details">
+          Working on AI agentic features with Gemini — shipping products used by millions, including <a href="https://gemini.google/overview/deep-research/?hl=en" target="_blank" rel="noopener">Gemini Deep Research</a>.
+        </div>
+      </div>
+      <div class="we-node">
+        <img src="/assets/img/google_deepmind_color.png" alt="Google DeepMind">
+      </div>
+    </div>
 
-    <button class="we-logo-btn" id="we-btn-0" aria-label="Google Assistant" onclick="weShowDetail(0, this)">
-      <div class="we-logo-circle">
+    <!-- Google Assistant -->
+    <div class="we-item">
+      <div class="we-card" onclick="weToggleItem(this)" role="button" tabindex="0" aria-expanded="false">
+        <div class="we-card-top">
+          <div class="we-role-group">
+            <span class="we-company">Google Assistant</span>
+            <span class="we-role">· Research Intern</span>
+          </div>
+          <div class="we-meta-right">
+            <span class="we-date">2022</span>
+            <span class="we-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <p class="we-summary">Research on parsing realistic task-oriented dialogs (published at EMNLP 2023).</p>
+        <div class="we-details">
+          Conducted research on parsing realistic task-oriented dialogs. Published and presented a <a href="https://aclanthology.org/2023.emnlp-main.667/" target="_blank" rel="noopener">paper</a> at EMNLP 2023.
+        </div>
+      </div>
+      <div class="we-node">
         <img src="/assets/img/google_logo_2.jpeg" alt="Google Assistant">
       </div>
-      <span class="we-logo-name">Google Assistant</span>
-      <span class="we-logo-year">2022</span>
-    </button>
+    </div>
 
-    <button class="we-logo-btn" id="we-btn-1" aria-label="Amazon Alexa" onclick="weShowDetail(1, this)">
-      <div class="we-logo-circle">
-        <img src="/assets/img/amazon_alexa_logo.webp" alt="Amazon Alexa">
+    <!-- Verneek.ai -->
+    <div class="we-item">
+      <div class="we-card" onclick="weToggleItem(this)" role="button" tabindex="0" aria-expanded="false">
+        <div class="we-card-top">
+          <div class="we-role-group">
+            <span class="we-company">Verneek.ai</span>
+            <span class="we-role">· NLP Research Intern</span>
+          </div>
+          <div class="we-meta-right">
+            <span class="we-date">2021</span>
+            <span class="we-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <p class="we-summary">NLP models for semantic parsing and closed-domain natural language generation.</p>
+        <div class="we-details">
+          Developed NLP models for semantic parsing and closed-domain natural language generation.
+        </div>
       </div>
-      <span class="we-logo-name">Amazon Alexa</span>
-      <span class="we-logo-year">2020</span>
-    </button>
-
-    <button class="we-logo-btn" id="we-btn-2" aria-label="Verneek.ai" onclick="weShowDetail(2, this)">
-      <div class="we-logo-circle">
+      <div class="we-node">
         <img src="/assets/img/verneek_logo_3.png" alt="Verneek.ai">
       </div>
-      <span class="we-logo-name">Verneek.ai</span>
-      <span class="we-logo-year">2021</span>
-    </button>
+    </div>
 
-    <button class="we-logo-btn" id="we-btn-3" aria-label="EXL Analytics" onclick="weShowDetail(3, this)">
-      <div class="we-logo-circle">
-        <img src="/assets/img/exl_logo.jpeg" alt="EXL Analytics">
+    <!-- Amazon Alexa -->
+    <div class="we-item">
+      <div class="we-card" onclick="weToggleItem(this)" role="button" tabindex="0" aria-expanded="false">
+        <div class="we-card-top">
+          <div class="we-role-group">
+            <span class="we-company">Amazon Alexa AI</span>
+            <span class="we-role">· Applied Scientist Intern</span>
+          </div>
+          <div class="we-meta-right">
+            <span class="we-date">2020</span>
+            <span class="we-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <p class="we-summary">Cross-lingual transfer learning with the Alexa NLU team.</p>
+        <div class="we-details">
+          Worked with the Alexa NLU team on Cross-Lingual Transfer Learning.
+        </div>
       </div>
-      <span class="we-logo-name">EXL Analytics</span>
-      <span class="we-logo-year">2014–2017</span>
-    </button>
-
-  </div>
-
-  <!-- Detail Panel -->
-  <div class="we-detail-panel" id="we-detail-panel">
-    <button class="we-detail-close" onclick="weCloseDetail()" aria-label="Close">✕</button>
-    <div class="we-detail-header">
-      <div class="we-detail-logo"><img id="we-d-logo" src="" alt=""></div>
-      <div>
-        <p class="we-detail-company" id="we-d-company"></p>
-        <p class="we-detail-meta" id="we-d-meta"></p>
+      <div class="we-node">
+        <img src="/assets/img/amazon_alexa_logo.webp" alt="Amazon Alexa">
       </div>
     </div>
-    <p class="we-detail-desc" id="we-d-desc"></p>
+
+    <!-- FACTS.lab -->
+    <div class="we-item">
+      <div class="we-card" onclick="weToggleItem(this)" role="button" tabindex="0" aria-expanded="false">
+        <div class="we-card-top">
+          <div class="we-role-group">
+            <span class="we-company">FACTS.lab, Univ. of Rochester</span>
+            <span class="we-role">· Graduate Research Assistant</span>
+          </div>
+          <div class="we-meta-right">
+            <span class="we-date">2018 – 2023</span>
+            <span class="we-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <p class="we-summary">Ph.D. research in NLP on cross-document event extraction and temporal relations.</p>
+        <div class="we-details">
+          Conducted Ph.D. research at <a href="https://factslab.io/" target="_blank" rel="noopener">FACTS.lab</a> advised by Aaron White. Led the <a href="https://github.com/FACTSlab/FAMuS" target="_blank" rel="noopener">FAMuS</a> (Frames Across Multiple Sources) project as well as research on temporal relation extraction (<a href="https://decomp.io/projects/time/" target="_blank" rel="noopener">UDS-Time</a>).
+        </div>
+      </div>
+      <div class="we-node">
+        <img src="/assets/img/facts_logo.png" alt="FACTS.lab">
+      </div>
+    </div>
+
+    <!-- EXL Analytics -->
+    <div class="we-item">
+      <div class="we-card" onclick="weToggleItem(this)" role="button" tabindex="0" aria-expanded="false">
+        <div class="we-card-top">
+          <div class="we-role-group">
+            <span class="we-company">EXL Analytics</span>
+            <span class="we-role">· Senior Consultant</span>
+          </div>
+          <div class="we-meta-right">
+            <span class="we-date">2014 – 2017</span>
+            <span class="we-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <p class="we-summary">Retail banking analytics, ML risk models, and reporting automation.</p>
+        <div class="we-details">
+          Worked on multiple projects with retail banking clients: report automation with SAS and Excel VBA, feature engineering and ML models on customer data to mitigate credit card portfolio risk.
+        </div>
+      </div>
+      <div class="we-node">
+        <img src="/assets/img/exl_logo.jpeg" alt="EXL Analytics">
+      </div>
+    </div>
+
   </div>
 
 </div>
 
 <script>
-(function() {
-  var details = [
-    {
-      logo: '/assets/img/google_logo_2.jpeg',
-      company: 'Google Assistant',
-      meta: 'Research Intern · 2022',
-      desc: 'Conducted research on parsing realistic task-oriented dialogs. Published and presented a <a href="https://aclanthology.org/2023.emnlp-main.667/" target="_blank" rel="noopener">paper</a> at EMNLP 2023.'
-    },
-    {
-      logo: '/assets/img/amazon_alexa_logo.webp',
-      company: 'Amazon Alexa AI',
-      meta: 'Applied Scientist Intern · 2020',
-      desc: 'Worked with the Alexa NLU team on Cross-Lingual Transfer Learning.'
-    },
-    {
-      logo: '/assets/img/verneek_logo_3.png',
-      company: 'Verneek.ai',
-      meta: 'NLP Research Intern · 2021',
-      desc: 'Developed NLP models for semantic parsing and closed-domain natural language generation.'
-    },
-    {
-      logo: '/assets/img/exl_logo.jpeg',
-      company: 'EXL Analytics',
-      meta: 'Senior Consultant · 2014 – 2017',
-      desc: 'Worked on multiple projects with retail banking clients: report automation with SAS and Excel VBA, feature engineering and ML models on customer data to mitigate credit card portfolio risk.'
-    }
-  ];
+function weToggleItem(card) {
+  var isExpanded = card.classList.toggle('is-expanded');
+  card.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+  var parentItem = card.closest('.we-item');
+  if (parentItem) {
+    parentItem.classList.toggle('expanded', isExpanded);
+  }
+}
 
-  var activeBtn = null;
-
-  window.weShowDetail = function(idx, btn) {
-    var d = details[idx];
-    var panel = document.getElementById('we-detail-panel');
-
-    // toggle off if same
-    if (activeBtn === btn && panel.classList.contains('we-panel-visible')) {
-      weCloseDetail();
-      return;
-    }
-
-    // reset all active states
-    document.querySelectorAll('.we-logo-btn').forEach(function(b) { b.classList.remove('we-active'); });
-    btn.classList.add('we-active');
-    activeBtn = btn;
-
-    document.getElementById('we-d-logo').src = d.logo;
-    document.getElementById('we-d-logo').alt = d.company;
-    document.getElementById('we-d-company').textContent = d.company;
-    document.getElementById('we-d-meta').textContent = d.meta;
-    document.getElementById('we-d-desc').innerHTML = d.desc;
-
-    // re-trigger animation
-    panel.classList.remove('we-panel-visible');
-    void panel.offsetWidth; // reflow
-    panel.classList.add('we-panel-visible');
-
-    // scroll into view on mobile
-    if (window.innerWidth < 700) {
-      setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
-    }
-  };
-
-  window.weCloseDetail = function() {
-    document.getElementById('we-detail-panel').classList.remove('we-panel-visible');
-    document.querySelectorAll('.we-logo-btn').forEach(function(b) { b.classList.remove('we-active'); });
-    activeBtn = null;
-  };
-
-  // close on outside click
-  document.addEventListener('click', function(e) {
-    var grid = document.getElementById('we-logo-grid');
-    var panel = document.getElementById('we-detail-panel');
-    if (grid && panel && !grid.contains(e.target) && !panel.contains(e.target)) {
-      weCloseDetail();
+// Enable keyboard Enter/Space activation
+document.querySelectorAll('.we-card').forEach(function(card) {
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      weToggleItem(card);
     }
   });
-})();
+});
 </script>

@@ -4,23 +4,25 @@
   .hobbies-section h3 { margin-bottom: 20px; }
   .hobbies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
   }
 
   /* ── Hobby Card ──────────────────────────────────────── */
   .hobby-card {
     border-radius: 16px;
-    padding: 20px 20px 16px 20px;
+    padding: 22px 22px 18px 22px;
     border: 1.5px solid var(--global-divider-color, #e9ecef);
     background: var(--global-card-bg-color, #fff);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
   .hobby-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   }
   .hobby-card::before {
     content: '';
@@ -31,25 +33,35 @@
   }
   .hobby-card.piano::before  { background: linear-gradient(90deg, #667eea, #764ba2); }
   .hobby-card.chess::before  { background: linear-gradient(90deg, #1a1a2e, #16213e, #0f3460); }
-  .hobby-card.magic::before  { background: linear-gradient(90deg, #f7971e, #ffd200); }
-  .hobby-card.puzzles::before { background: linear-gradient(90deg, #11998e, #38ef7d); }
 
-  [data-theme="dark"] .hobby-card {
+  [data-theme="dark"] .hobby-card,
+  html[data-theme="dark"] .hobby-card {
     background: #1e1e2e;
     border-color: rgba(255,255,255,0.10);
   }
 
-  .hobby-icon { font-size: 1.7em; margin-bottom: 10px; display: block; }
-  .hobby-title {
-    font-size: 1.02em; font-weight: 700; margin: 0 0 7px 0;
+  .hobby-icon {
+    font-size: 1.6em;
+    margin-bottom: 8px;
+    display: inline-block;
     color: var(--global-text-color, #1a1a2e);
   }
-  [data-theme="dark"] .hobby-title { color: #e8eaf6; }
-  .hobby-desc {
-    font-size: 0.86em; line-height: 1.6;
-    color: var(--global-text-color-light, #666); margin: 0 0 12px 0;
+  [data-theme="dark"] .hobby-icon,
+  html[data-theme="dark"] .hobby-icon {
+    color: #e8eaf6;
   }
-  [data-theme="dark"] .hobby-desc { color: #9e9ec0; }
+  .hobby-title {
+    font-size: 1.05em; font-weight: 700; margin: 0 0 6px 0;
+    color: var(--global-text-color, #1a1a2e);
+  }
+  [data-theme="dark"] .hobby-title,
+  html[data-theme="dark"] .hobby-title { color: #e8eaf6; }
+  .hobby-desc {
+    font-size: 0.88em; line-height: 1.55;
+    color: var(--global-text-color-light, #666); margin: 0 0 14px 0;
+  }
+  [data-theme="dark"] .hobby-desc,
+  html[data-theme="dark"] .hobby-desc { color: #9e9ec0; }
 
   /* ── YouTube thumbnail embed ─────────────────────────── */
   .yt-thumb-wrap {
@@ -58,7 +70,6 @@
     border-radius: 10px;
     overflow: hidden;
     display: block;
-    margin-top: 4px;
     background: #000;
     aspect-ratio: 16 / 9;
   }
@@ -67,14 +78,17 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, transform 0.3s ease;
   }
-  .yt-thumb-wrap:hover img { opacity: 0.82; }
+  .yt-thumb-wrap:hover img {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
   .yt-play-btn {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 52px; height: 52px;
+    width: 48px; height: 48px;
     background: rgba(255,0,0,0.90);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
@@ -86,34 +100,37 @@
     background: #ff0000;
     transform: translate(-50%, -50%) scale(1.12);
   }
-  .yt-play-btn svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+  .yt-play-btn svg { width: 20px; height: 20px; fill: #fff; margin-left: 3px; }
   .yt-playlist-label {
-    font-size: 0.72em; font-weight: 600;
-    letter-spacing: 0.06em; text-transform: uppercase;
+    font-size: 0.74em; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--global-text-color-light, #999);
     margin-top: 8px; display: block;
   }
-  [data-theme="dark"] .yt-playlist-label { color: #6a6a8a; }
+  [data-theme="dark"] .yt-playlist-label,
+  html[data-theme="dark"] .yt-playlist-label { color: #8e8eb0; }
 
   /* ── Chess fame callout ──────────────────────────────── */
   .chess-fame {
     display: flex; gap: 10px; align-items: flex-start;
     background: rgba(15,52,96,0.06);
-    border-radius: 10px; padding: 10px 12px; margin-top: 10px;
+    border-radius: 10px; padding: 10px 12px; margin-top: 12px;
     border: 1px solid rgba(15,52,96,0.12);
   }
-  [data-theme="dark"] .chess-fame {
-    background: rgba(100,149,237,0.08);
-    border-color: rgba(100,149,237,0.15);
+  [data-theme="dark"] .chess-fame,
+  html[data-theme="dark"] .chess-fame {
+    background: rgba(100,149,237,0.10);
+    border-color: rgba(100,149,237,0.22);
   }
   .chess-fame-icon { font-size: 1.2em; flex-shrink: 0; }
   .chess-fame-text {
     font-size: 0.82em; line-height: 1.55;
     color: var(--global-text-color, #444);
   }
-  [data-theme="dark"] .chess-fame-text { color: #c5cae9; }
+  [data-theme="dark"] .chess-fame-text,
+  html[data-theme="dark"] .chess-fame-text { color: #d0d4f7; }
   .chess-fame-text a {
-    color: #4285f4; font-weight: 500; text-decoration: none;
+    color: var(--global-theme-color, #4285f4); font-weight: 600; text-decoration: none;
   }
   .chess-fame-text a:hover { text-decoration: underline; }
 
@@ -130,7 +147,7 @@
     <div class="hobby-card piano">
       <span class="hobby-icon">🎹</span>
       <p class="hobby-title">Piano</p>
-      <p class="hobby-desc">Playing piano for 10+ years — from classical pieces to pop covers.</p>
+      <p class="hobby-desc">I dabble in piano in my free time — mostly playing classical tunes and casual covers.</p>
       <a class="yt-thumb-wrap"
          href="https://www.youtube.com/watch?v=3M6JIu0whkY&list=PLSVgicuKedidUJaB1cQZMVaDYXzijsRue&index=4"
          target="_blank" rel="noopener" aria-label="Watch piano covers playlist">
@@ -144,9 +161,9 @@
 
     <!-- Chess -->
     <div class="hobby-card chess">
-      <span class="hobby-icon">♟️</span>
+      <span class="hobby-icon"><i class="fas fa-chess-knight"></i></span>
       <p class="hobby-title">Chess</p>
-      <p class="hobby-desc">Love the game, playing online and with friends as a social player.</p>
+      <p class="hobby-desc">Casual chess player who enjoys games online and over the board with friends.</p>
       <a class="yt-thumb-wrap"
          href="https://youtu.be/cMuTglM_td0"
          target="_blank" rel="noopener" aria-label="Watch full game against Samay Raina">
@@ -165,29 +182,6 @@
           <a href="https://youtu.be/cMuTglM_td0" target="_blank" rel="noopener">Full Game</a>
         </span>
       </div>
-    </div>
-
-    <!-- Card Magic -->
-    <div class="hobby-card magic">
-      <span class="hobby-icon">🃏</span>
-      <p class="hobby-title">Card Magic</p>
-      <p class="hobby-desc">Hobbyist card magician — I enjoy learning and performing magic for friends.</p>
-      <a class="yt-thumb-wrap"
-         href="https://www.youtube.com/watch?v=ngiVK9QCF_E&list=PLTK2_nXkIs7Q"
-         target="_blank" rel="noopener" aria-label="Watch magic tricks playlist">
-        <img src="https://img.youtube.com/vi/ngiVK9QCF_E/mqdefault.jpg" alt="Card magic playlist" loading="lazy">
-        <div class="yt-play-btn">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
-      </a>
-      <span class="yt-playlist-label">▶ Card magic playlist</span>
-    </div>
-
-    <!-- Games & Puzzles -->
-    <div class="hobby-card puzzles">
-      <span class="hobby-icon">🧩</span>
-      <p class="hobby-title">Games & Puzzles</p>
-      <p class="hobby-desc">I enjoy playing poker, diving into board games, and solving probability puzzles in my free time.</p>
     </div>
 
   </div>
