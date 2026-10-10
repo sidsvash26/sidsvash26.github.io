@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>Züri Drive · Practise the Swiss driving test on real Zurich streets</title>
+  <meta name="description" content="A 3D driving simulator on real Zurich, Adliswil and motorway roads. Drive from the cockpit, share the road with trams, traffic and pedestrians, and get marked on Swiss road rules.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
+  <link rel="stylesheet" href="css/style.css?v=202610101200">
+</head>
+<body>
+  <canvas id="view"></canvas>
+
+  <!-- ───────── in-drive HUD ───────── -->
+  <div id="hud" hidden>
+    <div class="hud-tl">
+      <div class="card score" id="score-card">
+        <div class="ring" id="score-ring"><span id="score">100</span></div>
+        <div class="score-meta">
+          <div class="label" id="mode-label">Free drive</div>
+          <div class="sub"><span id="fault-count">0</span> faults · <span id="clock">0:00</span></div>
+        </div>
+      </div>
+      <div class="card nav" id="nav-card" hidden>
+        <div class="nav-icon" id="nav-icon"></div>
+        <div>
+          <div class="nav-dist" id="nav-dist"></div>
+          <div class="nav-text" id="nav-text"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hud-tr">
+      <div class="card road">
+        <div class="limit" id="limit">50</div>
+        <div>
+          <div class="street" id="street">–</div>
+          <div class="sub" id="road-kind"></div>
+        </div>
+      </div>
+      <div class="hud-buttons">
+        <button id="btn-view" title="Change view (V)">View</button>
+        <button id="btn-map" title="Map (M)">Map</button>
+        <button id="btn-pause" title="Pause (Esc)">Pause</button>
+      </div>
+    </div>
+
+    <div id="feed"></div>
+
+    <div class="hud-bl"><canvas id="minimap" width="400" height="400"></canvas></div>
+
+    <div class="hud-bc">
+      <div class="cluster">
+        <div class="blink" id="blink-l">◀</div>
+        <div class="speed"><span id="speed">0</span><small>km/h</small></div>
+        <div class="gear" id="gear">D</div>
+        <div class="blink" id="blink-r">▶</div>
+      </div>
+      <div class="chips"><span id="chip-lim" hidden>LIMITER</span><span id="chip-look" hidden></span></div>
+    </div>
+
+    <div class="hint" id="hint"></div>
+
+    <div id="touch" hidden>
+      <div class="t-left">
+        <button data-t="blinkL" class="t-small">◀ sig</button>
+        <div class="t-row"><button data-t="left">◀</button><button data-t="right">▶</button></div>
+      </div>
+      <div class="t-right">
+        <button data-t="blinkR" class="t-small">sig ▶</button>
+        <div class="t-row"><button data-t="brake" class="t-brake">Brake</button><button data-t="gas" class="t-gas">Gas</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── full map ───────── -->
+  <div id="mapview" class="overlay" hidden>
+    <div class="map-head">
+      <div><strong>Map</strong> <span id="map-note"></span></div>
+      <button id="map-close">Close</button>
+    </div>
+    <canvas id="bigmap"></canvas>
+  </div>
+
+  <!-- ───────── main menu ───────── -->
+  <div id="menu" class="overlay menu" hidden>
+    <div class="menu-inner">
+      <header>
+        <a class="back" href="/side-projects/">← side projects</a>
+        <h1>Züri <span>Drive</span></h1>
+        <p class="tag">Practise for the Swiss practical test on real streets: Zürich, Adliswil and the motorways around them. Drive from the driver's seat, share the road with trams, traffic and pedestrians, and get marked like an examiner would.</p>
+      </header>
+
+      <nav class="tabs">
+        <button data-tab="lessons" class="on">Lessons</button>
+        <button data-tab="free">Free drive</button>
+        <button data-tab="car">Your car</button>
+        <button data-tab="signs">Signs &amp; quiz</button>
+        <button data-tab="rules">Rules &amp; controls</button>
+        <button data-tab="settings">Settings</button>
+      </nav>
+
+      <section data-panel="lessons" class="panel">
+        <div class="grid" id="lesson-grid"></div>
+      </section>
+
+      <section data-panel="free" class="panel" hidden>
+        <p class="lead">Pick a place and drive wherever you like. The examiner still marks you, and you can open the map (M) to jump somewhere else or set a destination.</p>
+        <div class="places" id="place-grid"></div>
+      </section>
+
+      <section data-panel="car" class="panel" hidden>
+        <p class="lead">Pick what you drive. The car on the right turns so you can see it from every side.</p>
+        <h3>Model</h3>
+        <div class="car-models" id="car-models"></div>
+        <h3>Paint</h3>
+        <div class="car-paints" id="car-paints"></div>
+      </section>
+
+      <section data-panel="signs" class="panel" hidden>
+        <div id="signs-browse">
+          <p class="lead">Swiss signs, road markings and light signals, grouped by what they do. Tap one for what it means; hover a group for its German name. Then test yourself.</p>
+          <div class="sg-bar">
+            <div class="sg-cats" id="sg-cats"></div>
+            <button class="sg-go" id="sg-quiz-btn">Quiz</button>
+          </div>
+          <div id="sg-grid"></div>
+        </div>
+        <div id="signs-quiz" hidden>
+          <div class="sq-head"><span id="sq-progress"></span><span id="sq-score"></span><button id="sq-back">← All signs</button></div>
+          <div class="bar sq"><i id="sq-bar"></i></div>
+          <div id="sq-prompt" class="sq-prompt"></div>
+          <div id="sq-options" class="sq-options"></div>
+          <div id="sq-feedback" class="sq-feedback" hidden><div><b></b><p></p></div><button class="sg-go" id="sq-next">Next</button></div>
+        </div>
+      </section>
+
+      <section data-panel="rules" class="panel" hidden>
+        <div class="two">
+          <div>
+            <h3>Controls</h3>
+            <table class="keys">
+              <tr><td><kbd>W</kbd> <kbd>S</kbd> / <kbd>↑</kbd> <kbd>↓</kbd></td><td>Accelerate · brake (hold brake when stopped for reverse)</td></tr>
+              <tr><td><kbd>A</kbd> <kbd>D</kbd> / <kbd>←</kbd> <kbd>→</kbd></td><td>Steer</td></tr>
+              <tr><td><kbd>Q</kbd> <kbd>E</kbd></td><td>Indicate left · right</td></tr>
+              <tr><td><kbd>Z</kbd> <kbd>C</kbd> · <kbd>X</kbd></td><td>Look left · right (shoulder check) · look back</td></tr>
+              <tr><td><kbd>V</kbd></td><td>Change view: cockpit, chase, bird's-eye</td></tr>
+              <tr><td><kbd>Space</kbd></td><td>Emergency brake</td></tr>
+              <tr><td><kbd>L</kbd></td><td>Speed limiter (holds the current limit)</td></tr>
+              <tr><td><kbd>M</kbd> · <kbd>R</kbd> · <kbd>H</kbd></td><td>Map · reset onto the road · hazard lights</td></tr>
+              <tr><td><kbd>Esc</kbd></td><td>Pause</td></tr>
+            </table>
+          </div>
+          <div>
+            <h3>What the examiner watches</h3>
+            <ul class="rules">
+              <li><b>Rechtsvortritt.</b> No sign, no markings: traffic from the right goes first. Slow right down for every unmarked junction.</li>
+              <li><b>Kein Vortritt and STOP.</b> The inverted triangle with shark-teeth means give way; at STOP the wheels must stop completely.</li>
+              <li><b>Trams.</b> They have priority almost everywhere. Never pull across their path.</li>
+              <li><b>Fussgängerstreifen.</b> Stop for anyone on, or waiting at, a yellow zebra crossing.</li>
+              <li><b>Kreisel.</b> Give way to the left on entry, no signal going in, indicate right before your exit.</li>
+              <li><b>Speed.</b> 50 in town unless signed, zones of 30 and 20, 120 on the motorway.</li>
+              <li><b>Signal and look.</b> Indicate every turn and lane change; in the test route, shoulder checks count too.</li>
+              <li><b>Lights.</b> Red and red-with-yellow both mean stop. Yellow means stop if you safely can.</li>
+              <li><b>Autobahn.</b> Use the slip road to get up to speed, keep right, keep two seconds' distance.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section data-panel="settings" class="panel" hidden>
+        <div class="settings">
+          <label>Traffic<select id="set-traffic"><option value="0">None</option><option value="1">Light</option><option value="2" selected>Normal</option><option value="3">Busy</option></select></label>
+          <label>Graphics<select id="set-quality"><option value="0">Fast</option><option value="1" selected>Balanced</option><option value="2">Far view</option></select></label>
+          <label>Mirrors<select id="set-mirrors"><option value="1" selected>On</option><option value="0">Off (faster)</option></select></label>
+          <label>Route line on the road<select id="set-ribbon"><option value="1" selected>On</option><option value="0">Off</option></select></label>
+          <label>Spoken directions<select id="set-voice"><option value="1" selected>On</option><option value="0">Off</option></select></label>
+          <label>Sound<select id="set-sound"><option value="1" selected>On</option><option value="0">Off</option></select></label>
+          <label>Mark shoulder checks<select id="set-strict"><option value="0" selected>Test route only</option><option value="1">Always</option></select></label>
+        </div>
+      </section>
+
+      <footer>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors. Terrain from Mapzen / SRTM elevation tiles. The world is simplified: a practice aid, not a substitute for lessons with a Fahrlehrer.</footer>
+    </div>
+  </div>
+
+  <!-- ───────── pause ───────── -->
+  <div id="pause" class="overlay dim" hidden>
+    <div class="dialog">
+      <h2>Paused</h2>
+      <p class="lead" id="pause-brief"></p>
+      <div class="btns">
+        <button class="primary" id="p-resume">Resume</button>
+        <button id="p-restart">Restart</button>
+        <button id="p-finish">End drive &amp; see report</button>
+        <button id="p-menu">Main menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── briefing ───────── -->
+  <div id="brief" class="overlay dim" hidden>
+    <div class="dialog">
+      <div class="eyebrow" id="b-eyebrow"></div>
+      <h2 id="b-title"></h2>
+      <p class="lead" id="b-text"></p>
+      <div class="chiprow" id="b-focus"></div>
+      <p class="small">Indicate with <kbd>Q</kbd> / <kbd>E</kbd>, look over your shoulder with <kbd>Z</kbd> / <kbd>C</kbd>, change view with <kbd>V</kbd>.</p>
+      <div class="btns"><button class="primary" id="b-go">Start driving</button><button id="b-back">Back</button></div>
+    </div>
+  </div>
+
+  <!-- ───────── report ───────── -->
+  <div id="report" class="overlay dim" hidden>
+    <div class="dialog wide">
+      <div class="rep-head">
+        <div class="ring big" id="r-ring"><span id="r-score">0</span></div>
+        <div>
+          <div class="eyebrow" id="r-eyebrow"></div>
+          <h2 id="r-grade"></h2>
+          <div class="sub" id="r-stats"></div>
+        </div>
+      </div>
+      <div class="rep-body">
+        <div>
+          <h3>By category</h3>
+          <div id="r-cats"></div>
+          <h3 id="r-good-h">Done well</h3>
+          <div id="r-good" class="goodlist"></div>
+        </div>
+        <div>
+          <h3>What to work on</h3>
+          <div id="r-faults" class="faults"></div>
+        </div>
+      </div>
+      <div class="btns"><button class="primary" id="r-again">Drive it again</button><button id="r-next">Next lesson</button><button id="r-menu">Main menu</button></div>
+    </div>
+  </div>
+
+  <!-- ───────── loading ───────── -->
+  <div id="loading" class="overlay">
+    <div class="load-box">
+      <h1>Züri <span>Drive</span></h1>
+      <div class="bar"><i id="load-bar"></i></div>
+      <div class="sub" id="load-text">Loading the road network…</div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js?v=202610101200"></script>
+</body>
+</html>

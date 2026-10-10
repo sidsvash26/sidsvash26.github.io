@@ -199,6 +199,8 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - side-projects/zurich-driving/tools
+  - side-projects/zurich-driving/README.md
 keep_files:
   - CNAME
   - .nojekyll
@@ -231,7 +233,7 @@ defaults:
 # -----------------------------------------------------------------------------
 
 jekyll-minifier:
-  exclude: ["robots.txt"]
+  exclude: ["robots.txt", "side-projects/zurich-driving/*"] # the game ships modern ES modules and pre-minified data
   uglifier_args:
     harmony: true
 

@@ -43,3 +43,16 @@
   icon: "📚"
   published_date: "2025-11-21"
   last_updated_date: "2026-02-12"
+
+- title: "Züri Drive"
+  category: "games"
+  tagline: "Practise the Swiss driving test in 3D on real Zürich streets"
+  description: |
+    A 3D driving simulator built on real map data: Zürich, Adliswil and the motorways around them (A3, A1, the Uetliberg tunnel).
+
+    Drive from the cockpit with working mirrors, or switch to a chase or bird's-eye view. Share the road with trams, buses, traffic and pedestrians while an examiner marks you on Swiss rules: Rechtsvortritt, trams, yellow zebra crossings, roundabouts, lights, speed, signalling and lane discipline. Eight lessons, free drive anywhere on the map, and a report card after every drive.
+  image: "/assets/img/side-projects/zueri_drive.jpg"
+  url: "/side-projects/zurich-driving/"
+  icon: "🇨🇭"
+  published_date: "2026-10-10"
+  last_updated_date: "2026-10-10"
