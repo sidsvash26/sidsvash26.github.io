@@ -52,6 +52,15 @@
 
     Drive from the cockpit with working mirrors, or switch to a chase or bird's-eye view. Share the road with trams, buses, traffic and pedestrians while an examiner marks you on Swiss rules: Rechtsvortritt, trams, yellow zebra crossings, roundabouts, lights, speed, signalling and lane discipline. Eight lessons, free drive anywhere on the map, and a report card after every drive.
   image: "/assets/img/side-projects/zueri_drive.jpg"
+  featured: true
+  hero_image: "/assets/img/side-projects/zueri_drive_hero.jpg"
+  cta: "Start driving"
+  highlights:
+    - "Real Zürich & Adliswil streets"
+    - "Cockpit, chase and bird's-eye views"
+    - "Trams, traffic and pedestrians"
+    - "Marked on Swiss road rules"
+    - "124 signs with a quiz"
   url: "/side-projects/zurich-driving/"
   icon: "🇨🇭"
   published_date: "2026-10-10"

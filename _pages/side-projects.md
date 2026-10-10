@@ -13,6 +13,26 @@ nav_order: 5
     <p class="sp-subtitle">A collection of tools, visualizations, and interactive games — mostly built on weekends, often with the help of AI.</p>
   </div>
 
+  <!-- ═══════════ Spotlight ═══════════ -->
+  {% assign spotlight = site.data.side_projects | where: "featured", true %}
+  {% for item in spotlight %}
+  <a href="{{ item.url | relative_url }}" class="sp-spot">
+    <img class="sp-spot__img" src="{{ item.hero_image | default: item.image | relative_url }}" alt="{{ item.title }}">
+    <div class="sp-spot__shade"></div>
+    <div class="sp-spot__body">
+      <span class="sp-spot__eyebrow">{{ item.icon }} Featured project</span>
+      <h2 class="sp-spot__title">{{ item.title }}</h2>
+      {% if item.tagline %}<p class="sp-spot__tagline">{{ item.tagline }}</p>{% endif %}
+      {% if item.highlights %}
+      <ul class="sp-spot__chips">
+        {% for h in item.highlights %}<li>{{ h }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+      <span class="sp-spot__cta">{{ item.cta | default: "Open" }} →</span>
+    </div>
+  </a>
+  {% endfor %}
+
   <!-- ═══════════ Tools & Visualizations ═══════════ -->
   {% assign tools = site.data.side_projects | where: "category", "tools" %}
   {% if tools.size > 0 %}
@@ -66,6 +86,7 @@ nav_order: 5
 
     <div class="sp-grid sp-grid--cards">
       {% for item in games %}
+      {% if item.featured %}{% continue %}{% endif %}
       <a href="{{ item.url | relative_url }}" class="sp-card">
         <div class="sp-card__image-wrap">
           {% if item.image %}
@@ -118,6 +139,104 @@ nav_order: 5
   font-size: 16px;
   line-height: 1.55;
   color: var(--global-text-color-light, #666);
+}
+
+/* Spotlight */
+.sp-spot {
+  position: relative;
+  display: block;
+  min-height: 420px;
+  margin-bottom: 48px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #14181d;
+  text-decoration: none !important;
+  box-shadow: 0 10px 34px rgba(0,0,0,0.16);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.sp-spot:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.26);
+}
+.sp-spot__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 50%;
+  transition: transform 0.6s ease;
+}
+.sp-spot:hover .sp-spot__img {
+  transform: scale(1.04);
+}
+.sp-spot__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(12,15,19,0.94) 0%, rgba(12,15,19,0.8) 34%, rgba(12,15,19,0.15) 68%, rgba(12,15,19,0) 100%);
+}
+.sp-spot__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 420px;
+  max-width: 500px;
+  padding: 40px 44px;
+  color: #fff;
+}
+.sp-spot__eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffd23f;
+  margin-bottom: 12px;
+}
+.sp-spot__title {
+  font-size: clamp(34px, 6vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  margin: 0 0 12px;
+  color: #fff;
+}
+.sp-spot__tagline {
+  font-size: 17px;
+  line-height: 1.45;
+  margin: 0 0 18px;
+  color: rgba(255,255,255,0.86);
+}
+.sp-spot__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 26px;
+}
+.sp-spot__chips li {
+  font-size: 12.5px;
+  line-height: 1.2;
+  padding: 6px 11px;
+  border-radius: 999px;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.sp-spot__cta {
+  align-self: flex-start;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 10px;
+  color: #14181d;
+  background: #ffd23f;
+  transition: background 0.2s ease, padding 0.2s ease;
+}
+.sp-spot:hover .sp-spot__cta {
+  background: #ffe07a;
+  padding-right: 28px;
 }
 
 /* Section */
@@ -289,6 +408,22 @@ body.dark-mode .sp-card:hover {
 
 /* ═══════════ Responsive ═══════════ */
 @media (max-width: 640px) {
+  .sp-spot,
+  .sp-spot__body {
+    min-height: 520px;
+  }
+  .sp-spot__body {
+    justify-content: flex-end;
+    max-width: none;
+    padding: 24px 20px;
+  }
+  .sp-spot__shade {
+    background: linear-gradient(0deg, rgba(12,15,19,0.96) 0%, rgba(12,15,19,0.82) 52%, rgba(12,15,19,0.1) 100%);
+  }
+  .sp-spot__img {
+    object-position: 55% 0;
+    height: 55%;
+  }
   .sp-card--featured {
     flex-direction: column;
   }
